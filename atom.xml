@@ -1,0 +1,261 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+  <title>qczyl&#39;s Blog</title>
+  
+  <link href="/atom.xml" rel="self"/>
+  
+  <link href="http://blog.qczyl.club/"/>
+  <updated>2017-06-30T08:57:46.000Z</updated>
+  <id>http://blog.qczyl.club/</id>
+  
+  <author>
+    <name>qczyl</name>
+    
+  </author>
+  
+  <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>《Objective-C高级编程 iOS与OS X多线程和内存管理》读书笔记 Block篇</title>
+    <link href="http://blog.qczyl.club/2017/06/29/note_block/"/>
+    <id>http://blog.qczyl.club/2017/06/29/note_block/</id>
+    <published>2017-06-28T16:00:00.000Z</published>
+    <updated>2017-06-30T08:57:46.000Z</updated>
+    
+    <content type="html"><![CDATA[<p>由于block部分内容还是比较多的，如果全部都细讲的话，篇幅会非常的长。强烈建议大家去看<a href="https://item.jd.com/11258970.html" target="_blank" rel="external">本书</a>（<a href="https://pan.baidu.com/s/1jHNOboq" target="_blank" rel="external">PDF版</a>）。</p>
+<p>所以本文重点讲述 <strong>Block存储域</strong> 部分的内容。</p>
+<h2 id="1-Block的实质"><a href="#1-Block的实质" class="headerlink" title="1.Block的实质"></a>1.Block的实质</h2><blockquote>
+<p>要说各种Block相关内容的话，一定要先了解Block的实质。</p>
+</blockquote>
+<p>首先，我们通过<a href="https://zh.wikipedia.org/wiki/Clang" target="_blank" rel="external">clang</a>转换Block语法。(源码太多，所以截图，请见谅)</p>
+<p><img src="http://upload-images.jianshu.io/upload_images/1787055-4d74e021c947bec2.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt=""></p>
+<p>此源码的Block语法最为简单，该源码通过<a href="https://zh.wikipedia.org/wiki/Clang" target="_blank" rel="external">clang</a>可变换为以下形式：</p>
+<p><img src="http://upload-images.jianshu.io/upload_images/1787055-1a4dec8ed13c898e.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt=""></p>
+<p>我们目前需要重点关心的为红色圈出的部分。</p>
+<h2 id="2-Block存储域"><a href="#2-Block存储域" class="headerlink" title="2.Block存储域"></a>2.Block存储域</h2><p><img src="http://upload-images.jianshu.io/upload_images/1787055-92df46c39f580f29.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt=""></p>
+<p>上述源码通过<code>impl.isa = &amp;_NSConcreteStackBlcok;</code>我们可以看出，该Block的类为_NSConcreteStackBlcok，设置在栈上。</p>
+<p>下面我们再来看看设置在数据区域的Block：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">void (^blk)(void) = ^&#123;printf(&quot;Global Block\n&quot;);&#125;;</div><div class="line">int main()</div><div class="line">&#123;</div></pre></td></tr></table></figure>
+<p>此源代码通过声明全局变量blk来使用Block语法。如果转换该源代码，Block用结构体的成员变量isa的初始化如下：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">impl.isa = &amp;_NSConcreteGlobalBlcok;</div></pre></td></tr></table></figure>
+<p>该Block的类为_NSConcreteGlobalBlcok类。因为在使用全局变量的地方不能使用自动变量没所以不存在对自动变量进行截获。</p>
+<p>所以只要Block不截获自动变量，就可以将Block用结构体实例设置在程序的数据区域。</p>
+<p>配置在全局变量上的Block，从变量作用域外也可以通过指针安全的使用。但设置在栈上的Block，如果其所属的变量作用于结束，该Block就被废弃。由于<strong>blcok变量也配置在栈上，同样的，如果其所属的作用域结束，则该</strong>block变量也会被废弃。</p>
+<p><img src="http://upload-images.jianshu.io/upload_images/1787055-9dc8a736878353ff.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt=""></p>
+<p>Block提供了将Block和__block变量从栈上复制到堆上的方法来解决这个问题。将配置在栈上的Block复制到堆上，这样即使Block语法所属的变量作用域结束，堆上的Block还可以继续存在。</p>
+<p><img src="http://upload-images.jianshu.io/upload_images/1787055-355a3424f29d8f22.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt=""></p>
+<p>复制到堆上的Block将_NSConcreteMallocBlcok类对象写入Block用结构体实例的成员变量isa。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">impl.isa = &amp; _NSConcreteMallocBlcok;</div></pre></td></tr></table></figure>
+<p>那么Blcok提供的复制方法究竟是什么呢？实际上当ARC有效时，大多数情形下编译器会恰当地进行判断，自动生成将Block从栈上复制到堆上的代码。</p>
+<p>例如：将Blcok作为函数返回值返回时，编译器会自动生成复制到堆上的代码。</p>
+<p>前面讲到过“大多数情况下编译器会恰当地进行判断”，不过在此之外的情况下需要手动生成代码，将Block从栈上复制到堆上。此时我们使用“copy实例方法”。那么编译器不能进行判断的究竟是什么样的状况呢？如下所示：</p>
+<ul>
+<li>向方法或函数的参数中传递Block时</li>
+</ul>
+<p>但是如果在方法或函数中恰当地复制了传递过来的参数，那么就不必再调用该方法或函数前手动复制了。以下方法或函数不用手动复制。</p>
+<ul>
+<li>Cocoa框架的方法且方法名中含有usingBlock等时</li>
+<li>GCD的API</li>
+</ul>
+<p>举个具体例子，在使用NSArray类的enumerateObjectsUsingBlock实例方法以及dispatch_async函数时，不用手动复制。相反地，在NSArray类的initWithObjects实例方法上传递Block时需要手动复制。下面我们来看看源代码。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">- (id)getBlockArray </div><div class="line">&#123;</div><div class="line">	int val = 10;</div><div class="line">	return [[NSArray alloc] initWithObjects:</div><div class="line">			^&#123;NSLog(@&quot;blk0:%d&quot;, val)&#125;,</div><div class="line">			^&#123;NSLog(@&quot;blk1:%d&quot;, val)&#125;, nil];</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>getBlockArray方法在栈上生成两个Block，并传递给NSArray类的initWithObjects实例方法。下面，在getBlockArray方法调用方，从NSArray对象中取出Block并执行。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">id obj = getBlockArray();</div><div class="line">typedef void (^blk_t)(void);</div><div class="line">blk_t blk = (blk_t)[obj objectAtIndex:0];</div><div class="line">blk();</div></pre></td></tr></table></figure>
+<p>该源代码的blk()，即Block在执行时发生异常，应用程序强制结束。这是由于在getBlockArray函数执行结束时，栈上的Block被废弃的缘故。可惜此时编译器不能判断是否需要复制。也可以不让编译器进行判断，而使其在所有情况下都能复制。但将Block从栈上复制到堆上是相当消耗CPU的。当Block设置在栈上也能使用时，将Block从栈上复制到堆上只是在浪费CPU资源。因此只在此情形下让编程人员手动进行复制。</p>
+<p>该源代码像下面这样修改一下即可正常运行。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">&#123;</div><div class="line">	int val = 10;</div><div class="line">	return [[NSArray alloc] initWithObjects:</div><div class="line">			[^&#123;NSLog(@&quot;blk0:%d&quot;, val)&#125; copy],</div><div class="line">			[^&#123;NSLog(@&quot;blk1:%d&quot;, val)&#125; copy], nil];</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>另外，对于已配置在堆上的Block以及配置在程序的数据区域上的Blcok，调用copy方法又会如何呢？</p>
+<p><img src="http://upload-images.jianshu.io/upload_images/1787055-d05dc12aae560c11.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt=""></p>
+<p>不管Block配置在何处，用copy方法复制都不会引起任何问题。</p>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;由于block部分内容还是比较多的，如果全部都细讲的话，篇幅会非常的长。强烈建议大家去看&lt;a href=&quot;https://item.jd.com/11258970.html&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;本书&lt;/a&gt;（&lt;a href=&quot;ht
+    
+    </summary>
+    
+      <category term="读书笔记" scheme="http://blog.qczyl.club/categories/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/"/>
+    
+    
+  </entry>
+  
+  <entry>
+    <title>《Objective-C高级编程 iOS与OS X多线程和内存管理》读书笔记 自动引用计数篇</title>
+    <link href="http://blog.qczyl.club/2017/06/28/note_arc/"/>
+    <id>http://blog.qczyl.club/2017/06/28/note_arc/</id>
+    <published>2017-06-27T17:00:00.000Z</published>
+    <updated>2017-06-30T08:54:36.000Z</updated>
+    
+    <content type="html"><![CDATA[<h4 id="导语："><a href="#导语：" class="headerlink" title="导语："></a>导语：</h4><blockquote>
+<p>顾名思义，自动引用计数（ARC，Automatic Reference Counting）是指内存管理中对引用采取自动计数的技术。以下摘自苹果的官方说明。</p>
+<p>在Objective-C 中采用Automatic Reference Counting（ARC）机制，让编译器来进行内存管理。在新一代Apple LLVM 编译器中设置ARC 为有效状态，就无需再次键入retain 或者release 代码，这在降低程序崩溃、内存泄漏等风险的同时，很大程度上减少了开发程序的工作量。编译器完全清楚目标对象，并能立刻释放那些不再被使用的对象。如此一来，应用程序将具有可预测性，且能流畅运行，速度也将大幅提升。</p>
+</blockquote>
+<h3 id="一、内存管理的思考方式"><a href="#一、内存管理的思考方式" class="headerlink" title="一、内存管理的思考方式"></a>一、内存管理的思考方式</h3><blockquote>
+<p>看到”引用计数”这个名称，我们便会不自觉地联想到”某处有某物多少多少”而将注意力放到计数上。但其实，更加客观、正确的思考方式是：</p>
+<ul>
+<li>自己生成的对象，自己所持有。</li>
+<li>非自己生成的对象，自己也能持有。</li>
+<li>不再需要 自己持有的对象 时释放。</li>
+<li>非自己持有的对象无法释放。</li>
+</ul>
+</blockquote>
+<h5 id="1-自己生成的对象，自己所持有"><a href="#1-自己生成的对象，自己所持有" class="headerlink" title="1. 自己生成的对象，自己所持有"></a>1. 自己生成的对象，自己所持有</h5><p>使用”以下名称开头”的方法名意味着自己生成的对象只有自己持有：</p>
+<ul>
+<li>alloc</li>
+<li>new</li>
+<li>copy</li>
+<li>mutableCopy</li>
+</ul>
+<p>注：”以下名称开头”包括 allocMyObject，但不包括 allocmyobject，需要遵循驼峰式命名规范</p>
+<h5 id="2-非自己生成的对象，自己也能持有"><a href="#2-非自己生成的对象，自己也能持有" class="headerlink" title="2. 非自己生成的对象，自己也能持有"></a>2. 非自己生成的对象，自己也能持有</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">例：</div><div class="line">    // 取得非自己生成的对象</div><div class="line">    id obj = [NSMutableArray array];</div><div class="line">    // 自己持有</div><div class="line">    [obj retain];</div></pre></td></tr></table></figure>
+<p>注：一般情况下，调用这类方法无需自己持有，在NSMutableArray的array方法中，<br>已将生成的对象注册到了自动释放池，所以无需obj持有也不会释放（注释为个人理解，如有错误请指出）</p>
+<h5 id="3-不再需要-自己持有对象-时释放"><a href="#3-不再需要-自己持有对象-时释放" class="headerlink" title="3. 不再需要 自己持有对象 时释放"></a>3. 不再需要 自己持有对象 时释放</h5><p>用 alloc/new/copy/mutableCopy “开头”的方法生成并持有的对象，或者用 retain 方法持有的对象，一旦不再需要，务必要用release方法进行释放。</p>
+<h5 id="4-非自己持有的对象无法释放"><a href="#4-非自己持有的对象无法释放" class="headerlink" title="4. 非自己持有的对象无法释放"></a>4. 非自己持有的对象无法释放</h5><p>对于用alloc/new/copy/mutableCopy 方法生成并持有的对象，<br>或是用retain方法持有的对象，由于持有者是自己，所以在不需要该对象时需要将其释放。<br>而由此以外所得到的对象绝对不能释放。倘若在应用程序中释放了非自己所持有的对象就会造成崩溃。</p>
+<h3 id="二、ARC（重点）"><a href="#二、ARC（重点）" class="headerlink" title="二、ARC（重点）"></a>二、ARC（重点）</h3><blockquote>
+<p>“引用计数式内存管理”的本质部分在ARC中并没有改变。就像”自动引用计数”这个名称表示的那样，ARC只是自动的帮助我们处理”引用计数”的相关部分</p>
+</blockquote>
+<h4 id="2-1-所有权修饰符"><a href="#2-1-所有权修饰符" class="headerlink" title="2.1 所有权修饰符"></a>2.1 所有权修饰符</h4><ul>
+<li>__strong修饰符</li>
+<li>__weak修饰符</li>
+<li>__unsafe_unretained修饰符</li>
+<li>__autoreleasing修饰符</li>
+</ul>
+<h5 id="2-1-1-strong修饰符"><a href="#2-1-1-strong修饰符" class="headerlink" title="2.1.1 __strong修饰符"></a>2.1.1 __strong修饰符</h5><p>__strong修饰符是id类型和对象类型默认的所有权修饰符。<br>如”strong”这个名称所示，__strong修饰符表示对对象的”强引用”(持有对象)。<br>持有强引用的变量在超出其作用域时被废弃，随着强引用的失效，引用的对象会随之释放。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div></pre></td><td class="code"><pre><div class="line">&#123;</div><div class="line">    /*</div><div class="line">     *  自己生成并持有对象</div><div class="line">     */</div><div class="line">    id __strong obj = [[NSObject alloc] init];</div><div class="line">    /*</div><div class="line">     *  因为变量obj为强引用，</div><div class="line">     *  所以自己持有对象</div><div class="line">     */</div><div class="line">&#125;</div><div class="line">    /*</div><div class="line">     *  因为变量obj超出其作用域，强引用失效，</div><div class="line">     *  所以自动的释放自己持有的对象。</div><div class="line">     *  对象的所有者不存在，因此废弃该对象。</div><div class="line">     */</div></pre></td></tr></table></figure>
+<h5 id="2-1-2-weak修饰符"><a href="#2-1-2-weak修饰符" class="headerlink" title="2.1.2 __weak修饰符"></a>2.1.2 __weak修饰符</h5><p>大家应该都知道，如果只是用__strong修饰符的话必然会发生”循环引用”的问题。<br>而__weak修饰符就可以避免这一问题。<br>__weak修饰符与__strong修饰符相反，提供”弱引用”(不持有对象)。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div></pre></td><td class="code"><pre><div class="line">&#123;</div><div class="line">    /*</div><div class="line">     *  自己生成并持有对象</div><div class="line">     */</div><div class="line">    id __strong obj0 = [[NSObject alloc] init];</div><div class="line">    /*</div><div class="line">     *  因为变量obj为强引用，</div><div class="line">     *  所以自己持有对象</div><div class="line">     */</div><div class="line">    id __weak obj1 = obj0;</div><div class="line">    /*</div><div class="line">     *  obj1变量持有生成对象的弱引用</div><div class="line">     */</div><div class="line">&#125;</div><div class="line">    /*</div><div class="line">     *  因为变量obj0超出其作用域，强引用失效，</div><div class="line">     *  所以自动的释放自己持有的对象。</div><div class="line">     *  对象的所有者不存在，因此废弃该对象。</div><div class="line">     */</div></pre></td></tr></table></figure>
+<p>__weak修饰符还有一个优点。在持有某对象的弱引用时，<br>若该对象被废弃，则此弱引用将自动失效且处于nil被赋值的状态。</p>
+<h5 id="2-1-3-unsafe-unretained修饰符（很少使用）"><a href="#2-1-3-unsafe-unretained修饰符（很少使用）" class="headerlink" title="2.1.3 __unsafe_unretained修饰符（很少使用）"></a>2.1.3 __unsafe_unretained修饰符（很少使用）</h5><p>__unsafe_unretained修饰符正如其名unsafe所示，是不安全的所有权修饰符。<br>尽管ARC式的内存管理是编译器的工作，但附有__unsafe_unretained修饰符<br>的变量不属于编译器的内存管理对象。这一点在使用时要注意。<br>附有__unsafe_unretained修饰符的变量同附有__weak修饰符的变量一样，<br>因为自己生成并持有的对象不能继续为自己所用，所以生成的对象会立即被释放。</p>
+<p>注：__unsafe_unretained修饰符在对象被废弃时不会主动赋值nil，所以会访问到”悬垂指针”，导致系统在个别运行情况下崩溃。</p>
+<h5 id="2-1-4-autoreleasing修饰符（虽然很少显式附加，但很多情况下都会使用，所以很重要）"><a href="#2-1-4-autoreleasing修饰符（虽然很少显式附加，但很多情况下都会使用，所以很重要）" class="headerlink" title="2.1.4 __autoreleasing修饰符（虽然很少显式附加，但很多情况下都会使用，所以很重要）"></a>2.1.4 __autoreleasing修饰符（虽然很少显式附加，但很多情况下都会使用，所以很重要）</h5><p>ARC无效时会像下面这样来使用：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">/* ARC无效 */</div><div class="line">NSAutoreleasePool *pool = [[NSAutoreleasePool alloc] init];</div><div class="line">id obj = [[NSObject alloc] init];</div><div class="line">[obj autorelease];</div><div class="line">[pool drain];</div></pre></td></tr></table></figure>
+<p>ARC有效时，该源码也能写成下面这样：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">@autoreleasepool &#123;</div><div class="line">    id __autoreleasing obj = [[NSObject alloc] init];</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>但是，显式的附加__autoreleasing修饰符同显式的附加__strong修饰符一样罕见。</p>
+<p>我们通过实例来看看为什么非显式地使用__autoreleasing修饰符也可以。</p>
+<p>1、编译器会检查方法名是否以alloc/new/copy/mutableCopy 开始，<br>如果不是则自动将返回值的对象注册到autoreleasepool。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div></pre></td><td class="code"><pre><div class="line">@autoreleasepool &#123;  </div><div class="line">/*  </div><div class="line"> * 取得非自己生成并持有的对象  </div><div class="line"> */  </div><div class="line">id __strong obj = [NSMutableArray array];  </div><div class="line">/*  </div><div class="line"> * 因为变量obj 为强引用，  </div><div class="line"> * 所以自己持有对象。  </div><div class="line"> *  </div><div class="line"> * 并且该对象  </div><div class="line"> * 由编译器判断其方法名后  </div><div class="line"> * 自动注册到autoreleasepool  </div><div class="line"> */  </div><div class="line">&#125; </div><div class="line">/*  </div><div class="line"> * 因为变量obj 超出其作用域，强引用失效，  </div><div class="line"> * 所以自动释放自己持有的对象。  </div><div class="line"> *  </div><div class="line"> * 同时，随着@autoreleasepool 块的结束，  </div><div class="line"> * 注册到autoreleasepool 中的  </div><div class="line"> * 所有对象被自动释放。  </div><div class="line"> *  </div><div class="line"> * 因为对象的所有者不存在，所以废弃对象。  </div><div class="line"> */</div></pre></td></tr></table></figure>
+<p>2、由于return使得对象变量超出其作用域，所以该强引用对应的自己持有的对象会被自动释放，<br>但该对象作为函数的返回值，编译器会自动将其注册到autoreleasepool。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">+ (id) array  </div><div class="line">&#123;  </div><div class="line">	id obj = [[NSMutableArray alloc] init];  </div><div class="line">	return obj;  </div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>3、以下为使用__weak修饰符的例子。虽然__weak修饰符是为了避免循环引用而使用的，<br>但在访问附有__weak修饰符的变量时，实际上必定要访问注册到autoreleasepool的对象。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">id __weak obj1 = obj0;  </div><div class="line">NSLog(@&quot;class=%@&quot;, [obj1 class]);</div></pre></td></tr></table></figure>
+<p>以下源代码与此相同：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">id __weak obj1 = obj0;  </div><div class="line">id __autoreleasing tmp = obj1;  </div><div class="line">NSLog(@&quot;class=%@&quot;, [tmp class]);</div></pre></td></tr></table></figure>
+<p>为什么在访问附有__weak修饰符的变量时必须访问注册到autoreleasepool 的对象呢？<br>这是因为__weak修饰符只持有对象的弱引用，而在访问引用对象的过程中，该对象有可能被废弃。<br>如果把要访问的对象注册到autoreleasepool中，那么在@autoreleasepool块结束之前都能确保该对象存在。<br>因此，在使用附有__weak修饰符的变量时就必定要使用注册到autoreleasepool中的对象。</p>
+<p>4、最后一个可非显式地使用__autoreleasing修饰符的例子，同前面讲述的id obj 和id __strongobj 完全一样。</p>
+<p>那么id 的指针id <em>obj 又如何呢？可以由id __strong obj 的例子类推出id __strong</em>obj 吗？</p>
+<p>其实，推出来的是id __autoreleasing <em>obj。<br>同样地，对象的指针NSObject **obj 便成为了NSObject </em> __autoreleasing *obj。<br>例：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">- (BOOL) performOperationWithError:(NSError **)error;</div></pre></td></tr></table></figure>
+<p>同前面讲述的一样，id的指针或对象的指针会默认附加上__autoreleasing 修饰符，所以等同于以下源代码。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">- (BOOL) performOperationWithError:(NSError * __autoreleasing *)error;</div></pre></td></tr></table></figure>
+<p>下面的源代码会产生编译器错误：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line">NSError *error = nil;  </div><div class="line">NSError **pError = &amp;error; </div><div class="line">赋值给对象指针时，所有权修饰符必须一致。</div><div class="line">error: initializing &apos;NSError *__autoreleasing *&apos; with an expression  </div><div class="line">of type &apos;NSError *__strong *&apos; changes retain/release properties of pointer  </div><div class="line">NSError **pError = &amp;error;  </div><div class="line">        ^           ~~~~~~ </div><div class="line">此时，对象指针必须附加__strong 修饰符。</div><div class="line">NSError *error = nil;  </div><div class="line">NSError * __strong *pError = &amp;error;  </div><div class="line">/* 编译正常 */</div></pre></td></tr></table></figure>
+<h4 id="2-2-属性"><a href="#2-2-属性" class="headerlink" title="2.2 属性"></a>2.2 属性</h4><p><img src="http://upload\-images.jianshu.io/upload\_images/1787055\-83eef1a8a0494bb1.jpg?imageMogr2/auto\-orient/strip%7CimageView2/2/w/1240" alt=""></p>
+<h2 id="问题"><a href="#问题" class="headerlink" title="问题"></a>问题</h2><p>1.如何防止block的内存泄漏？ </p>
+<ul>
+<li>答：使用__weak将self弱引用</li>
+</ul>
+<p>2.那为什么又要在block中将self使用__strong强引用呢？</p>
+<ul>
+<li>答案一：防止self在使用过程中被释放掉。（未读本书前的理解）</li>
+<li>答案二：既然使用__weak修饰的变量在使用时会自动加入到自动释放池，就保证了在使用过程中不会被释放掉。同时，由于使用__weak修饰的变量在每次使用时都会加入到一个自动释放池中，所以会消耗资源，但是使用__strong强引用一下就不会了。（读本书后的理解，不知道对不对，希望各位大神指点一下）</li>
+</ul>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;h4 id=&quot;导语：&quot;&gt;&lt;a href=&quot;#导语：&quot; class=&quot;headerlink&quot; title=&quot;导语：&quot;&gt;&lt;/a&gt;导语：&lt;/h4&gt;&lt;blockquote&gt;
+&lt;p&gt;顾名思义，自动引用计数（ARC，Automatic Reference Counting）是指内存管理中对
+    
+    </summary>
+    
+      <category term="读书笔记" scheme="http://blog.qczyl.club/categories/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/"/>
+    
+    
+  </entry>
+  
+  <entry>
+    <title>Hexo+GitHub Pages搭建个人博客</title>
+    <link href="http://blog.qczyl.club/2017/06/28/create_blog/"/>
+    <id>http://blog.qczyl.club/2017/06/28/create_blog/</id>
+    <published>2017-06-27T16:00:00.000Z</published>
+    <updated>2017-06-30T08:54:50.000Z</updated>
+    
+    <content type="html"><![CDATA[<p>本文主要记录自己在搭建个人博客的记录，以及工程中遇到的一些问题。</p>
+<p>废话少说，上干货。</p>
+<h4 id="1-GitHub仓库"><a href="#1-GitHub仓库" class="headerlink" title="1. GitHub仓库"></a>1. GitHub仓库</h4><p>由于本博客的搭建是基于Hexo + GitHub Page的，所以GitHub账号是必不可少的。<br>相信大家应该也都有自己的账号了，没有的赶紧去注册一个吧！</p>
+<p>注：账号的username会影响你的域名哦！</p>
+<p>我们需要创建一个仓库来存储我们的博客内容，点击首页任意位置出现的<code>New repository</code>按钮创建仓库，Respository name中的<code>username</code>.github.io的<code>username</code>一定与前面的Owner 一致。</p>
+<p><img src="http://upload-images.jianshu.io/upload_images/1787055-137e556b3f8107e3.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="创建仓库"></p>
+<p><img src="http://upload-images.jianshu.io/upload_images/1787055-b664fcba6dbd2869.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="需要保持username一致"></p>
+<h4 id="2-安装Hexo"><a href="#2-安装Hexo" class="headerlink" title="2. 安装Hexo"></a>2. 安装Hexo</h4><blockquote>
+<p><a href="https://hexo.io/zh-cn/docs/index.html" target="_blank" rel="external">Hexo</a> 是一个快速、简洁且高效的博客框架。Hexo 使用 Markdown（或其他渲染引擎）解析文章，在几秒内，即可利用靓丽的主题生成静态网页。</p>
+</blockquote>
+<h6 id="2-1-安装brew（如果已安装，请忽略）"><a href="#2-1-安装brew（如果已安装，请忽略）" class="headerlink" title="2.1 安装brew（如果已安装，请忽略）"></a>2.1 安装brew（如果已安装，请忽略）</h6><figure class="highlight sh"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ /usr/bin/ruby -e <span class="string">"<span class="variable">$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)</span>"</span></div></pre></td></tr></table></figure>
+<h6 id="2-2-安装git"><a href="#2-2-安装git" class="headerlink" title="2.2 安装git"></a>2.2 安装git</h6><figure class="highlight sh"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ brew install git</div></pre></td></tr></table></figure>
+<h6 id="2-3-安装nodejs"><a href="#2-3-安装nodejs" class="headerlink" title="2.3 安装nodejs"></a>2.3 安装nodejs</h6><figure class="highlight sh"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line"><span class="comment"># 使用brew安装nvm</span></div><div class="line">$ brew install nvm</div><div class="line"></div><div class="line"><span class="comment"># vim ~/.bash_profile后增加下面这两行</span></div><div class="line"><span class="built_in">export</span> NVM_DIR=<span class="string">"<span class="variable">$HOME</span>/.nvm"</span></div><div class="line"><span class="built_in">source</span> $(brew --prefix nvm)/nvm.sh</div><div class="line"></div><div class="line"><span class="comment"># .bash_profile立即生效</span></div><div class="line">$ <span class="built_in">source</span> ~/.bash_profile</div><div class="line"></div><div class="line"><span class="comment"># 使用nvm安装node.js</span></div><div class="line">$ nvm install node</div></pre></td></tr></table></figure>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div></pre></td><td class="code"><pre><div class="line"><span class="comment"># 校验（建议重启终端后校验）</span></div><div class="line">$ nvm --version</div><div class="line">0.33.2</div><div class="line">$ node -v</div><div class="line">v8.1.2</div><div class="line">$ npm -v</div><div class="line">5.0.3</div><div class="line">$ nvm list</div><div class="line">-&gt;       v8.1.2</div><div class="line">default -&gt; node (-&gt; v8.1.2)</div><div class="line">node -&gt; stable (-&gt; v8.1.2) (default)</div><div class="line">stable -&gt; 8.1 (-&gt; v8.1.2) (default)</div><div class="line">iojs -&gt; N/A (default)</div><div class="line">lts/* -&gt; lts/boron (-&gt; N/A)</div><div class="line">lts/argon -&gt; v4.8.3 (-&gt; N/A)</div><div class="line">lts/boron -&gt; v6.11.0 (-&gt; N/A)</div></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div></pre></td><td class="code"><pre><div class="line">如果校验成功，可忽略此步骤！</div><div class="line">如果校验失败，则有很大的可能是本地的node，nvm，npm版本出现问题。</div><div class="line">可尝试一下方法解决：</div><div class="line">1、卸载老版本的node</div><div class="line">    如果是从brew安装的, 运行brew uninstall node</div><div class="line">    删除~/目录下所有node和node_modules</div><div class="line">    删除/usr/local/lib中的所有node和node_modules</div><div class="line">    删除/usr/local/lib中的所有node和node_modules的文件夹</div><div class="line">    在/usr/local/bin中,删除所有node的可执行文件(node和npm)</div><div class="line">    </div><div class="line">    手动删除文件，整理成脚本是这个样子:</div><div class="line">    sudo rm -rf ~/.npm</div><div class="line">    sudo rm -rf ~/node_modules</div><div class="line">    sudo rm -rf ~/.node-gyp</div><div class="line">    sudo rm /usr/local/bin/node</div><div class="line">    sudo rm /usr/local/bin/npm</div><div class="line">    sudo rm /usr/local/lib/dtrace/node.d</div><div class="line"></div><div class="line">2、卸载老版本.nvm</div><div class="line">    我之前是手动安装的nvm，nvm的目录结构比较简单，删除这三个就可以了</div><div class="line">    # 删除后请确认删除干净了</div><div class="line">    rm -rf ~/.nvm</div><div class="line">    rm -rf ~/.npm</div><div class="line">    rm -rf ~/.bower</div><div class="line">    </div><div class="line">    还需要删除下.bash_profile文件中的配置(用brew安装后还需要重新加上，但不太一样)</div><div class="line">    export NVM_DIR=&quot;$HOME/.nvm&quot;</div><div class="line">    source $(brew --prefix nvm)/nvm.sh</div><div class="line"></div><div class="line">3、清除干净后确认(重启终端后测试)</div><div class="line">    &quot;重启终端&quot;后，挨个测试几个命令应该都是找不到，才算是正确的:</div><div class="line">    nvm</div><div class="line">    node</div><div class="line">    npm</div><div class="line">    </div><div class="line">4、重新从 2.3安装nodejs 开始执行</div></pre></td></tr></table></figure>
+<h6 id="2-4-安装Hexo"><a href="#2-4-安装Hexo" class="headerlink" title="2.4 安装Hexo"></a>2.4 安装Hexo</h6><figure class="highlight sh"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">$ npm install -g hexo --no-optional</div><div class="line"><span class="comment"># 安装hexo-deployer-git自动部署发布工具</span></div><div class="line">$ npm install hexo-deployer-git --save</div></pre></td></tr></table></figure>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line"><span class="comment"># 安装Hexo时，不添加--no-optional可能会报如下错误，但不影响使用，建议添加</span></div><div class="line">&#123; [Error: Cannot find module <span class="string">'./build/Release/DTraceProviderBindings'</span>] code: <span class="string">'MODULE_NOT_FOUND'</span> &#125;</div><div class="line">&#123; [Error: Cannot find module <span class="string">'./build/default/DTraceProviderBindings'</span>] code: <span class="string">'MODULE_NOT_FOUND'</span> &#125;</div><div class="line">&#123; [Error: Cannot find module <span class="string">'./build/Debug/DTraceProviderBindings'</span>] code: <span class="string">'MODULE_NOT_FOUND'</span> &#125;</div><div class="line"></div><div class="line"><span class="comment"># 如果添加--no-optional仍报上述错误的话，可以尝试下面的方法，重装 hexo-cli</span></div><div class="line">$ npm uninstall hexo-cli -g</div><div class="line">$ npm install hexo-cli -g</div></pre></td></tr></table></figure>
+<p>所有必须工具已经安装完成，下面我们就可以生成博客，上传至我们的Github 仓库了。</p>
+<h4 id="3-编写，发布"><a href="#3-编写，发布" class="headerlink" title="3. 编写，发布"></a>3. 编写，发布</h4><blockquote>
+<p>接下来我们需要用Hexo初始化一个博客，然后更改一些自定义的配置，或者加上自己喜欢的主题，写上第一篇文章，然后发布到自己的个人Github网站(username.github.io)。</p>
+</blockquote>
+<h6 id="3-1-创建博客"><a href="#3-1-创建博客" class="headerlink" title="3.1 创建博客"></a>3.1 创建博客</h6><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"># 执行成功后，会在当前目录下创建出一个名为 blog 的文件夹。</div><div class="line">$ hexo init blog</div></pre></td></tr></table></figure>
+<h6 id="3-2-更改配置"><a href="#3-2-更改配置" class="headerlink" title="3.2 更改配置"></a>3.2 更改配置</h6><p>1.主题安装：</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="comment"># 为了使博客不太难看，我们需要安装一个主题，切换至刚刚生成的blog目录，安装主题</span></div><div class="line">$ <span class="built_in">cd</span> blog</div><div class="line">$ git <span class="built_in">clone</span> https://github.com/iissnan/hexo-theme-next themes/next</div></pre></td></tr></table></figure>
+<p>这里有<a href="https://hexo.io/themes/" target="_blank" rel="external">更多主题</a>供你选择。喵神的主题在<a href="https://github.com/monniya/hexo-theme-new-vno" target="_blank" rel="external">这里</a>。</p>
+<p>2.基础配置:</p>
+<p>打开文件位置blog/_config.yml修改几个键值对，下面把几个必须设置的列出来按需求修改，记得保存， 还有注意配置的键值之间一定要有空格。<a href="https://hexo.io/zh-cn/docs/configuration.html" target="_blank" rel="external">更多设置</a></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">title: qczyl&apos;s club     //你博客的名字</div><div class="line">author: qczyl           //你的名字</div><div class="line">language: zh-Hans       //语言 中文</div><div class="line">theme: next             //刚刚安装的主题名称</div><div class="line">deploy:</div><div class="line">  type: git             //使用Git 发布</div><div class="line">  repo: https://github.com/qcyl/qcyl.github.io.git    // 刚创建的Github仓库</div></pre></td></tr></table></figure>
+<p>3.主题配置:</p>
+<p>主题配置文件在blog/themes/next/_config.yml中修改，这里略过。<a href="http://theme-next.iissnan.com/getting-started.html#theme-settings" target="_blank" rel="external">设置详情</a></p>
+<h6 id="3-3-写文章"><a href="#3-3-写文章" class="headerlink" title="3.3 写文章"></a>3.3 写文章</h6><p>所有基础框架都已经创建完成，接下来可以开始写你的第一篇博客了。<br>在blog/source/_posts下创建你的第一个博客吧，<br>例如，创建一个名为FirstNight.md的文件，用Markdown大肆发挥吧，注意保存。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">如：</div><div class="line">---</div><div class="line">title: First Night</div><div class="line">---</div><div class="line">&gt; 我有一头**小毛驴**，可是我从来都不骑。</div></pre></td></tr></table></figure>
+<h6 id="3-4-测试"><a href="#3-4-测试" class="headerlink" title="3.4 测试"></a>3.4 测试</h6><figure class="highlight sh"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ hexo s</div></pre></td></tr></table></figure>
+<p>测试服务启动，你可以在浏览器中输入<a href="https://localhost:4000" target="_blank" rel="external">https://localhost:4000</a> 访问了。</p>
+<h6 id="3-5-发布"><a href="#3-5-发布" class="headerlink" title="3.5 发布"></a>3.5 发布</h6><figure class="highlight sh"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ hexo clean &amp;&amp; hexo g &amp;&amp; hexo d</div></pre></td></tr></table></figure>
+<p>如果这是你的第一次，终端会让你输入Github 的邮箱和密码，正确输入后，骚等片刻，就会把你的博客上传至Github 了。以后在每次把博客写完后，执行一下这个命令就可以直接发布了，灰常苏胡。</p>
+<h4 id="到这里，你的博客已经完成了，在浏览器中输入-http-qcyl-github-io-就能够访问了。"><a href="#到这里，你的博客已经完成了，在浏览器中输入-http-qcyl-github-io-就能够访问了。" class="headerlink" title="到这里，你的博客已经完成了，在浏览器中输入 http://qcyl.github.io 就能够访问了。"></a>到这里，你的博客已经完成了，在浏览器中输入 <a href="http://qcyl.github.io" target="_blank" rel="external">http://qcyl.github.io</a> 就能够访问了。</h4><hr>
+<blockquote>
+<p>如果你还希望将博客绑定到自己的个人域名下，提升一下逼格，<br>那么请接着往下看，如果暂时不需要的话，以下的内容可暂时忽略。</p>
+</blockquote>
+<h4 id="4-绑定个人域名"><a href="#4-绑定个人域名" class="headerlink" title="4.绑定个人域名"></a>4.绑定个人域名</h4><h6 id="4-1-购买域名"><a href="#4-1-购买域名" class="headerlink" title="4.1 购买域名"></a>4.1 购买域名</h6><p>如果你还没有个人域名，可前往<a href="https://wanwang.aliyun.com/?utm_content=se_96657&amp;gclid=Cj0KEQjwhMjKBRDjxb31j-aesI4BEiQA7ivN-AkOk2kYl2zH2OJBcrIlT1Zb67lF3zcsOg-tTn5UkjkaAsWb8P8HAQ" target="_blank" rel="external">万网</a>进行购买。</p>
+<h6 id="4-2-创建-CNAME-文件"><a href="#4-2-创建-CNAME-文件" class="headerlink" title="4.2 创建 CNAME 文件"></a>4.2 创建 CNAME 文件</h6><ol>
+<li>创建 CNAME 文件（注意文件名大写，且没有扩展名）</li>
+<li>写入需要绑定的域名，例：blog.qczyl.club</li>
+<li>将 CNAME 文件放到blog/theme/next/source目录下</li>
+<li>执行$ hexo clean &amp;&amp; hexo g &amp;&amp; hexo d 发布到github</li>
+</ol>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">注: 1. 域名前不需要添加 http 这样的协议</div><div class="line">    2. 如果需要绑定的域名为 ‘www.qczyl.club’,</div><div class="line">    可省略www，直接写为 ‘qczyl.club’，</div><div class="line">    Github Pages会自动将其重定向到 ‘www.qczyl.club’ 上</div><div class="line">    3. CNAME文件需要放到当前使用主题的source目录下</div></pre></td></tr></table></figure>
+<h6 id="4-3-添加-CNAME-记录"><a href="#4-3-添加-CNAME-记录" class="headerlink" title="4.3 添加 CNAME 记录"></a>4.3 添加 CNAME 记录</h6><p>登录阿里云管理控制台，选择云解析DNS，给当前域名新增一条CNAME记录。</p>
+<p><img src="http://upload-images.jianshu.io/upload_images/1787055-f14b3852417588e8.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="云解析DNS"></p>
+<p><img src="http://upload-images.jianshu.io/upload_images/1787055-2e58e6931f9f94d0.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="添加一条CNAME记录"></p>
+<pre><code>注：1.如果你绑定的域名为www.***,则主机记录为www，我这里为blog
+    2.记录值为你个人的github pages地址，即username.github.io
+</code></pre><p>完成以上这些步骤后，登录到你的github仓库，查看GitHub Pages，显示为你绑定的域名，并且打了对勾，则绑定成功，然后就可在浏览器中输入你自己的域名访问了。</p>
+<p><img src="http://upload-images.jianshu.io/upload_images/1787055-43ce81f9820358fd.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="进入仓库，选择settings"></p>
+<p><img src="http://upload-images.jianshu.io/upload_images/1787055-24e60c8d9c33c7f3.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="查看GitHub Pages"></p>
+<h3 id="参考文章："><a href="#参考文章：" class="headerlink" title="参考文章："></a>参考文章：</h3><ol>
+<li><a href="http://www.jianshu.com/p/4eaddcbe4d12" target="_blank" rel="external">5分钟 搭建免费个人博客</a></li>
+<li><a href="http://linyehui.me/2016/03/03/reinstall-nodejs-on-osx/" target="_blank" rel="external">Mac OSX下重装node.js</a></li>
+<li><a href="https://kikoroc.com/2016/05/04/resolve-hexo-DTraceProviderBindings-MODULE-NOT-FOUND.html" target="_blank" rel="external">解决hexo神烦的DTraceProviderBindings MODULE_NOT_FOUND</a></li>
+</ol>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;本文主要记录自己在搭建个人博客的记录，以及工程中遇到的一些问题。&lt;/p&gt;
+&lt;p&gt;废话少说，上干货。&lt;/p&gt;
+&lt;h4 id=&quot;1-GitHub仓库&quot;&gt;&lt;a href=&quot;#1-GitHub仓库&quot; class=&quot;headerlink&quot; title=&quot;1. GitHub仓库&quot;&gt;&lt;/
+    
+    </summary>
+    
+      <category term="杂学" scheme="http://blog.qczyl.club/categories/%E6%9D%82%E5%AD%A6/"/>
+    
+    
+  </entry>
+  
+</feed>
