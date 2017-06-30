@@ -1,0 +1,1317 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.1" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="Hexo, NexT" />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/images/avatar.png?v=5.1.1" />
+
+
+
+
+
+
+<meta name="description" content="导语： 顾名思义，自动引用计数（ARC，Automatic Reference Counting）是指内存管理中对引用采取自动计数的技术。以下摘自苹果的官方说明。 在Objective-C 中采用Automatic Reference Counting（ARC）机制，让编译器来进行内存管理。在新一代Apple LLVM 编译器中设置ARC 为有效状态，就无需再次键入retain 或者release">
+<meta property="og:type" content="article">
+<meta property="og:title" content="《Objective-C高级编程 iOS与OS X多线程和内存管理》读书笔记 自动引用计数篇">
+<meta property="og:url" content="http://blog.qczyl.club/2017/06/28/note_arc/index.html">
+<meta property="og:site_name" content="qczyl&#39;s Blog">
+<meta property="og:description" content="导语： 顾名思义，自动引用计数（ARC，Automatic Reference Counting）是指内存管理中对引用采取自动计数的技术。以下摘自苹果的官方说明。 在Objective-C 中采用Automatic Reference Counting（ARC）机制，让编译器来进行内存管理。在新一代Apple LLVM 编译器中设置ARC 为有效状态，就无需再次键入retain 或者release">
+<meta property="og:image" content="http://upload\-images.jianshu.io/upload\_images/1787055\-83eef1a8a0494bb1.jpg?imageMogr2/auto\-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:updated_time" content="2017-06-30T08:54:36.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="《Objective-C高级编程 iOS与OS X多线程和内存管理》读书笔记 自动引用计数篇">
+<meta name="twitter:description" content="导语： 顾名思义，自动引用计数（ARC，Automatic Reference Counting）是指内存管理中对引用采取自动计数的技术。以下摘自苹果的官方说明。 在Objective-C 中采用Automatic Reference Counting（ARC）机制，让编译器来进行内存管理。在新一代Apple LLVM 编译器中设置ARC 为有效状态，就无需再次键入retain 或者release">
+<meta name="twitter:image" content="http://upload\-images.jianshu.io/upload\_images/1787055\-83eef1a8a0494bb1.jpg?imageMogr2/auto\-orient/strip%7CimageView2/2/w/1240">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Mist',
+    sidebar: {"position":"left","display":"hide","offset":12,"offset_float":0,"b2t":false,"scrollpercent":false},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://blog.qczyl.club/2017/06/28/note_arc/"/>
+
+
+
+
+
+  <title>《Objective-C高级编程 iOS与OS X多线程和内存管理》读书笔记 自动引用计数篇 | qczyl's Blog</title>
+  
+
+
+
+
+
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?daaad9be55ecc7fd62df82ede675e5e3";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">qczyl's Blog</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <h1 class="site-subtitle" itemprop="description"></h1>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br />
+            
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup search-popup local-search-popup">
+  <div class="local-search-header clearfix">
+    <span class="search-icon">
+      <i class="fa fa-search"></i>
+    </span>
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+    <div class="local-search-input-wrapper">
+      <input autocomplete="off"
+             placeholder="搜索..." spellcheck="false"
+             type="text" id="local-search-input">
+    </div>
+  </div>
+  <div id="local-search-result"></div>
+</div>
+
+
+
+    </div>
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="http://blog.qczyl.club/2017/06/28/note_arc/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="qczyl">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="qczyl's Blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h2 class="post-title" itemprop="name headline">《Objective-C高级编程 iOS与OS X多线程和内存管理》读书笔记 自动引用计数篇</h2>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-06-28T01:00:00+08:00">
+                2017-06-28
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/读书笔记/" itemprop="url" rel="index">
+                    <span itemprop="name">读书笔记</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a class="cloud-tie-join-count" href="/2017/06/28/note_arc/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count join-count" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+             <span id="/2017/06/28/note_arc/" class="leancloud_visitors" data-flag-title="《Objective-C高级编程 iOS与OS X多线程和内存管理》读书笔记 自动引用计数篇">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数 </span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h4 id="导语："><a href="#导语：" class="headerlink" title="导语："></a>导语：</h4><blockquote>
+<p>顾名思义，自动引用计数（ARC，Automatic Reference Counting）是指内存管理中对引用采取自动计数的技术。以下摘自苹果的官方说明。</p>
+<p>在Objective-C 中采用Automatic Reference Counting（ARC）机制，让编译器来进行内存管理。在新一代Apple LLVM 编译器中设置ARC 为有效状态，就无需再次键入retain 或者release 代码，这在降低程序崩溃、内存泄漏等风险的同时，很大程度上减少了开发程序的工作量。编译器完全清楚目标对象，并能立刻释放那些不再被使用的对象。如此一来，应用程序将具有可预测性，且能流畅运行，速度也将大幅提升。</p>
+</blockquote>
+<h3 id="一、内存管理的思考方式"><a href="#一、内存管理的思考方式" class="headerlink" title="一、内存管理的思考方式"></a>一、内存管理的思考方式</h3><blockquote>
+<p>看到”引用计数”这个名称，我们便会不自觉地联想到”某处有某物多少多少”而将注意力放到计数上。但其实，更加客观、正确的思考方式是：</p>
+<ul>
+<li>自己生成的对象，自己所持有。</li>
+<li>非自己生成的对象，自己也能持有。</li>
+<li>不再需要 自己持有的对象 时释放。</li>
+<li>非自己持有的对象无法释放。</li>
+</ul>
+</blockquote>
+<h5 id="1-自己生成的对象，自己所持有"><a href="#1-自己生成的对象，自己所持有" class="headerlink" title="1. 自己生成的对象，自己所持有"></a>1. 自己生成的对象，自己所持有</h5><p>使用”以下名称开头”的方法名意味着自己生成的对象只有自己持有：</p>
+<ul>
+<li>alloc</li>
+<li>new</li>
+<li>copy</li>
+<li>mutableCopy</li>
+</ul>
+<p>注：”以下名称开头”包括 allocMyObject，但不包括 allocmyobject，需要遵循驼峰式命名规范</p>
+<h5 id="2-非自己生成的对象，自己也能持有"><a href="#2-非自己生成的对象，自己也能持有" class="headerlink" title="2. 非自己生成的对象，自己也能持有"></a>2. 非自己生成的对象，自己也能持有</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">例：</div><div class="line">    // 取得非自己生成的对象</div><div class="line">    id obj = [NSMutableArray array];</div><div class="line">    // 自己持有</div><div class="line">    [obj retain];</div></pre></td></tr></table></figure>
+<p>注：一般情况下，调用这类方法无需自己持有，在NSMutableArray的array方法中，<br>已将生成的对象注册到了自动释放池，所以无需obj持有也不会释放（注释为个人理解，如有错误请指出）</p>
+<h5 id="3-不再需要-自己持有对象-时释放"><a href="#3-不再需要-自己持有对象-时释放" class="headerlink" title="3. 不再需要 自己持有对象 时释放"></a>3. 不再需要 自己持有对象 时释放</h5><p>用 alloc/new/copy/mutableCopy “开头”的方法生成并持有的对象，或者用 retain 方法持有的对象，一旦不再需要，务必要用release方法进行释放。</p>
+<h5 id="4-非自己持有的对象无法释放"><a href="#4-非自己持有的对象无法释放" class="headerlink" title="4. 非自己持有的对象无法释放"></a>4. 非自己持有的对象无法释放</h5><p>对于用alloc/new/copy/mutableCopy 方法生成并持有的对象，<br>或是用retain方法持有的对象，由于持有者是自己，所以在不需要该对象时需要将其释放。<br>而由此以外所得到的对象绝对不能释放。倘若在应用程序中释放了非自己所持有的对象就会造成崩溃。</p>
+<h3 id="二、ARC（重点）"><a href="#二、ARC（重点）" class="headerlink" title="二、ARC（重点）"></a>二、ARC（重点）</h3><blockquote>
+<p>“引用计数式内存管理”的本质部分在ARC中并没有改变。就像”自动引用计数”这个名称表示的那样，ARC只是自动的帮助我们处理”引用计数”的相关部分</p>
+</blockquote>
+<h4 id="2-1-所有权修饰符"><a href="#2-1-所有权修饰符" class="headerlink" title="2.1 所有权修饰符"></a>2.1 所有权修饰符</h4><ul>
+<li>__strong修饰符</li>
+<li>__weak修饰符</li>
+<li>__unsafe_unretained修饰符</li>
+<li>__autoreleasing修饰符</li>
+</ul>
+<h5 id="2-1-1-strong修饰符"><a href="#2-1-1-strong修饰符" class="headerlink" title="2.1.1 __strong修饰符"></a>2.1.1 __strong修饰符</h5><p>__strong修饰符是id类型和对象类型默认的所有权修饰符。<br>如”strong”这个名称所示，__strong修饰符表示对对象的”强引用”(持有对象)。<br>持有强引用的变量在超出其作用域时被废弃，随着强引用的失效，引用的对象会随之释放。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div></pre></td><td class="code"><pre><div class="line">&#123;</div><div class="line">    /*</div><div class="line">     *  自己生成并持有对象</div><div class="line">     */</div><div class="line">    id __strong obj = [[NSObject alloc] init];</div><div class="line">    /*</div><div class="line">     *  因为变量obj为强引用，</div><div class="line">     *  所以自己持有对象</div><div class="line">     */</div><div class="line">&#125;</div><div class="line">    /*</div><div class="line">     *  因为变量obj超出其作用域，强引用失效，</div><div class="line">     *  所以自动的释放自己持有的对象。</div><div class="line">     *  对象的所有者不存在，因此废弃该对象。</div><div class="line">     */</div></pre></td></tr></table></figure>
+<h5 id="2-1-2-weak修饰符"><a href="#2-1-2-weak修饰符" class="headerlink" title="2.1.2 __weak修饰符"></a>2.1.2 __weak修饰符</h5><p>大家应该都知道，如果只是用__strong修饰符的话必然会发生”循环引用”的问题。<br>而__weak修饰符就可以避免这一问题。<br>__weak修饰符与__strong修饰符相反，提供”弱引用”(不持有对象)。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div></pre></td><td class="code"><pre><div class="line">&#123;</div><div class="line">    /*</div><div class="line">     *  自己生成并持有对象</div><div class="line">     */</div><div class="line">    id __strong obj0 = [[NSObject alloc] init];</div><div class="line">    /*</div><div class="line">     *  因为变量obj为强引用，</div><div class="line">     *  所以自己持有对象</div><div class="line">     */</div><div class="line">    id __weak obj1 = obj0;</div><div class="line">    /*</div><div class="line">     *  obj1变量持有生成对象的弱引用</div><div class="line">     */</div><div class="line">&#125;</div><div class="line">    /*</div><div class="line">     *  因为变量obj0超出其作用域，强引用失效，</div><div class="line">     *  所以自动的释放自己持有的对象。</div><div class="line">     *  对象的所有者不存在，因此废弃该对象。</div><div class="line">     */</div></pre></td></tr></table></figure>
+<p>__weak修饰符还有一个优点。在持有某对象的弱引用时，<br>若该对象被废弃，则此弱引用将自动失效且处于nil被赋值的状态。</p>
+<h5 id="2-1-3-unsafe-unretained修饰符（很少使用）"><a href="#2-1-3-unsafe-unretained修饰符（很少使用）" class="headerlink" title="2.1.3 __unsafe_unretained修饰符（很少使用）"></a>2.1.3 __unsafe_unretained修饰符（很少使用）</h5><p>__unsafe_unretained修饰符正如其名unsafe所示，是不安全的所有权修饰符。<br>尽管ARC式的内存管理是编译器的工作，但附有__unsafe_unretained修饰符<br>的变量不属于编译器的内存管理对象。这一点在使用时要注意。<br>附有__unsafe_unretained修饰符的变量同附有__weak修饰符的变量一样，<br>因为自己生成并持有的对象不能继续为自己所用，所以生成的对象会立即被释放。</p>
+<p>注：__unsafe_unretained修饰符在对象被废弃时不会主动赋值nil，所以会访问到”悬垂指针”，导致系统在个别运行情况下崩溃。</p>
+<h5 id="2-1-4-autoreleasing修饰符（虽然很少显式附加，但很多情况下都会使用，所以很重要）"><a href="#2-1-4-autoreleasing修饰符（虽然很少显式附加，但很多情况下都会使用，所以很重要）" class="headerlink" title="2.1.4 __autoreleasing修饰符（虽然很少显式附加，但很多情况下都会使用，所以很重要）"></a>2.1.4 __autoreleasing修饰符（虽然很少显式附加，但很多情况下都会使用，所以很重要）</h5><p>ARC无效时会像下面这样来使用：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">/* ARC无效 */</div><div class="line">NSAutoreleasePool *pool = [[NSAutoreleasePool alloc] init];</div><div class="line">id obj = [[NSObject alloc] init];</div><div class="line">[obj autorelease];</div><div class="line">[pool drain];</div></pre></td></tr></table></figure>
+<p>ARC有效时，该源码也能写成下面这样：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">@autoreleasepool &#123;</div><div class="line">    id __autoreleasing obj = [[NSObject alloc] init];</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>但是，显式的附加__autoreleasing修饰符同显式的附加__strong修饰符一样罕见。</p>
+<p>我们通过实例来看看为什么非显式地使用__autoreleasing修饰符也可以。</p>
+<p>1、编译器会检查方法名是否以alloc/new/copy/mutableCopy 开始，<br>如果不是则自动将返回值的对象注册到autoreleasepool。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div></pre></td><td class="code"><pre><div class="line">@autoreleasepool &#123;  </div><div class="line">/*  </div><div class="line"> * 取得非自己生成并持有的对象  </div><div class="line"> */  </div><div class="line">id __strong obj = [NSMutableArray array];  </div><div class="line">/*  </div><div class="line"> * 因为变量obj 为强引用，  </div><div class="line"> * 所以自己持有对象。  </div><div class="line"> *  </div><div class="line"> * 并且该对象  </div><div class="line"> * 由编译器判断其方法名后  </div><div class="line"> * 自动注册到autoreleasepool  </div><div class="line"> */  </div><div class="line">&#125; </div><div class="line">/*  </div><div class="line"> * 因为变量obj 超出其作用域，强引用失效，  </div><div class="line"> * 所以自动释放自己持有的对象。  </div><div class="line"> *  </div><div class="line"> * 同时，随着@autoreleasepool 块的结束，  </div><div class="line"> * 注册到autoreleasepool 中的  </div><div class="line"> * 所有对象被自动释放。  </div><div class="line"> *  </div><div class="line"> * 因为对象的所有者不存在，所以废弃对象。  </div><div class="line"> */</div></pre></td></tr></table></figure>
+<p>2、由于return使得对象变量超出其作用域，所以该强引用对应的自己持有的对象会被自动释放，<br>但该对象作为函数的返回值，编译器会自动将其注册到autoreleasepool。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">+ (id) array  </div><div class="line">&#123;  </div><div class="line">	id obj = [[NSMutableArray alloc] init];  </div><div class="line">	return obj;  </div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>3、以下为使用__weak修饰符的例子。虽然__weak修饰符是为了避免循环引用而使用的，<br>但在访问附有__weak修饰符的变量时，实际上必定要访问注册到autoreleasepool的对象。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">id __weak obj1 = obj0;  </div><div class="line">NSLog(@&quot;class=%@&quot;, [obj1 class]);</div></pre></td></tr></table></figure>
+<p>以下源代码与此相同：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">id __weak obj1 = obj0;  </div><div class="line">id __autoreleasing tmp = obj1;  </div><div class="line">NSLog(@&quot;class=%@&quot;, [tmp class]);</div></pre></td></tr></table></figure>
+<p>为什么在访问附有__weak修饰符的变量时必须访问注册到autoreleasepool 的对象呢？<br>这是因为__weak修饰符只持有对象的弱引用，而在访问引用对象的过程中，该对象有可能被废弃。<br>如果把要访问的对象注册到autoreleasepool中，那么在@autoreleasepool块结束之前都能确保该对象存在。<br>因此，在使用附有__weak修饰符的变量时就必定要使用注册到autoreleasepool中的对象。</p>
+<p>4、最后一个可非显式地使用__autoreleasing修饰符的例子，同前面讲述的id obj 和id __strongobj 完全一样。</p>
+<p>那么id 的指针id <em>obj 又如何呢？可以由id __strong obj 的例子类推出id __strong</em>obj 吗？</p>
+<p>其实，推出来的是id __autoreleasing <em>obj。<br>同样地，对象的指针NSObject **obj 便成为了NSObject </em> __autoreleasing *obj。<br>例：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">- (BOOL) performOperationWithError:(NSError **)error;</div></pre></td></tr></table></figure>
+<p>同前面讲述的一样，id的指针或对象的指针会默认附加上__autoreleasing 修饰符，所以等同于以下源代码。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">- (BOOL) performOperationWithError:(NSError * __autoreleasing *)error;</div></pre></td></tr></table></figure>
+<p>下面的源代码会产生编译器错误：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line">NSError *error = nil;  </div><div class="line">NSError **pError = &amp;error; </div><div class="line">赋值给对象指针时，所有权修饰符必须一致。</div><div class="line">error: initializing &apos;NSError *__autoreleasing *&apos; with an expression  </div><div class="line">of type &apos;NSError *__strong *&apos; changes retain/release properties of pointer  </div><div class="line">NSError **pError = &amp;error;  </div><div class="line">        ^           ~~~~~~ </div><div class="line">此时，对象指针必须附加__strong 修饰符。</div><div class="line">NSError *error = nil;  </div><div class="line">NSError * __strong *pError = &amp;error;  </div><div class="line">/* 编译正常 */</div></pre></td></tr></table></figure>
+<h4 id="2-2-属性"><a href="#2-2-属性" class="headerlink" title="2.2 属性"></a>2.2 属性</h4><p><img src="http://upload\-images.jianshu.io/upload\_images/1787055\-83eef1a8a0494bb1.jpg?imageMogr2/auto\-orient/strip%7CimageView2/2/w/1240" alt=""></p>
+<h2 id="问题"><a href="#问题" class="headerlink" title="问题"></a>问题</h2><p>1.如何防止block的内存泄漏？ </p>
+<ul>
+<li>答：使用__weak将self弱引用</li>
+</ul>
+<p>2.那为什么又要在block中将self使用__strong强引用呢？</p>
+<ul>
+<li>答案一：防止self在使用过程中被释放掉。（未读本书前的理解）</li>
+<li>答案二：既然使用__weak修饰的变量在使用时会自动加入到自动释放池，就保证了在使用过程中不会被释放掉。同时，由于使用__weak修饰的变量在每次使用时都会加入到一个自动释放池中，所以会消耗资源，但是使用__strong强引用一下就不会了。（读本书后的理解，不知道对不对，希望各位大神指点一下）</li>
+</ul>
+
+      
+    </div>
+
+    <div>
+      
+        
+<div id="wechat_subscriber" style="display: block; padding: 10px 0; margin: 20px auto; width: 100%; text-align: center">
+    <img id="wechat_subscriber_qcode" src="/images/wechat_qrcode.jpg" alt="qczyl wechat" style="width: 200px; max-width: 100%;"/>
+    <div>欢迎关注「qczyl」，获取本站最新内容。</div>
+</div>
+
+
+      
+    </div>
+
+    <div>
+      
+        
+  <div style="padding: 10px 0; margin: 20px auto; width: 90%; text-align: center;">
+    <div></div>
+    <button id="rewardButton" disable="enable" onclick="var qr = document.getElementById('QR'); if (qr.style.display === 'none') {qr.style.display='block';} else {qr.style.display='none'}">
+      <span>赏</span>
+    </button>
+    <div id="QR" style="display: none;">
+      
+        <div id="wechat" style="display: inline-block">
+          <img id="wechat_qr" src="/images/wechat_pay.png" alt="qczyl WeChat Pay"/>
+          <p>微信打赏</p>
+        </div>
+      
+      
+        <div id="alipay" style="display: inline-block">
+          <img id="alipay_qr" src="/images/ali_pay.png" alt="qczyl Alipay"/>
+          <p>支付宝打赏</p>
+        </div>
+      
+    </div>
+  </div>
+
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/06/28/create_blog/" rel="next" title="Hexo+GitHub Pages搭建个人博客">
+                <i class="fa fa-chevron-left"></i> Hexo+GitHub Pages搭建个人博客
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2017/06/29/note_block/" rel="prev" title="《Objective-C高级编程 iOS与OS X多线程和内存管理》读书笔记 Block篇">
+                《Objective-C高级编程 iOS与OS X多线程和内存管理》读书笔记 Block篇 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+      <div id="cloud-tie-wrapper" class="cloud-tie-wrapper"></div>
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/images/avatar.png"
+               alt="qczyl" />
+          <p class="site-author-name" itemprop="name">qczyl</p>
+           
+              <p class="site-description motion-element" itemprop="description"></p>
+           
+        </div>
+        <nav class="site-state motion-element">
+
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/archives/">
+                <span class="site-state-item-count">3</span>
+                <span class="site-state-item-name">日志</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-categories">
+              <a href="/categories/index.html">
+                <span class="site-state-item-count">2</span>
+                <span class="site-state-item-name">分类</span>
+              </a>
+            </div>
+          
+
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="http://www.jianshu.com/u/f85c446e6d01" target="_blank" title="简书">
+                  
+                    <i class="fa fa-fw fa-globe"></i>
+                  
+                  简书
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-4"><a class="nav-link" href="#导语："><span class="nav-number">1.</span> <span class="nav-text">导语：</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#一、内存管理的思考方式"><span class="nav-number"></span> <span class="nav-text">一、内存管理的思考方式</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#1-自己生成的对象，自己所持有"><span class="nav-number">0.1.</span> <span class="nav-text">1. 自己生成的对象，自己所持有</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#2-非自己生成的对象，自己也能持有"><span class="nav-number">0.2.</span> <span class="nav-text">2. 非自己生成的对象，自己也能持有</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#3-不再需要-自己持有对象-时释放"><span class="nav-number">0.3.</span> <span class="nav-text">3. 不再需要 自己持有对象 时释放</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#4-非自己持有的对象无法释放"><span class="nav-number">0.4.</span> <span class="nav-text">4. 非自己持有的对象无法释放</span></a></li></ol></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#二、ARC（重点）"><span class="nav-number"></span> <span class="nav-text">二、ARC（重点）</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#2-1-所有权修饰符"><span class="nav-number">1.</span> <span class="nav-text">2.1 所有权修饰符</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#2-1-1-strong修饰符"><span class="nav-number">1.1.</span> <span class="nav-text">2.1.1 __strong修饰符</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#2-1-2-weak修饰符"><span class="nav-number">1.2.</span> <span class="nav-text">2.1.2 __weak修饰符</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#2-1-3-unsafe-unretained修饰符（很少使用）"><span class="nav-number">1.3.</span> <span class="nav-text">2.1.3 __unsafe_unretained修饰符（很少使用）</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#2-1-4-autoreleasing修饰符（虽然很少显式附加，但很多情况下都会使用，所以很重要）"><span class="nav-number">1.4.</span> <span class="nav-text">2.1.4 __autoreleasing修饰符（虽然很少显式附加，但很多情况下都会使用，所以很重要）</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-2-属性"><span class="nav-number">2.</span> <span class="nav-text">2.2 属性</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#问题"><span class="nav-number"></span> <span class="nav-text">问题</span></a></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2017</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">qczyl</span>
+</div>
+
+
+<div class="powered-by">
+  由 <a class="theme-link" href="https://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Mist
+  </a>
+</div>
+
+
+        
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+  
+  <script type="text/javascript" src="/lib/canvas-nest/canvas-nest.min.js"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.1"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.1"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.1"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.1"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.1"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+    
+    <script>
+      var cloudTieConfig = {
+        url: document.location.href, 
+        sourceId: "",
+        productKey: "b5f47ce5ce2c4818888e50562a113e92",
+        target: "cloud-tie-wrapper"
+      };
+    </script>
+    <script src="https://img1.ws.126.net/f2e/tie/yun/sdk/loader.js"></script>
+  
+
+
+
+
+
+
+
+
+
+
+  
+
+  <script type="text/javascript">
+    // Popup Window;
+    var isfetched = false;
+    var isXml = true;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length === 0) {
+      search_path = "search.xml";
+    } else if (/json$/i.test(search_path)) {
+      isXml = false;
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    var onPopupClose = function (e) {
+      $('.popup').hide();
+      $('#local-search-input').val('');
+      $('.search-result-list').remove();
+      $('#no-result').remove();
+      $(".local-search-pop-overlay").remove();
+      $('body').css('overflow', '');
+    }
+
+    function proceedsearch() {
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay"></div>')
+        .css('overflow', 'hidden');
+      $('.search-popup-overlay').click(onPopupClose);
+      $('.popup').toggle();
+      var $localSearchInput = $('#local-search-input');
+      $localSearchInput.attr("autocapitalize", "none");
+      $localSearchInput.attr("autocorrect", "off");
+      $localSearchInput.focus();
+    }
+
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+      'use strict';
+
+      // start loading animation
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay">' +
+          '<div id="search-loading-icon">' +
+          '<i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>' +
+          '</div>' +
+          '</div>')
+        .css('overflow', 'hidden');
+      $("#search-loading-icon").css('margin', '20% auto 0 auto').css('text-align', 'center');
+
+      $.ajax({
+        url: path,
+        dataType: isXml ? "xml" : "json",
+        async: true,
+        success: function(res) {
+          // get the contents from search data
+          isfetched = true;
+          $('.popup').detach().appendTo('.header-inner');
+          var datas = isXml ? $("entry", res).map(function() {
+            return {
+              title: $("title", this).text(),
+              content: $("content",this).text(),
+              url: $("url" , this).text()
+            };
+          }).get() : res;
+          var input = document.getElementById(search_id);
+          var resultContent = document.getElementById(content_id);
+          var inputEventFunction = function() {
+            var searchText = input.value.trim().toLowerCase();
+            var keywords = searchText.split(/[\s\-]+/);
+            if (keywords.length > 1) {
+              keywords.push(searchText);
+            }
+            var resultItems = [];
+            if (searchText.length > 0) {
+              // perform local searching
+              datas.forEach(function(data) {
+                var isMatch = false;
+                var hitCount = 0;
+                var searchTextCount = 0;
+                var title = data.title.trim();
+                var titleInLowerCase = title.toLowerCase();
+                var content = data.content.trim().replace(/<[^>]+>/g,"");
+                var contentInLowerCase = content.toLowerCase();
+                var articleUrl = decodeURIComponent(data.url);
+                var indexOfTitle = [];
+                var indexOfContent = [];
+                // only match articles with not empty titles
+                if(title != '') {
+                  keywords.forEach(function(keyword) {
+                    function getIndexByWord(word, text, caseSensitive) {
+                      var wordLen = word.length;
+                      if (wordLen === 0) {
+                        return [];
+                      }
+                      var startPosition = 0, position = [], index = [];
+                      if (!caseSensitive) {
+                        text = text.toLowerCase();
+                        word = word.toLowerCase();
+                      }
+                      while ((position = text.indexOf(word, startPosition)) > -1) {
+                        index.push({position: position, word: word});
+                        startPosition = position + wordLen;
+                      }
+                      return index;
+                    }
+
+                    indexOfTitle = indexOfTitle.concat(getIndexByWord(keyword, titleInLowerCase, false));
+                    indexOfContent = indexOfContent.concat(getIndexByWord(keyword, contentInLowerCase, false));
+                  });
+                  if (indexOfTitle.length > 0 || indexOfContent.length > 0) {
+                    isMatch = true;
+                    hitCount = indexOfTitle.length + indexOfContent.length;
+                  }
+                }
+
+                // show search results
+
+                if (isMatch) {
+                  // sort index by position of keyword
+
+                  [indexOfTitle, indexOfContent].forEach(function (index) {
+                    index.sort(function (itemLeft, itemRight) {
+                      if (itemRight.position !== itemLeft.position) {
+                        return itemRight.position - itemLeft.position;
+                      } else {
+                        return itemLeft.word.length - itemRight.word.length;
+                      }
+                    });
+                  });
+
+                  // merge hits into slices
+
+                  function mergeIntoSlice(text, start, end, index) {
+                    var item = index[index.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    var hits = [];
+                    var searchTextCountInSlice = 0;
+                    while (position + word.length <= end && index.length != 0) {
+                      if (word === searchText) {
+                        searchTextCountInSlice++;
+                      }
+                      hits.push({position: position, length: word.length});
+                      var wordEnd = position + word.length;
+
+                      // move to next position of hit
+
+                      index.pop();
+                      while (index.length != 0) {
+                        item = index[index.length - 1];
+                        position = item.position;
+                        word = item.word;
+                        if (wordEnd > position) {
+                          index.pop();
+                        } else {
+                          break;
+                        }
+                      }
+                    }
+                    searchTextCount += searchTextCountInSlice;
+                    return {
+                      hits: hits,
+                      start: start,
+                      end: end,
+                      searchTextCount: searchTextCountInSlice
+                    };
+                  }
+
+                  var slicesOfTitle = [];
+                  if (indexOfTitle.length != 0) {
+                    slicesOfTitle.push(mergeIntoSlice(title, 0, title.length, indexOfTitle));
+                  }
+
+                  var slicesOfContent = [];
+                  while (indexOfContent.length != 0) {
+                    var item = indexOfContent[indexOfContent.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    // cut out 100 characters
+                    var start = position - 20;
+                    var end = position + 80;
+                    if(start < 0){
+                      start = 0;
+                    }
+                    if (end < position + word.length) {
+                      end = position + word.length;
+                    }
+                    if(end > content.length){
+                      end = content.length;
+                    }
+                    slicesOfContent.push(mergeIntoSlice(content, start, end, indexOfContent));
+                  }
+
+                  // sort slices in content by search text's count and hits' count
+
+                  slicesOfContent.sort(function (sliceLeft, sliceRight) {
+                    if (sliceLeft.searchTextCount !== sliceRight.searchTextCount) {
+                      return sliceRight.searchTextCount - sliceLeft.searchTextCount;
+                    } else if (sliceLeft.hits.length !== sliceRight.hits.length) {
+                      return sliceRight.hits.length - sliceLeft.hits.length;
+                    } else {
+                      return sliceLeft.start - sliceRight.start;
+                    }
+                  });
+
+                  // select top N slices in content
+
+                  var upperBound = parseInt('1');
+                  if (upperBound >= 0) {
+                    slicesOfContent = slicesOfContent.slice(0, upperBound);
+                  }
+
+                  // highlight title and content
+
+                  function highlightKeyword(text, slice) {
+                    var result = '';
+                    var prevEnd = slice.start;
+                    slice.hits.forEach(function (hit) {
+                      result += text.substring(prevEnd, hit.position);
+                      var end = hit.position + hit.length;
+                      result += '<b class="search-keyword">' + text.substring(hit.position, end) + '</b>';
+                      prevEnd = end;
+                    });
+                    result += text.substring(prevEnd, slice.end);
+                    return result;
+                  }
+
+                  var resultItem = '';
+
+                  if (slicesOfTitle.length != 0) {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + highlightKeyword(title, slicesOfTitle[0]) + "</a>";
+                  } else {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + title + "</a>";
+                  }
+
+                  slicesOfContent.forEach(function (slice) {
+                    resultItem += "<a href='" + articleUrl + "'>" +
+                      "<p class=\"search-result\">" + highlightKeyword(content, slice) +
+                      "...</p>" + "</a>";
+                  });
+
+                  resultItem += "</li>";
+                  resultItems.push({
+                    item: resultItem,
+                    searchTextCount: searchTextCount,
+                    hitCount: hitCount,
+                    id: resultItems.length
+                  });
+                }
+              })
+            };
+            if (keywords.length === 1 && keywords[0] === "") {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>'
+            } else if (resultItems.length === 0) {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>'
+            } else {
+              resultItems.sort(function (resultLeft, resultRight) {
+                if (resultLeft.searchTextCount !== resultRight.searchTextCount) {
+                  return resultRight.searchTextCount - resultLeft.searchTextCount;
+                } else if (resultLeft.hitCount !== resultRight.hitCount) {
+                  return resultRight.hitCount - resultLeft.hitCount;
+                } else {
+                  return resultRight.id - resultLeft.id;
+                }
+              });
+              var searchResultList = '<ul class=\"search-result-list\">';
+              resultItems.forEach(function (result) {
+                searchResultList += result.item;
+              })
+              searchResultList += "</ul>";
+              resultContent.innerHTML = searchResultList;
+            }
+          }
+
+          if ('auto' === 'auto') {
+            input.addEventListener('input', inputEventFunction);
+          } else {
+            $('.search-icon').click(inputEventFunction);
+            input.addEventListener('keypress', function (event) {
+              if (event.keyCode === 13) {
+                inputEventFunction();
+              }
+            });
+          }
+
+          // remove loading animation
+          $(".local-search-pop-overlay").remove();
+          $('body').css('overflow', '');
+
+          proceedsearch();
+        }
+      });
+    }
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched === false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+    });
+
+    $('.popup-btn-close').click(onPopupClose);
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+    $(document).on('keyup', function (event) {
+      var shouldDismissSearchPopup = event.which === 27 &&
+        $('.search-popup').is(':visible');
+      if (shouldDismissSearchPopup) {
+        onPopupClose();
+      }
+    });
+  </script>
+
+
+
+
+
+  
+
+  
+  <script src="https://cdn1.lncld.net/static/js/av-core-mini-0.6.1.js"></script>
+  <script>AV.initialize("rJnGob3PxvKfdhX3wADmA1Gc-gzGzoHsz", "yshXlu8LmR4EU0zBoaui1kMz");</script>
+  <script>
+    function showTime(Counter) {
+      var query = new AV.Query(Counter);
+      var entries = [];
+      var $visitors = $(".leancloud_visitors");
+
+      $visitors.each(function () {
+        entries.push( $(this).attr("id").trim() );
+      });
+
+      query.containedIn('url', entries);
+      query.find()
+        .done(function (results) {
+          var COUNT_CONTAINER_REF = '.leancloud-visitors-count';
+
+          if (results.length === 0) {
+            $visitors.find(COUNT_CONTAINER_REF).text(0);
+            return;
+          }
+
+          for (var i = 0; i < results.length; i++) {
+            var item = results[i];
+            var url = item.get('url');
+            var time = item.get('time');
+            var element = document.getElementById(url);
+
+            $(element).find(COUNT_CONTAINER_REF).text(time);
+          }
+          for(var i = 0; i < entries.length; i++) {
+            var url = entries[i];
+            var element = document.getElementById(url);
+            var countSpan = $(element).find(COUNT_CONTAINER_REF);
+            if( countSpan.text() == '') {
+              countSpan.text(0);
+            }
+          }
+        })
+        .fail(function (object, error) {
+          console.log("Error: " + error.code + " " + error.message);
+        });
+    }
+
+    function addCount(Counter) {
+      var $visitors = $(".leancloud_visitors");
+      var url = $visitors.attr('id').trim();
+      var title = $visitors.attr('data-flag-title').trim();
+      var query = new AV.Query(Counter);
+
+      query.equalTo("url", url);
+      query.find({
+        success: function(results) {
+          if (results.length > 0) {
+            var counter = results[0];
+            counter.fetchWhenSave(true);
+            counter.increment("time");
+            counter.save(null, {
+              success: function(counter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(counter.get('time'));
+              },
+              error: function(counter, error) {
+                console.log('Failed to save Visitor num, with error message: ' + error.message);
+              }
+            });
+          } else {
+            var newcounter = new Counter();
+            /* Set ACL */
+            var acl = new AV.ACL();
+            acl.setPublicReadAccess(true);
+            acl.setPublicWriteAccess(true);
+            newcounter.setACL(acl);
+            /* End Set ACL */
+            newcounter.set("title", title);
+            newcounter.set("url", url);
+            newcounter.set("time", 1);
+            newcounter.save(null, {
+              success: function(newcounter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(newcounter.get('time'));
+              },
+              error: function(newcounter, error) {
+                console.log('Failed to create');
+              }
+            });
+          }
+        },
+        error: function(error) {
+          console.log('Error:' + error.code + " " + error.message);
+        }
+      });
+    }
+
+    $(function() {
+      var Counter = AV.Object.extend("Counter");
+      if ($('.leancloud_visitors').length == 1) {
+        addCount(Counter);
+      } else if ($('.post-title-link').length > 1) {
+        showTime(Counter);
+      }
+    });
+  </script>
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
