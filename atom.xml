@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://blog.qczyl.club/"/>
-  <updated>2017-06-30T08:57:46.000Z</updated>
+  <updated>2017-07-03T06:38:52.000Z</updated>
   <id>http://blog.qczyl.club/</id>
   
   <author>
@@ -16,9 +16,64 @@
   <generator uri="http://hexo.io/">Hexo</generator>
   
   <entry>
+    <title>《Objective-C高级编程 iOS与OS X多线程和内存管理》读书笔记 GCD篇</title>
+    <link href="http://blog.qczyl.club/2017/07/03/%E3%80%8AObjective-C%E9%AB%98%E7%BA%A7%E7%BC%96%E7%A8%8B%20iOS%E4%B8%8EOS%20X%E5%A4%9A%E7%BA%BF%E7%A8%8B%E5%92%8C%E5%86%85%E5%AD%98%E7%AE%A1%E7%90%86%E3%80%8B%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0%20GCD%E7%AF%87/"/>
+    <id>http://blog.qczyl.club/2017/07/03/《Objective-C高级编程 iOS与OS X多线程和内存管理》读书笔记 GCD篇/</id>
+    <published>2017-07-03T06:14:08.000Z</published>
+    <updated>2017-07-03T06:38:52.000Z</updated>
+    
+    <content type="html"><![CDATA[<p>这篇文章主要给大家讲解一下GCD的平时不太常用的API，以及文末会贴出GCD定时器的一个小例子。</p>
+<h2 id="1-GCD的API"><a href="#1-GCD的API" class="headerlink" title="1.GCD的API"></a>1.GCD的API</h2><h3 id="1-1-Dispatch-Queue"><a href="#1-1-Dispatch-Queue" class="headerlink" title="1.1 Dispatch Queue"></a>1.1 Dispatch Queue</h3><p>要谈GCD，就一定要了解<code>Dispatch Queue</code>（执行处理的等待队列）。<br><code>Dispatch Queue</code>按照追加的顺序（先进先出FIFO，First-In-First-Out）执行处理。<br>另外在执行处理是存在两种<code>Dispatch Queue</code>，一种是等待现在执行中处理的<code>Serial Dispatch Queue</code>，另一种是不等待现在执行中处理的<code>Concurrent Dispatch Queue</code>。</p>
+<p><img src="http://ocga9x543.bkt.clouddn.com/WX20170703-111143.png" alt=""></p>
+<h3 id="1-2-dispatch-queue-create"><a href="#1-2-dispatch-queue-create" class="headerlink" title="1.2 dispatch_queue_create"></a>1.2 dispatch_queue_create</h3><p>由于平时在使用时，我们大部分都是使用系统提供的<code>Main Dispatch Queue</code>和<code>Global Dispatch Queue</code>。<br>所以关于<code>dispatch_queue_create</code>API，这里只说两点：</p>
+<ul>
+<li>通过<code>dispatch_queue_create</code>函数生成的<code>Dispatch Queue</code>在使用结束后要通过<code>dispatch_release</code>函数释放。</li>
+<li>如果生成过多的线程，就会消耗大量内存，大幅度降低系统的响应性能。而使用系统提供的<code>Global Dispatch Queue</code>则不用担心这个问题。所以除非必要，其他情况建议使用系统提供的<code>Dispatch Queue</code>。</li>
+</ul>
+<h3 id="1-3-dispatch-set-target-queue"><a href="#1-3-dispatch-set-target-queue" class="headerlink" title="1.3 dispatch_set_target_queue"></a>1.3 dispatch_set_target_queue</h3><p>使用<code>dispatch_queue_create</code>函数生成的<code>Dispatch Queue</code>，都使用的是与系统提供的<code>Global Dispatch Queue</code>的默认优先级相同的优先级。而要变更生成的执行优先级的话就要使用<code>dispatch_set_target_queue</code>函数。</p>
+<p>在后台执行动作处理的<code>Serial Dispatch Queue</code>的生成方法如下:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">dispatch_queue_t mySerialDispatchQueue = dispatch_queue_create(&quot;com.example.gcd.mySerialDispatchQueue&quot;, NULL);</div><div class="line">   dispatch_queue_t globalDispatchQueueBackground = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_BACKGROUND, 0);</div><div class="line">   dispatch_set_target_queue(mySerialDispatchQueue, globalDispatchQueueBackground);</div></pre></td></tr></table></figure>
+<h3 id="1-3-dispatch-after"><a href="#1-3-dispatch-after" class="headerlink" title="1.3 dispatch_after"></a>1.3 dispatch_after</h3><p><code>dispatch_after</code>这里只说一点，<code>dispatch_after</code>函数并不是在指定时间后执行处理，而只是在指定时间追加处理到<code>Dispatch Queue</code>。</p>
+<p>因为<code>Main Dispatch Queue</code>在主线程的<code>RunLoop</code>中执行，所以在比如每隔1/60秒执行的<code>RunLoop</code>中，Block最快在 3 秒后执行，最慢在 3 秒 + 1/60 秒后执行，并且在<code>Main Dispatch Queue</code>有大量处理追加或主线程的处理本身有延迟时，这个时间会更长。</p>
+<p>所以该函数在有严格时间要求的情况下使用会出现问题，但是只是想大致延迟执行处理，该函数是非常有效的。</p>
+<h3 id="1-4-dispatch-barrier-async"><a href="#1-4-dispatch-barrier-async" class="headerlink" title="1.4 dispatch_barrier_async"></a>1.4 dispatch_barrier_async</h3><p>在访问数据库或文件时，使用多线程可能会产生数据竞争的问题，当然使用<code>Serial Dispatch Queue</code>可避免数据竞争。</p>
+<p>但是如果读取处理只是与读取处理并行执行，那么多个并行执行就不会发生问题。也就是说为了高效率的进行访问，读取处理追加到<code>Concurrent Dispatch Queue</code>，写入处理在任一读取处理没有执行的状态下，追加到<code>Serial Dispatch Queue</code>中即可（在写入处理结束之前，读取处理不可执行）。</p>
+<p>使用<code>dispatch_barrier_async</code>便可解决这个问题。<code>dispatch_barrier_async</code>函数会等待追加到<code>Concurrent Dispatch Queue</code>上的并行执行的处理全部结束后，再将制定的处理追加到该<code>Concurrent Dispatch Queue</code>中。然后在由<code>dispatch_barrier_async</code>函数追加的处理执行完毕后，<code>Concurrent Dispatch Queue</code>才恢复为一般的动作，追加到该<code>Concurrent Dispatch Queue</code>的处理又开始并行执行。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line">dispatch_async(queue, blk0_for_reading);</div><div class="line">dispatch_async(queue, blk1_for_reading);</div><div class="line">dispatch_async(queue, blk2_for_reading);</div><div class="line">dispatch_async(queue, blk3_for_reading);</div><div class="line">dispatch_barrier_async(queue, blk_for_writing);</div><div class="line">dispatch_async(queue, blk4_for_reading);</div><div class="line">dispatch_async(queue, blk5_for_reading);</div><div class="line">dispatch_async(queue, blk6_for_reading);</div><div class="line">dispatch_async(queue, blk7_for_reading);</div></pre></td></tr></table></figure>
+<p>如上所示，使用方法非常简单。仅使用<code>dispatch_barrier_async</code>函数代替<code>dispatch_async</code>函数即可。</p>
+<p><img src="http://ocga9x543.bkt.clouddn.com/WX20170703-115939.png" alt=""></p>
+<h3 id="1-5-dispatch-apply"><a href="#1-5-dispatch-apply" class="headerlink" title="1.5 dispatch_apply"></a>1.5 dispatch_apply</h3><p><code>dispatch_apply</code>函数是<code>dispatch_sync</code>函数和<code>Dispatch Group</code>的关联API。该函数按指定的次数将指定的Block追加到指定的<code>Dispatch Queue</code>中，并等待全部处理执行结束。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">dispatch_queue_t queue = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0);</div><div class="line">dispatch_apply(10, queue, ^(size_t index) &#123;</div><div class="line">    NSLog(@&quot;%zu&quot;, index);</div><div class="line">&#125;);</div><div class="line">NSLog(@&quot;done&quot;);</div></pre></td></tr></table></figure>
+<p>例如，该源代码的执行结果为：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line">4</div><div class="line">1</div><div class="line">0</div><div class="line">3</div><div class="line">5</div><div class="line">2</div><div class="line">6</div><div class="line">8</div><div class="line">9</div><div class="line">7</div><div class="line">done</div></pre></td></tr></table></figure>
+<p>因为在<code>Global Dispatch Queue</code>中执行处理，所以各个处理的执行时间不定。但是输出结果中最后的done必定在最后的位置上。这是因为<code>dispatch_apply</code>函数会等待全部处理执行结束。</p>
+<h3 id="1-6-Dispatch-I-O"><a href="#1-6-Dispatch-I-O" class="headerlink" title="1.6 Dispatch I/O"></a>1.6 Dispatch I/O</h3><p>大家可能想过，在读取较大文件时，如果将文件分成合适的大小并使用<code>Global Dispatch Queue</code>并列读取的话，应该会比一般的读取速度快不少。能实现这一功能的就是<code>Dispatch I/O</code>和<code>Dispatch Data</code>。</p>
+<p><img src="http://ocga9x543.bkt.clouddn.com/WX20170703-140234.png" alt=""></p>
+<p>如果想提高文件读取速度，可以尝试使用<code>Dispatch I/O</code>。</p>
+<h3 id="1-7-Dispatch-Source"><a href="#1-7-Dispatch-Source" class="headerlink" title="1.7 Dispatch Source"></a>1.7 Dispatch Source</h3><p>GCD中出了主要的<code>Dispatch Queue</code>外，还有不太引人注目的<code>Dispatch Source</code>。它是BSD系内核惯有功能<code>kqueue</code>的包装。<br><code>kqueue</code>是在XNU内核中发生各种事件时，在应用程序编程方执行处理的技术。其CPU负荷非常小，尽量不占用资源。<code>kqueue</code>可以说是应用程序处理XNU内核中发生的各种事件的方法中最优秀的一种。</p>
+<p><code>Dispatch Source</code>可以处理一下事件。</p>
+<p><img src="http://ocga9x543.bkt.clouddn.com/WX20170703-141244.png" alt=""></p>
+<p>在使用NSTimer做定时器的时候，大家应该都知道如果使用不当，会出现内存泄漏的问题。<br>而如果作为一个封装的组件来说，就需要将NSTimer属性暴露出来，在控制器销毁时，调用NSTimer的invalidate方法。如果忘记的话就会内存泄漏！</p>
+<p>但是使用<code>DISPATCH_SOUTCE_TYPE_TIMER</code>的话就不需要担心这个问题了。</p>
+<p><a href="https://github.com/qcyl/GCD-Timer-Demo" target="_blank" rel="external">此处</a>为使用了<code>DISPATCH_SOUTCE_TYPE_TIMER</code>的定时器的小demo。</p>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;这篇文章主要给大家讲解一下GCD的平时不太常用的API，以及文末会贴出GCD定时器的一个小例子。&lt;/p&gt;
+&lt;h2 id=&quot;1-GCD的API&quot;&gt;&lt;a href=&quot;#1-GCD的API&quot; class=&quot;headerlink&quot; title=&quot;1.GCD的API&quot;&gt;&lt;/a&gt;1.G
+    
+    </summary>
+    
+      <category term="读书笔记" scheme="http://blog.qczyl.club/categories/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/"/>
+    
+    
+  </entry>
+  
+  <entry>
     <title>《Objective-C高级编程 iOS与OS X多线程和内存管理》读书笔记 Block篇</title>
-    <link href="http://blog.qczyl.club/2017/06/29/note_block/"/>
-    <id>http://blog.qczyl.club/2017/06/29/note_block/</id>
+    <link href="http://blog.qczyl.club/2017/06/29/%E3%80%8AObjective-C%E9%AB%98%E7%BA%A7%E7%BC%96%E7%A8%8B%20iOS%E4%B8%8EOS%20X%E5%A4%9A%E7%BA%BF%E7%A8%8B%E5%92%8C%E5%86%85%E5%AD%98%E7%AE%A1%E7%90%86%E3%80%8B%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0%20Block%E7%AF%87/"/>
+    <id>http://blog.qczyl.club/2017/06/29/《Objective-C高级编程 iOS与OS X多线程和内存管理》读书笔记 Block篇/</id>
     <published>2017-06-28T16:00:00.000Z</published>
     <updated>2017-06-30T08:57:46.000Z</updated>
     
@@ -82,8 +137,8 @@
   
   <entry>
     <title>《Objective-C高级编程 iOS与OS X多线程和内存管理》读书笔记 自动引用计数篇</title>
-    <link href="http://blog.qczyl.club/2017/06/28/note_arc/"/>
-    <id>http://blog.qczyl.club/2017/06/28/note_arc/</id>
+    <link href="http://blog.qczyl.club/2017/06/28/%E3%80%8AObjective-C%E9%AB%98%E7%BA%A7%E7%BC%96%E7%A8%8B%20iOS%E4%B8%8EOS%20X%E5%A4%9A%E7%BA%BF%E7%A8%8B%E5%92%8C%E5%86%85%E5%AD%98%E7%AE%A1%E7%90%86%E3%80%8B%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0%20%E8%87%AA%E5%8A%A8%E5%BC%95%E7%94%A8%E8%AE%A1%E6%95%B0%E7%AF%87/"/>
+    <id>http://blog.qczyl.club/2017/06/28/《Objective-C高级编程 iOS与OS X多线程和内存管理》读书笔记 自动引用计数篇/</id>
     <published>2017-06-27T17:00:00.000Z</published>
     <updated>2017-06-30T08:54:36.000Z</updated>
     
@@ -177,8 +232,8 @@
   
   <entry>
     <title>Hexo+GitHub Pages搭建个人博客</title>
-    <link href="http://blog.qczyl.club/2017/06/28/create_blog/"/>
-    <id>http://blog.qczyl.club/2017/06/28/create_blog/</id>
+    <link href="http://blog.qczyl.club/2017/06/28/Hexo+GitHub%20Pages%E6%90%AD%E5%BB%BA%E4%B8%AA%E4%BA%BA%E5%8D%9A%E5%AE%A2/"/>
+    <id>http://blog.qczyl.club/2017/06/28/Hexo+GitHub Pages搭建个人博客/</id>
     <published>2017-06-27T16:00:00.000Z</published>
     <updated>2017-06-30T08:54:50.000Z</updated>
     
