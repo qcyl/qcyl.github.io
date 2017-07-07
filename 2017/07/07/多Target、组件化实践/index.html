@@ -95,18 +95,21 @@
 
 
 
-<meta name="description" content="导语： 顾名思义，自动引用计数（ARC，Automatic Reference Counting）是指内存管理中对引用采取自动计数的技术。以下摘自苹果的官方说明。 在Objective-C 中采用Automatic Reference Counting（ARC）机制，让编译器来进行内存管理。在新一代Apple LLVM 编译器中设置ARC 为有效状态，就无需再次键入retain 或者release">
+<meta name="description" content="前言因为公司项目的特性：每个城市对应一个APP，每个APP又有着或多或少的区别； 所以开发人员面临的问题是：开发多个相似APP。 解决方案先说一下之前的解决方案：将所有APP整合为一个大的项目，通过修改配置文件，调用不同APP所需代码。 这样确实是解决了问题，但是方案肯定是不好的。 这样做的缺点：  任何一个APP都需要加载所有APP的文件，资源 每次查看不同城市的APP都需要修改配置文件，同时还">
 <meta property="og:type" content="article">
-<meta property="og:title" content="《Objective-C高级编程 iOS与OS X多线程和内存管理》读书笔记 自动引用计数篇">
-<meta property="og:url" content="http://blog.qczyl.club/2017/06/28/《Objective-C高级编程 iOS与OS X多线程和内存管理》读书笔记 自动引用计数篇/index.html">
+<meta property="og:title" content="多Target、组件化实践">
+<meta property="og:url" content="http://blog.qczyl.club/2017/07/07/多Target、组件化实践/index.html">
 <meta property="og:site_name" content="qczyl&#39;s Blog">
-<meta property="og:description" content="导语： 顾名思义，自动引用计数（ARC，Automatic Reference Counting）是指内存管理中对引用采取自动计数的技术。以下摘自苹果的官方说明。 在Objective-C 中采用Automatic Reference Counting（ARC）机制，让编译器来进行内存管理。在新一代Apple LLVM 编译器中设置ARC 为有效状态，就无需再次键入retain 或者release">
-<meta property="og:image" content="http://upload\-images.jianshu.io/upload\_images/1787055\-83eef1a8a0494bb1.jpg?imageMogr2/auto\-orient/strip%7CimageView2/2/w/1240">
-<meta property="og:updated_time" content="2017-06-30T08:54:36.000Z">
+<meta property="og:description" content="前言因为公司项目的特性：每个城市对应一个APP，每个APP又有着或多或少的区别； 所以开发人员面临的问题是：开发多个相似APP。 解决方案先说一下之前的解决方案：将所有APP整合为一个大的项目，通过修改配置文件，调用不同APP所需代码。 这样确实是解决了问题，但是方案肯定是不好的。 这样做的缺点：  任何一个APP都需要加载所有APP的文件，资源 每次查看不同城市的APP都需要修改配置文件，同时还">
+<meta property="og:image" content="http://ocga9x543.bkt.clouddn.com/WX20170707-113040.png">
+<meta property="og:image" content="http://ocga9x543.bkt.clouddn.com/WX20170707-150056.png">
+<meta property="og:image" content="http://ocga9x543.bkt.clouddn.com/WX20170707-150127.png">
+<meta property="og:image" content="http://ocga9x543.bkt.clouddn.com/WX20170707-152510.png">
+<meta property="og:updated_time" content="2017-07-07T08:02:52.000Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="《Objective-C高级编程 iOS与OS X多线程和内存管理》读书笔记 自动引用计数篇">
-<meta name="twitter:description" content="导语： 顾名思义，自动引用计数（ARC，Automatic Reference Counting）是指内存管理中对引用采取自动计数的技术。以下摘自苹果的官方说明。 在Objective-C 中采用Automatic Reference Counting（ARC）机制，让编译器来进行内存管理。在新一代Apple LLVM 编译器中设置ARC 为有效状态，就无需再次键入retain 或者release">
-<meta name="twitter:image" content="http://upload\-images.jianshu.io/upload\_images/1787055\-83eef1a8a0494bb1.jpg?imageMogr2/auto\-orient/strip%7CimageView2/2/w/1240">
+<meta name="twitter:title" content="多Target、组件化实践">
+<meta name="twitter:description" content="前言因为公司项目的特性：每个城市对应一个APP，每个APP又有着或多或少的区别； 所以开发人员面临的问题是：开发多个相似APP。 解决方案先说一下之前的解决方案：将所有APP整合为一个大的项目，通过修改配置文件，调用不同APP所需代码。 这样确实是解决了问题，但是方案肯定是不好的。 这样做的缺点：  任何一个APP都需要加载所有APP的文件，资源 每次查看不同城市的APP都需要修改配置文件，同时还">
+<meta name="twitter:image" content="http://ocga9x543.bkt.clouddn.com/WX20170707-113040.png">
 
 
 
@@ -134,13 +137,13 @@
 
 
 
-  <link rel="canonical" href="http://blog.qczyl.club/2017/06/28/《Objective-C高级编程 iOS与OS X多线程和内存管理》读书笔记 自动引用计数篇/"/>
+  <link rel="canonical" href="http://blog.qczyl.club/2017/07/07/多Target、组件化实践/"/>
 
 
 
 
 
-  <title>《Objective-C高级编程 iOS与OS X多线程和内存管理》读书笔记 自动引用计数篇 | qczyl's Blog</title>
+  <title>多Target、组件化实践 | qczyl's Blog</title>
   
 
 
@@ -303,7 +306,7 @@
   
 
   <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-    <link itemprop="mainEntityOfPage" href="http://blog.qczyl.club/2017/06/28/《Objective-C高级编程 iOS与OS X多线程和内存管理》读书笔记 自动引用计数篇/">
+    <link itemprop="mainEntityOfPage" href="http://blog.qczyl.club/2017/07/07/多Target、组件化实践/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="qczyl">
@@ -320,7 +323,7 @@
 
         
         
-          <h2 class="post-title" itemprop="name headline">《Objective-C高级编程 iOS与OS X多线程和内存管理》读书笔记 自动引用计数篇</h2>
+          <h2 class="post-title" itemprop="name headline">多Target、组件化实践</h2>
         
 
         <div class="post-meta">
@@ -332,8 +335,8 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-06-28T01:00:00+08:00">
-                2017-06-28
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-07-07T14:49:51+08:00">
+                2017-07-07
               </time>
             
 
@@ -355,8 +358,8 @@
               
               
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/读书笔记/" itemprop="url" rel="index">
-                    <span itemprop="name">读书笔记</span>
+                  <a href="/categories/iOS/" itemprop="url" rel="index">
+                    <span itemprop="name">iOS</span>
                   </a>
                 </span>
 
@@ -373,7 +376,7 @@
                 <span class="post-meta-item-icon">
                   <i class="fa fa-comment-o"></i>
                 </span>
-                <a class="cloud-tie-join-count" href="/2017/06/28/《Objective-C高级编程 iOS与OS X多线程和内存管理》读书笔记 自动引用计数篇/#comments" itemprop="discussionUrl">
+                <a class="cloud-tie-join-count" href="/2017/07/07/多Target、组件化实践/#comments" itemprop="discussionUrl">
                   <span class="post-comments-count join-count" itemprop="commentCount"></span>
                 </a>
               </span>
@@ -382,7 +385,7 @@
 
           
           
-             <span id="/2017/06/28/《Objective-C高级编程 iOS与OS X多线程和内存管理》读书笔记 自动引用计数篇/" class="leancloud_visitors" data-flag-title="《Objective-C高级编程 iOS与OS X多线程和内存管理》读书笔记 自动引用计数篇">
+             <span id="/2017/07/07/多Target、组件化实践/" class="leancloud_visitors" data-flag-title="多Target、组件化实践">
                <span class="post-meta-divider">|</span>
                <span class="post-meta-item-icon">
                  <i class="fa fa-eye"></i>
@@ -410,80 +413,45 @@
       
 
       
-        <h4 id="导语："><a href="#导语：" class="headerlink" title="导语："></a>导语：</h4><blockquote>
-<p>顾名思义，自动引用计数（ARC，Automatic Reference Counting）是指内存管理中对引用采取自动计数的技术。以下摘自苹果的官方说明。</p>
-<p>在Objective-C 中采用Automatic Reference Counting（ARC）机制，让编译器来进行内存管理。在新一代Apple LLVM 编译器中设置ARC 为有效状态，就无需再次键入retain 或者release 代码，这在降低程序崩溃、内存泄漏等风险的同时，很大程度上减少了开发程序的工作量。编译器完全清楚目标对象，并能立刻释放那些不再被使用的对象。如此一来，应用程序将具有可预测性，且能流畅运行，速度也将大幅提升。</p>
-</blockquote>
-<h3 id="一、内存管理的思考方式"><a href="#一、内存管理的思考方式" class="headerlink" title="一、内存管理的思考方式"></a>一、内存管理的思考方式</h3><blockquote>
-<p>看到”引用计数”这个名称，我们便会不自觉地联想到”某处有某物多少多少”而将注意力放到计数上。但其实，更加客观、正确的思考方式是：</p>
-<ul>
-<li>自己生成的对象，自己所持有。</li>
-<li>非自己生成的对象，自己也能持有。</li>
-<li>不再需要 自己持有的对象 时释放。</li>
-<li>非自己持有的对象无法释放。</li>
-</ul>
-</blockquote>
-<h5 id="1-自己生成的对象，自己所持有"><a href="#1-自己生成的对象，自己所持有" class="headerlink" title="1. 自己生成的对象，自己所持有"></a>1. 自己生成的对象，自己所持有</h5><p>使用”以下名称开头”的方法名意味着自己生成的对象只有自己持有：</p>
-<ul>
-<li>alloc</li>
-<li>new</li>
-<li>copy</li>
-<li>mutableCopy</li>
-</ul>
-<p>注：”以下名称开头”包括 allocMyObject，但不包括 allocmyobject，需要遵循驼峰式命名规范</p>
-<h5 id="2-非自己生成的对象，自己也能持有"><a href="#2-非自己生成的对象，自己也能持有" class="headerlink" title="2. 非自己生成的对象，自己也能持有"></a>2. 非自己生成的对象，自己也能持有</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">例：</div><div class="line">    // 取得非自己生成的对象</div><div class="line">    id obj = [NSMutableArray array];</div><div class="line">    // 自己持有</div><div class="line">    [obj retain];</div></pre></td></tr></table></figure>
-<p>注：一般情况下，调用这类方法无需自己持有，在NSMutableArray的array方法中，<br>已将生成的对象注册到了自动释放池，所以无需obj持有也不会释放（注释为个人理解，如有错误请指出）</p>
-<h5 id="3-不再需要-自己持有对象-时释放"><a href="#3-不再需要-自己持有对象-时释放" class="headerlink" title="3. 不再需要 自己持有对象 时释放"></a>3. 不再需要 自己持有对象 时释放</h5><p>用 alloc/new/copy/mutableCopy “开头”的方法生成并持有的对象，或者用 retain 方法持有的对象，一旦不再需要，务必要用release方法进行释放。</p>
-<h5 id="4-非自己持有的对象无法释放"><a href="#4-非自己持有的对象无法释放" class="headerlink" title="4. 非自己持有的对象无法释放"></a>4. 非自己持有的对象无法释放</h5><p>对于用alloc/new/copy/mutableCopy 方法生成并持有的对象，<br>或是用retain方法持有的对象，由于持有者是自己，所以在不需要该对象时需要将其释放。<br>而由此以外所得到的对象绝对不能释放。倘若在应用程序中释放了非自己所持有的对象就会造成崩溃。</p>
-<h3 id="二、ARC（重点）"><a href="#二、ARC（重点）" class="headerlink" title="二、ARC（重点）"></a>二、ARC（重点）</h3><blockquote>
-<p>“引用计数式内存管理”的本质部分在ARC中并没有改变。就像”自动引用计数”这个名称表示的那样，ARC只是自动的帮助我们处理”引用计数”的相关部分</p>
-</blockquote>
-<h4 id="2-1-所有权修饰符"><a href="#2-1-所有权修饰符" class="headerlink" title="2.1 所有权修饰符"></a>2.1 所有权修饰符</h4><ul>
-<li>__strong修饰符</li>
-<li>__weak修饰符</li>
-<li>__unsafe_unretained修饰符</li>
-<li>__autoreleasing修饰符</li>
-</ul>
-<h5 id="2-1-1-strong修饰符"><a href="#2-1-1-strong修饰符" class="headerlink" title="2.1.1 __strong修饰符"></a>2.1.1 __strong修饰符</h5><p>__strong修饰符是id类型和对象类型默认的所有权修饰符。<br>如”strong”这个名称所示，__strong修饰符表示对对象的”强引用”(持有对象)。<br>持有强引用的变量在超出其作用域时被废弃，随着强引用的失效，引用的对象会随之释放。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div></pre></td><td class="code"><pre><div class="line">&#123;</div><div class="line">    /*</div><div class="line">     *  自己生成并持有对象</div><div class="line">     */</div><div class="line">    id __strong obj = [[NSObject alloc] init];</div><div class="line">    /*</div><div class="line">     *  因为变量obj为强引用，</div><div class="line">     *  所以自己持有对象</div><div class="line">     */</div><div class="line">&#125;</div><div class="line">    /*</div><div class="line">     *  因为变量obj超出其作用域，强引用失效，</div><div class="line">     *  所以自动的释放自己持有的对象。</div><div class="line">     *  对象的所有者不存在，因此废弃该对象。</div><div class="line">     */</div></pre></td></tr></table></figure>
-<h5 id="2-1-2-weak修饰符"><a href="#2-1-2-weak修饰符" class="headerlink" title="2.1.2 __weak修饰符"></a>2.1.2 __weak修饰符</h5><p>大家应该都知道，如果只是用__strong修饰符的话必然会发生”循环引用”的问题。<br>而__weak修饰符就可以避免这一问题。<br>__weak修饰符与__strong修饰符相反，提供”弱引用”(不持有对象)。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div></pre></td><td class="code"><pre><div class="line">&#123;</div><div class="line">    /*</div><div class="line">     *  自己生成并持有对象</div><div class="line">     */</div><div class="line">    id __strong obj0 = [[NSObject alloc] init];</div><div class="line">    /*</div><div class="line">     *  因为变量obj为强引用，</div><div class="line">     *  所以自己持有对象</div><div class="line">     */</div><div class="line">    id __weak obj1 = obj0;</div><div class="line">    /*</div><div class="line">     *  obj1变量持有生成对象的弱引用</div><div class="line">     */</div><div class="line">&#125;</div><div class="line">    /*</div><div class="line">     *  因为变量obj0超出其作用域，强引用失效，</div><div class="line">     *  所以自动的释放自己持有的对象。</div><div class="line">     *  对象的所有者不存在，因此废弃该对象。</div><div class="line">     */</div></pre></td></tr></table></figure>
-<p>__weak修饰符还有一个优点。在持有某对象的弱引用时，<br>若该对象被废弃，则此弱引用将自动失效且处于nil被赋值的状态。</p>
-<h5 id="2-1-3-unsafe-unretained修饰符（很少使用）"><a href="#2-1-3-unsafe-unretained修饰符（很少使用）" class="headerlink" title="2.1.3 __unsafe_unretained修饰符（很少使用）"></a>2.1.3 __unsafe_unretained修饰符（很少使用）</h5><p>__unsafe_unretained修饰符正如其名unsafe所示，是不安全的所有权修饰符。<br>尽管ARC式的内存管理是编译器的工作，但附有__unsafe_unretained修饰符<br>的变量不属于编译器的内存管理对象。这一点在使用时要注意。<br>附有__unsafe_unretained修饰符的变量同附有__weak修饰符的变量一样，<br>因为自己生成并持有的对象不能继续为自己所用，所以生成的对象会立即被释放。</p>
-<p>注：__unsafe_unretained修饰符在对象被废弃时不会主动赋值nil，所以会访问到”悬垂指针”，导致系统在个别运行情况下崩溃。</p>
-<h5 id="2-1-4-autoreleasing修饰符（虽然很少显式附加，但很多情况下都会使用，所以很重要）"><a href="#2-1-4-autoreleasing修饰符（虽然很少显式附加，但很多情况下都会使用，所以很重要）" class="headerlink" title="2.1.4 __autoreleasing修饰符（虽然很少显式附加，但很多情况下都会使用，所以很重要）"></a>2.1.4 __autoreleasing修饰符（虽然很少显式附加，但很多情况下都会使用，所以很重要）</h5><p>ARC无效时会像下面这样来使用：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">/* ARC无效 */</div><div class="line">NSAutoreleasePool *pool = [[NSAutoreleasePool alloc] init];</div><div class="line">id obj = [[NSObject alloc] init];</div><div class="line">[obj autorelease];</div><div class="line">[pool drain];</div></pre></td></tr></table></figure>
-<p>ARC有效时，该源码也能写成下面这样：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">@autoreleasepool &#123;</div><div class="line">    id __autoreleasing obj = [[NSObject alloc] init];</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<p>但是，显式的附加__autoreleasing修饰符同显式的附加__strong修饰符一样罕见。</p>
-<p>我们通过实例来看看为什么非显式地使用__autoreleasing修饰符也可以。</p>
-<p>1、编译器会检查方法名是否以alloc/new/copy/mutableCopy 开始，<br>如果不是则自动将返回值的对象注册到autoreleasepool。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div></pre></td><td class="code"><pre><div class="line">@autoreleasepool &#123;  </div><div class="line">/*  </div><div class="line"> * 取得非自己生成并持有的对象  </div><div class="line"> */  </div><div class="line">id __strong obj = [NSMutableArray array];  </div><div class="line">/*  </div><div class="line"> * 因为变量obj 为强引用，  </div><div class="line"> * 所以自己持有对象。  </div><div class="line"> *  </div><div class="line"> * 并且该对象  </div><div class="line"> * 由编译器判断其方法名后  </div><div class="line"> * 自动注册到autoreleasepool  </div><div class="line"> */  </div><div class="line">&#125; </div><div class="line">/*  </div><div class="line"> * 因为变量obj 超出其作用域，强引用失效，  </div><div class="line"> * 所以自动释放自己持有的对象。  </div><div class="line"> *  </div><div class="line"> * 同时，随着@autoreleasepool 块的结束，  </div><div class="line"> * 注册到autoreleasepool 中的  </div><div class="line"> * 所有对象被自动释放。  </div><div class="line"> *  </div><div class="line"> * 因为对象的所有者不存在，所以废弃对象。  </div><div class="line"> */</div></pre></td></tr></table></figure>
-<p>2、由于return使得对象变量超出其作用域，所以该强引用对应的自己持有的对象会被自动释放，<br>但该对象作为函数的返回值，编译器会自动将其注册到autoreleasepool。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">+ (id) array  </div><div class="line">&#123;  </div><div class="line">	id obj = [[NSMutableArray alloc] init];  </div><div class="line">	return obj;  </div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<p>3、以下为使用__weak修饰符的例子。虽然__weak修饰符是为了避免循环引用而使用的，<br>但在访问附有__weak修饰符的变量时，实际上必定要访问注册到autoreleasepool的对象。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">id __weak obj1 = obj0;  </div><div class="line">NSLog(@&quot;class=%@&quot;, [obj1 class]);</div></pre></td></tr></table></figure>
-<p>以下源代码与此相同：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">id __weak obj1 = obj0;  </div><div class="line">id __autoreleasing tmp = obj1;  </div><div class="line">NSLog(@&quot;class=%@&quot;, [tmp class]);</div></pre></td></tr></table></figure>
-<p>为什么在访问附有__weak修饰符的变量时必须访问注册到autoreleasepool 的对象呢？<br>这是因为__weak修饰符只持有对象的弱引用，而在访问引用对象的过程中，该对象有可能被废弃。<br>如果把要访问的对象注册到autoreleasepool中，那么在@autoreleasepool块结束之前都能确保该对象存在。<br>因此，在使用附有__weak修饰符的变量时就必定要使用注册到autoreleasepool中的对象。</p>
-<p>4、最后一个可非显式地使用__autoreleasing修饰符的例子，同前面讲述的id obj 和id __strongobj 完全一样。</p>
-<p>那么id 的指针id <em>obj 又如何呢？可以由id __strong obj 的例子类推出id __strong</em>obj 吗？</p>
-<p>其实，推出来的是id __autoreleasing <em>obj。<br>同样地，对象的指针NSObject **obj 便成为了NSObject </em> __autoreleasing *obj。<br>例：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">- (BOOL) performOperationWithError:(NSError **)error;</div></pre></td></tr></table></figure>
-<p>同前面讲述的一样，id的指针或对象的指针会默认附加上__autoreleasing 修饰符，所以等同于以下源代码。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">- (BOOL) performOperationWithError:(NSError * __autoreleasing *)error;</div></pre></td></tr></table></figure>
-<p>下面的源代码会产生编译器错误：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line">NSError *error = nil;  </div><div class="line">NSError **pError = &amp;error; </div><div class="line">赋值给对象指针时，所有权修饰符必须一致。</div><div class="line">error: initializing &apos;NSError *__autoreleasing *&apos; with an expression  </div><div class="line">of type &apos;NSError *__strong *&apos; changes retain/release properties of pointer  </div><div class="line">NSError **pError = &amp;error;  </div><div class="line">        ^           ~~~~~~ </div><div class="line">此时，对象指针必须附加__strong 修饰符。</div><div class="line">NSError *error = nil;  </div><div class="line">NSError * __strong *pError = &amp;error;  </div><div class="line">/* 编译正常 */</div></pre></td></tr></table></figure>
-<h4 id="2-2-属性"><a href="#2-2-属性" class="headerlink" title="2.2 属性"></a>2.2 属性</h4><p><img src="http://upload\-images.jianshu.io/upload\_images/1787055\-83eef1a8a0494bb1.jpg?imageMogr2/auto\-orient/strip%7CimageView2/2/w/1240" alt=""></p>
-<h2 id="问题"><a href="#问题" class="headerlink" title="问题"></a>问题</h2><p>1.如何防止block的内存泄漏？ </p>
-<ul>
-<li>答：使用__weak将self弱引用</li>
-</ul>
-<p>2.那为什么又要在block中将self使用__strong强引用呢？</p>
-<ul>
-<li>答案一：防止self在使用过程中被释放掉。（未读本书前的理解）</li>
-<li>答案二：既然使用__weak修饰的变量在使用时会自动加入到自动释放池，就保证了在使用过程中不会被释放掉。同时，由于使用__weak修饰的变量在每次使用时都会加入到一个自动释放池中，所以会消耗资源，但是使用__strong强引用一下就不会了。（读本书后的理解，不知道对不对，希望各位大神指点一下）</li>
-</ul>
+        <h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>因为公司项目的特性：每个城市对应一个APP，每个APP又有着或多或少的区别；</p>
+<p>所以开发人员面临的问题是：开发多个相似APP。</p>
+<h2 id="解决方案"><a href="#解决方案" class="headerlink" title="解决方案"></a>解决方案</h2><h3 id="先说一下之前的解决方案："><a href="#先说一下之前的解决方案：" class="headerlink" title="先说一下之前的解决方案："></a>先说一下之前的解决方案：</h3><p>将所有APP整合为一个大的项目，通过修改配置文件，调用不同APP所需代码。</p>
+<p>这样确实是解决了问题，但是方案肯定是不好的。</p>
+<p>这样做的缺点：</p>
+<ol>
+<li>任何一个APP都需要加载所有APP的文件，资源</li>
+<li>每次查看不同城市的APP都需要修改配置文件，同时还要修改服务器地址，很容易发生遗漏</li>
+<li>所有APP的icon，名称无法单独设置</li>
+</ol>
+<h3 id="下面是本文的解决方案："><a href="#下面是本文的解决方案：" class="headerlink" title="下面是本文的解决方案："></a>下面是本文的解决方案：</h3><ol>
+<li><p>通过Target管理不同城市的APP</p>
+<p> <img src="http://ocga9x543.bkt.clouddn.com/WX20170707-113040.png" alt=""></p>
+</li>
+<li><p>通过cocoapods私有库将项目组件化</p>
+<p> 大家可使用<a href="https://github.com/qcyl/module_config" target="_blank" rel="external">cocoapods私有库制作脚本</a>进行私有库制作。更多cocoapods私有库制作请<a href="http://www.jianshu.com/p/0c640821b36f" target="_blank" rel="external">点击</a>。</p>
+</li>
+<li>不同的Target导入不同的cocoapods私有仓库</li>
+</ol>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div></pre></td><td class="code"><pre><div class="line">project <span class="string">'SXC.xcodeproj'</span></div><div class="line"></div><div class="line">platform :ios, <span class="string">'8.0'</span></div><div class="line">use_frameworks!</div><div class="line"></div><div class="line">pod <span class="string">'QCRouter'</span>, :path =&gt; <span class="string">'../QCRouter'</span></div><div class="line"></div><div class="line">target <span class="string">'SXC_GX'</span> <span class="keyword">do</span></div><div class="line">  <span class="comment"># Pods for SXC-GX</span></div><div class="line">  pod <span class="string">'SSQ/GX'</span>, :path =&gt; <span class="string">'../SSQ'</span></div><div class="line">  </div><div class="line">end</div><div class="line"></div><div class="line">target <span class="string">'SXC_HLJ'</span> <span class="keyword">do</span></div><div class="line">  <span class="comment"># Pods for SXC-HLJ</span></div><div class="line">  pod <span class="string">'SSQ/HLJ'</span>, :path =&gt; <span class="string">'../SSQ'</span></div><div class="line">  </div><div class="line">end</div><div class="line"></div><div class="line">target <span class="string">'SXC_NX'</span> <span class="keyword">do</span></div><div class="line">  <span class="comment"># Pods for SXC-NX</span></div><div class="line">  pod <span class="string">'SSQ/NX'</span>, :path =&gt; <span class="string">'../SSQ'</span></div><div class="line">  </div><div class="line">end</div><div class="line"></div><div class="line">target <span class="string">'SXC_TJ'</span> <span class="keyword">do</span></div><div class="line">  <span class="comment"># Pods for SXC-TJ</span></div><div class="line">  pod <span class="string">'SSQ/TJ'</span>, :path =&gt; <span class="string">'../SSQ'</span></div><div class="line"></div><div class="line">end</div><div class="line"></div><div class="line">target <span class="string">'SXC_ZJ'</span> <span class="keyword">do</span></div><div class="line">  <span class="comment"># Pods for SXC-ZJ</span></div><div class="line">  pod <span class="string">'SSQ/ZJ'</span>, :path =&gt; <span class="string">'../SSQ'</span></div><div class="line"></div><div class="line">end</div></pre></td></tr></table></figure>
+<h2 id="注意事项"><a href="#注意事项" class="headerlink" title="注意事项"></a>注意事项</h2><ol>
+<li><p>多Target使用预定义宏问题</p>
+<p> <img src="http://ocga9x543.bkt.clouddn.com/WX20170707-150056.png" alt=""></p>
+<p> <img src="http://ocga9x543.bkt.clouddn.com/WX20170707-150127.png" alt=""></p>
+<p> 由于本项目为Swift项目，所以如下使用预定义宏</p>
+ <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line">#if SXC_TJ</div><div class="line">   	let scheme = &quot;sxc-tj&quot;</div><div class="line">#elseif SXC_NX</div><div class="line">    let scheme = &quot;sxc-nx&quot;</div><div class="line">#elseif SXC_GX</div><div class="line">    let scheme = &quot;sxc-gx&quot;</div><div class="line">#elseif SXC_HLJ</div><div class="line">    let scheme = &quot;sxc-hlj&quot;</div><div class="line">#elseif SXC_ZJ</div><div class="line">    let scheme = &quot;sxc-zj&quot;</div><div class="line">#else</div><div class="line">    let scheme = &quot;&quot;</div><div class="line">#endif</div></pre></td></tr></table></figure>
+</li>
+<li><p>组件化的话，使用了自己开发的<a href="https://github.com/qcyl/QCRouter" target="_blank" rel="external">QCRouter</a>来进行解耦，思路不知道对不对，大家有什么好的建议可以提一下。</p>
+</li>
+<li><p>创建类的时候要注意选择正确的Target</p>
+<p> <img src="http://ocga9x543.bkt.clouddn.com/WX20170707-152510.png" alt=""></p>
+</li>
+</ol>
+<hr>
+<p>本文<a href="https://github.com/qcyl/SXC_demo" target="_blank" rel="external">demo</a>地址</p>
+<h2 id="参考文章"><a href="#参考文章" class="headerlink" title="参考文章"></a>参考文章</h2><ol>
+<li><a href="http://ibloodline.com/articles/2016/06/16/multiple-targets.html" target="_blank" rel="external">iOS项目中多target的配置</a></li>
+<li><a href="http://www.jianshu.com/p/0c640821b36f" target="_blank" rel="external">CocoaPods 私有仓库的创建（超详细）</a></li>
+</ol>
 
       
     </div>
@@ -546,8 +514,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2017/06/28/Hexo+GitHub Pages搭建个人博客/" rel="next" title="Hexo+GitHub Pages搭建个人博客">
-                <i class="fa fa-chevron-left"></i> Hexo+GitHub Pages搭建个人博客
+              <a href="/2017/07/03/《Objective-C高级编程 iOS与OS X多线程和内存管理》读书笔记 GCD篇/" rel="next" title="《Objective-C高级编程 iOS与OS X多线程和内存管理》读书笔记 GCD篇">
+                <i class="fa fa-chevron-left"></i> 《Objective-C高级编程 iOS与OS X多线程和内存管理》读书笔记 GCD篇
               </a>
             
           </div>
@@ -555,10 +523,6 @@
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
-            
-              <a href="/2017/06/29/《Objective-C高级编程 iOS与OS X多线程和内存管理》读书笔记 Block篇/" rel="prev" title="《Objective-C高级编程 iOS与OS X多线程和内存管理》读书笔记 Block篇">
-                《Objective-C高级编程 iOS与OS X多线程和内存管理》读书笔记 Block篇 <i class="fa fa-chevron-right"></i>
-              </a>
             
           </div>
         </div>
@@ -698,7 +662,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-4"><a class="nav-link" href="#导语："><span class="nav-number">1.</span> <span class="nav-text">导语：</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#一、内存管理的思考方式"><span class="nav-number"></span> <span class="nav-text">一、内存管理的思考方式</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#1-自己生成的对象，自己所持有"><span class="nav-number">0.1.</span> <span class="nav-text">1. 自己生成的对象，自己所持有</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#2-非自己生成的对象，自己也能持有"><span class="nav-number">0.2.</span> <span class="nav-text">2. 非自己生成的对象，自己也能持有</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#3-不再需要-自己持有对象-时释放"><span class="nav-number">0.3.</span> <span class="nav-text">3. 不再需要 自己持有对象 时释放</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#4-非自己持有的对象无法释放"><span class="nav-number">0.4.</span> <span class="nav-text">4. 非自己持有的对象无法释放</span></a></li></ol></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#二、ARC（重点）"><span class="nav-number"></span> <span class="nav-text">二、ARC（重点）</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#2-1-所有权修饰符"><span class="nav-number">1.</span> <span class="nav-text">2.1 所有权修饰符</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#2-1-1-strong修饰符"><span class="nav-number">1.1.</span> <span class="nav-text">2.1.1 __strong修饰符</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#2-1-2-weak修饰符"><span class="nav-number">1.2.</span> <span class="nav-text">2.1.2 __weak修饰符</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#2-1-3-unsafe-unretained修饰符（很少使用）"><span class="nav-number">1.3.</span> <span class="nav-text">2.1.3 __unsafe_unretained修饰符（很少使用）</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#2-1-4-autoreleasing修饰符（虽然很少显式附加，但很多情况下都会使用，所以很重要）"><span class="nav-number">1.4.</span> <span class="nav-text">2.1.4 __autoreleasing修饰符（虽然很少显式附加，但很多情况下都会使用，所以很重要）</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-2-属性"><span class="nav-number">2.</span> <span class="nav-text">2.2 属性</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#问题"><span class="nav-number"></span> <span class="nav-text">问题</span></a></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#前言"><span class="nav-number">1.</span> <span class="nav-text">前言</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#解决方案"><span class="nav-number">2.</span> <span class="nav-text">解决方案</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#先说一下之前的解决方案："><span class="nav-number">2.1.</span> <span class="nav-text">先说一下之前的解决方案：</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#下面是本文的解决方案："><span class="nav-number">2.2.</span> <span class="nav-text">下面是本文的解决方案：</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#注意事项"><span class="nav-number">3.</span> <span class="nav-text">注意事项</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#参考文章"><span class="nav-number">4.</span> <span class="nav-text">参考文章</span></a></li></ol></div>
             
 
           </div>

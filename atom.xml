@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://blog.qczyl.club/"/>
-  <updated>2017-07-03T06:38:52.000Z</updated>
+  <updated>2017-07-07T08:02:52.000Z</updated>
   <id>http://blog.qczyl.club/</id>
   
   <author>
@@ -14,6 +14,66 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>多Target、组件化实践</title>
+    <link href="http://blog.qczyl.club/2017/07/07/%E5%A4%9ATarget%E3%80%81%E7%BB%84%E4%BB%B6%E5%8C%96%E5%AE%9E%E8%B7%B5/"/>
+    <id>http://blog.qczyl.club/2017/07/07/多Target、组件化实践/</id>
+    <published>2017-07-07T06:49:51.000Z</published>
+    <updated>2017-07-07T08:02:52.000Z</updated>
+    
+    <content type="html"><![CDATA[<h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>因为公司项目的特性：每个城市对应一个APP，每个APP又有着或多或少的区别；</p>
+<p>所以开发人员面临的问题是：开发多个相似APP。</p>
+<h2 id="解决方案"><a href="#解决方案" class="headerlink" title="解决方案"></a>解决方案</h2><h3 id="先说一下之前的解决方案："><a href="#先说一下之前的解决方案：" class="headerlink" title="先说一下之前的解决方案："></a>先说一下之前的解决方案：</h3><p>将所有APP整合为一个大的项目，通过修改配置文件，调用不同APP所需代码。</p>
+<p>这样确实是解决了问题，但是方案肯定是不好的。</p>
+<p>这样做的缺点：</p>
+<ol>
+<li>任何一个APP都需要加载所有APP的文件，资源</li>
+<li>每次查看不同城市的APP都需要修改配置文件，同时还要修改服务器地址，很容易发生遗漏</li>
+<li>所有APP的icon，名称无法单独设置</li>
+</ol>
+<h3 id="下面是本文的解决方案："><a href="#下面是本文的解决方案：" class="headerlink" title="下面是本文的解决方案："></a>下面是本文的解决方案：</h3><ol>
+<li><p>通过Target管理不同城市的APP</p>
+<p> <img src="http://ocga9x543.bkt.clouddn.com/WX20170707-113040.png" alt=""></p>
+</li>
+<li><p>通过cocoapods私有库将项目组件化</p>
+<p> 大家可使用<a href="https://github.com/qcyl/module_config" target="_blank" rel="external">cocoapods私有库制作脚本</a>进行私有库制作。更多cocoapods私有库制作请<a href="http://www.jianshu.com/p/0c640821b36f" target="_blank" rel="external">点击</a>。</p>
+</li>
+<li>不同的Target导入不同的cocoapods私有仓库</li>
+</ol>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div></pre></td><td class="code"><pre><div class="line">project <span class="string">'SXC.xcodeproj'</span></div><div class="line"></div><div class="line">platform :ios, <span class="string">'8.0'</span></div><div class="line">use_frameworks!</div><div class="line"></div><div class="line">pod <span class="string">'QCRouter'</span>, :path =&gt; <span class="string">'../QCRouter'</span></div><div class="line"></div><div class="line">target <span class="string">'SXC_GX'</span> <span class="keyword">do</span></div><div class="line">  <span class="comment"># Pods for SXC-GX</span></div><div class="line">  pod <span class="string">'SSQ/GX'</span>, :path =&gt; <span class="string">'../SSQ'</span></div><div class="line">  </div><div class="line">end</div><div class="line"></div><div class="line">target <span class="string">'SXC_HLJ'</span> <span class="keyword">do</span></div><div class="line">  <span class="comment"># Pods for SXC-HLJ</span></div><div class="line">  pod <span class="string">'SSQ/HLJ'</span>, :path =&gt; <span class="string">'../SSQ'</span></div><div class="line">  </div><div class="line">end</div><div class="line"></div><div class="line">target <span class="string">'SXC_NX'</span> <span class="keyword">do</span></div><div class="line">  <span class="comment"># Pods for SXC-NX</span></div><div class="line">  pod <span class="string">'SSQ/NX'</span>, :path =&gt; <span class="string">'../SSQ'</span></div><div class="line">  </div><div class="line">end</div><div class="line"></div><div class="line">target <span class="string">'SXC_TJ'</span> <span class="keyword">do</span></div><div class="line">  <span class="comment"># Pods for SXC-TJ</span></div><div class="line">  pod <span class="string">'SSQ/TJ'</span>, :path =&gt; <span class="string">'../SSQ'</span></div><div class="line"></div><div class="line">end</div><div class="line"></div><div class="line">target <span class="string">'SXC_ZJ'</span> <span class="keyword">do</span></div><div class="line">  <span class="comment"># Pods for SXC-ZJ</span></div><div class="line">  pod <span class="string">'SSQ/ZJ'</span>, :path =&gt; <span class="string">'../SSQ'</span></div><div class="line"></div><div class="line">end</div></pre></td></tr></table></figure>
+<h2 id="注意事项"><a href="#注意事项" class="headerlink" title="注意事项"></a>注意事项</h2><ol>
+<li><p>多Target使用预定义宏问题</p>
+<p> <img src="http://ocga9x543.bkt.clouddn.com/WX20170707-150056.png" alt=""></p>
+<p> <img src="http://ocga9x543.bkt.clouddn.com/WX20170707-150127.png" alt=""></p>
+<p> 由于本项目为Swift项目，所以如下使用预定义宏</p>
+ <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line">#if SXC_TJ</div><div class="line">   	let scheme = &quot;sxc-tj&quot;</div><div class="line">#elseif SXC_NX</div><div class="line">    let scheme = &quot;sxc-nx&quot;</div><div class="line">#elseif SXC_GX</div><div class="line">    let scheme = &quot;sxc-gx&quot;</div><div class="line">#elseif SXC_HLJ</div><div class="line">    let scheme = &quot;sxc-hlj&quot;</div><div class="line">#elseif SXC_ZJ</div><div class="line">    let scheme = &quot;sxc-zj&quot;</div><div class="line">#else</div><div class="line">    let scheme = &quot;&quot;</div><div class="line">#endif</div></pre></td></tr></table></figure>
+</li>
+<li><p>组件化的话，使用了自己开发的<a href="https://github.com/qcyl/QCRouter" target="_blank" rel="external">QCRouter</a>来进行解耦，思路不知道对不对，大家有什么好的建议可以提一下。</p>
+</li>
+<li><p>创建类的时候要注意选择正确的Target</p>
+<p> <img src="http://ocga9x543.bkt.clouddn.com/WX20170707-152510.png" alt=""></p>
+</li>
+</ol>
+<hr>
+<p>本文<a href="https://github.com/qcyl/SXC_demo" target="_blank" rel="external">demo</a>地址</p>
+<h2 id="参考文章"><a href="#参考文章" class="headerlink" title="参考文章"></a>参考文章</h2><ol>
+<li><a href="http://ibloodline.com/articles/2016/06/16/multiple-targets.html" target="_blank" rel="external">iOS项目中多target的配置</a></li>
+<li><a href="http://www.jianshu.com/p/0c640821b36f" target="_blank" rel="external">CocoaPods 私有仓库的创建（超详细）</a></li>
+</ol>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;h2 id=&quot;前言&quot;&gt;&lt;a href=&quot;#前言&quot; class=&quot;headerlink&quot; title=&quot;前言&quot;&gt;&lt;/a&gt;前言&lt;/h2&gt;&lt;p&gt;因为公司项目的特性：每个城市对应一个APP，每个APP又有着或多或少的区别；&lt;/p&gt;
+&lt;p&gt;所以开发人员面临的问题是：开发多个相似APP。&lt;
+    
+    </summary>
+    
+      <category term="iOS" scheme="http://blog.qczyl.club/categories/iOS/"/>
+    
+    
+  </entry>
   
   <entry>
     <title>《Objective-C高级编程 iOS与OS X多线程和内存管理》读书笔记 GCD篇</title>
