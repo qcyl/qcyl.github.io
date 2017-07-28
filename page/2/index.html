@@ -95,21 +95,15 @@
 
 
 
-<meta name="description" content="这篇文章主要给大家讲解一下GCD的平时不太常用的API，以及文末会贴出GCD定时器的一个小例子。 1.GCD的API1.1 Dispatch Queue要谈GCD，就一定要了解Dispatch Queue（执行处理的等待队列）。Dispatch Queue按照追加的顺序（先进先出FIFO，First-In-First-Out）执行处理。另外在执行处理是存在两种Dispatch Queue，一种是等">
-<meta property="og:type" content="article">
-<meta property="og:title" content="《Objective-C高级编程 iOS与OS X多线程和内存管理》读书笔记 GCD篇">
-<meta property="og:url" content="http://blog.qczyl.club/2017/07/03/《Objective-C高级编程 iOS与OS X多线程和内存管理》读书笔记 GCD篇/index.html">
+<meta name="description" content="qczyl的个人博客">
+<meta property="og:type" content="website">
+<meta property="og:title" content="qczyl&#39;s Blog">
+<meta property="og:url" content="http://blog.qczyl.club/page/2/index.html">
 <meta property="og:site_name" content="qczyl&#39;s Blog">
-<meta property="og:description" content="这篇文章主要给大家讲解一下GCD的平时不太常用的API，以及文末会贴出GCD定时器的一个小例子。 1.GCD的API1.1 Dispatch Queue要谈GCD，就一定要了解Dispatch Queue（执行处理的等待队列）。Dispatch Queue按照追加的顺序（先进先出FIFO，First-In-First-Out）执行处理。另外在执行处理是存在两种Dispatch Queue，一种是等">
-<meta property="og:image" content="http://ocga9x543.bkt.clouddn.com/WX20170703-111143.png">
-<meta property="og:image" content="http://ocga9x543.bkt.clouddn.com/WX20170703-115939.png">
-<meta property="og:image" content="http://ocga9x543.bkt.clouddn.com/WX20170703-140234.png">
-<meta property="og:image" content="http://ocga9x543.bkt.clouddn.com/WX20170703-141244.png">
-<meta property="og:updated_time" content="2017-07-03T06:38:52.000Z">
+<meta property="og:description" content="qczyl的个人博客">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="《Objective-C高级编程 iOS与OS X多线程和内存管理》读书笔记 GCD篇">
-<meta name="twitter:description" content="这篇文章主要给大家讲解一下GCD的平时不太常用的API，以及文末会贴出GCD定时器的一个小例子。 1.GCD的API1.1 Dispatch Queue要谈GCD，就一定要了解Dispatch Queue（执行处理的等待队列）。Dispatch Queue按照追加的顺序（先进先出FIFO，First-In-First-Out）执行处理。另外在执行处理是存在两种Dispatch Queue，一种是等">
-<meta name="twitter:image" content="http://ocga9x543.bkt.clouddn.com/WX20170703-111143.png">
+<meta name="twitter:title" content="qczyl&#39;s Blog">
+<meta name="twitter:description" content="qczyl的个人博客">
 
 
 
@@ -137,13 +131,13 @@
 
 
 
-  <link rel="canonical" href="http://blog.qczyl.club/2017/07/03/《Objective-C高级编程 iOS与OS X多线程和内存管理》读书笔记 GCD篇/"/>
+  <link rel="canonical" href="http://blog.qczyl.club/page/2/"/>
 
 
 
 
 
-  <title>《Objective-C高级编程 iOS与OS X多线程和内存管理》读书笔记 GCD篇 | qczyl's Blog</title>
+  <title>qczyl's Blog</title>
   
 
 
@@ -178,7 +172,9 @@
     
   
 
-  <div class="container sidebar-position-left page-post-detail ">
+  <div class="container sidebar-position-left 
+   page-home 
+ ">
     <div class="headband"></div>
 
     <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
@@ -295,9 +291,9 @@
         <div class="content-wrap">
           <div id="content" class="content">
             
-
-  <div id="posts" class="posts-expand">
+  <section id="posts" class="posts-expand">
     
+      
 
   
 
@@ -306,7 +302,7 @@
   
 
   <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-    <link itemprop="mainEntityOfPage" href="http://blog.qczyl.club/2017/07/03/《Objective-C高级编程 iOS与OS X多线程和内存管理》读书笔记 GCD篇/">
+    <link itemprop="mainEntityOfPage" href="http://blog.qczyl.club/2017/06/28/Hexo+GitHub Pages搭建个人博客/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="qczyl">
@@ -323,7 +319,9 @@
 
         
         
-          <h2 class="post-title" itemprop="name headline">《Objective-C高级编程 iOS与OS X多线程和内存管理》读书笔记 GCD篇</h2>
+          <h2 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2017/06/28/Hexo+GitHub Pages搭建个人博客/" itemprop="url">Hexo+GitHub Pages搭建个人博客</a></h2>
         
 
         <div class="post-meta">
@@ -335,8 +333,8 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-07-03T14:14:08+08:00">
-                2017-07-03
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-06-28T00:00:00+08:00">
+                2017-06-28
               </time>
             
 
@@ -358,8 +356,8 @@
               
               
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/读书笔记/" itemprop="url" rel="index">
-                    <span itemprop="name">读书笔记</span>
+                  <a href="/categories/杂学/" itemprop="url" rel="index">
+                    <span itemprop="name">杂学</span>
                   </a>
                 </span>
 
@@ -371,21 +369,11 @@
 
           
             
-              <span class="post-comments-count">
-                <span class="post-meta-divider">|</span>
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-comment-o"></i>
-                </span>
-                <a class="cloud-tie-join-count" href="/2017/07/03/《Objective-C高级编程 iOS与OS X多线程和内存管理》读书笔记 GCD篇/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count join-count" itemprop="commentCount"></span>
-                </a>
-              </span>
-            
           
 
           
           
-             <span id="/2017/07/03/《Objective-C高级编程 iOS与OS X多线程和内存管理》读书笔记 GCD篇/" class="leancloud_visitors" data-flag-title="《Objective-C高级编程 iOS与OS X多线程和内存管理》读书笔记 GCD篇">
+             <span id="/2017/06/28/Hexo+GitHub Pages搭建个人博客/" class="leancloud_visitors" data-flag-title="Hexo+GitHub Pages搭建个人博客">
                <span class="post-meta-divider">|</span>
                <span class="post-meta-item-icon">
                  <i class="fa fa-eye"></i>
@@ -413,88 +401,33 @@
       
 
       
-        <p>这篇文章主要给大家讲解一下GCD的平时不太常用的API，以及文末会贴出GCD定时器的一个小例子。</p>
-<h2 id="1-GCD的API"><a href="#1-GCD的API" class="headerlink" title="1.GCD的API"></a>1.GCD的API</h2><h3 id="1-1-Dispatch-Queue"><a href="#1-1-Dispatch-Queue" class="headerlink" title="1.1 Dispatch Queue"></a>1.1 Dispatch Queue</h3><p>要谈GCD，就一定要了解<code>Dispatch Queue</code>（执行处理的等待队列）。<br><code>Dispatch Queue</code>按照追加的顺序（先进先出FIFO，First-In-First-Out）执行处理。<br>另外在执行处理是存在两种<code>Dispatch Queue</code>，一种是等待现在执行中处理的<code>Serial Dispatch Queue</code>，另一种是不等待现在执行中处理的<code>Concurrent Dispatch Queue</code>。</p>
-<p><img src="http://ocga9x543.bkt.clouddn.com/WX20170703-111143.png" alt=""></p>
-<h3 id="1-2-dispatch-queue-create"><a href="#1-2-dispatch-queue-create" class="headerlink" title="1.2 dispatch_queue_create"></a>1.2 dispatch_queue_create</h3><p>由于平时在使用时，我们大部分都是使用系统提供的<code>Main Dispatch Queue</code>和<code>Global Dispatch Queue</code>。<br>所以关于<code>dispatch_queue_create</code>API，这里只说两点：</p>
-<ul>
-<li>通过<code>dispatch_queue_create</code>函数生成的<code>Dispatch Queue</code>在使用结束后要通过<code>dispatch_release</code>函数释放。</li>
-<li>如果生成过多的线程，就会消耗大量内存，大幅度降低系统的响应性能。而使用系统提供的<code>Global Dispatch Queue</code>则不用担心这个问题。所以除非必要，其他情况建议使用系统提供的<code>Dispatch Queue</code>。</li>
-</ul>
-<h3 id="1-3-dispatch-set-target-queue"><a href="#1-3-dispatch-set-target-queue" class="headerlink" title="1.3 dispatch_set_target_queue"></a>1.3 dispatch_set_target_queue</h3><p>使用<code>dispatch_queue_create</code>函数生成的<code>Dispatch Queue</code>，都使用的是与系统提供的<code>Global Dispatch Queue</code>的默认优先级相同的优先级。而要变更生成的执行优先级的话就要使用<code>dispatch_set_target_queue</code>函数。</p>
-<p>在后台执行动作处理的<code>Serial Dispatch Queue</code>的生成方法如下:</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">dispatch_queue_t mySerialDispatchQueue = dispatch_queue_create(&quot;com.example.gcd.mySerialDispatchQueue&quot;, NULL);</div><div class="line">   dispatch_queue_t globalDispatchQueueBackground = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_BACKGROUND, 0);</div><div class="line">   dispatch_set_target_queue(mySerialDispatchQueue, globalDispatchQueueBackground);</div></pre></td></tr></table></figure>
-<h3 id="1-3-dispatch-after"><a href="#1-3-dispatch-after" class="headerlink" title="1.3 dispatch_after"></a>1.3 dispatch_after</h3><p><code>dispatch_after</code>这里只说一点，<code>dispatch_after</code>函数并不是在指定时间后执行处理，而只是在指定时间追加处理到<code>Dispatch Queue</code>。</p>
-<p>因为<code>Main Dispatch Queue</code>在主线程的<code>RunLoop</code>中执行，所以在比如每隔1/60秒执行的<code>RunLoop</code>中，Block最快在 3 秒后执行，最慢在 3 秒 + 1/60 秒后执行，并且在<code>Main Dispatch Queue</code>有大量处理追加或主线程的处理本身有延迟时，这个时间会更长。</p>
-<p>所以该函数在有严格时间要求的情况下使用会出现问题，但是只是想大致延迟执行处理，该函数是非常有效的。</p>
-<h3 id="1-4-dispatch-barrier-async"><a href="#1-4-dispatch-barrier-async" class="headerlink" title="1.4 dispatch_barrier_async"></a>1.4 dispatch_barrier_async</h3><p>在访问数据库或文件时，使用多线程可能会产生数据竞争的问题，当然使用<code>Serial Dispatch Queue</code>可避免数据竞争。</p>
-<p>但是如果读取处理只是与读取处理并行执行，那么多个并行执行就不会发生问题。也就是说为了高效率的进行访问，读取处理追加到<code>Concurrent Dispatch Queue</code>，写入处理在任一读取处理没有执行的状态下，追加到<code>Serial Dispatch Queue</code>中即可（在写入处理结束之前，读取处理不可执行）。</p>
-<p>使用<code>dispatch_barrier_async</code>便可解决这个问题。<code>dispatch_barrier_async</code>函数会等待追加到<code>Concurrent Dispatch Queue</code>上的并行执行的处理全部结束后，再将制定的处理追加到该<code>Concurrent Dispatch Queue</code>中。然后在由<code>dispatch_barrier_async</code>函数追加的处理执行完毕后，<code>Concurrent Dispatch Queue</code>才恢复为一般的动作，追加到该<code>Concurrent Dispatch Queue</code>的处理又开始并行执行。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line">dispatch_async(queue, blk0_for_reading);</div><div class="line">dispatch_async(queue, blk1_for_reading);</div><div class="line">dispatch_async(queue, blk2_for_reading);</div><div class="line">dispatch_async(queue, blk3_for_reading);</div><div class="line">dispatch_barrier_async(queue, blk_for_writing);</div><div class="line">dispatch_async(queue, blk4_for_reading);</div><div class="line">dispatch_async(queue, blk5_for_reading);</div><div class="line">dispatch_async(queue, blk6_for_reading);</div><div class="line">dispatch_async(queue, blk7_for_reading);</div></pre></td></tr></table></figure>
-<p>如上所示，使用方法非常简单。仅使用<code>dispatch_barrier_async</code>函数代替<code>dispatch_async</code>函数即可。</p>
-<p><img src="http://ocga9x543.bkt.clouddn.com/WX20170703-115939.png" alt=""></p>
-<h3 id="1-5-dispatch-apply"><a href="#1-5-dispatch-apply" class="headerlink" title="1.5 dispatch_apply"></a>1.5 dispatch_apply</h3><p><code>dispatch_apply</code>函数是<code>dispatch_sync</code>函数和<code>Dispatch Group</code>的关联API。该函数按指定的次数将指定的Block追加到指定的<code>Dispatch Queue</code>中，并等待全部处理执行结束。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">dispatch_queue_t queue = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0);</div><div class="line">dispatch_apply(10, queue, ^(size_t index) &#123;</div><div class="line">    NSLog(@&quot;%zu&quot;, index);</div><div class="line">&#125;);</div><div class="line">NSLog(@&quot;done&quot;);</div></pre></td></tr></table></figure>
-<p>例如，该源代码的执行结果为：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line">4</div><div class="line">1</div><div class="line">0</div><div class="line">3</div><div class="line">5</div><div class="line">2</div><div class="line">6</div><div class="line">8</div><div class="line">9</div><div class="line">7</div><div class="line">done</div></pre></td></tr></table></figure>
-<p>因为在<code>Global Dispatch Queue</code>中执行处理，所以各个处理的执行时间不定。但是输出结果中最后的done必定在最后的位置上。这是因为<code>dispatch_apply</code>函数会等待全部处理执行结束。</p>
-<h3 id="1-6-Dispatch-I-O"><a href="#1-6-Dispatch-I-O" class="headerlink" title="1.6 Dispatch I/O"></a>1.6 Dispatch I/O</h3><p>大家可能想过，在读取较大文件时，如果将文件分成合适的大小并使用<code>Global Dispatch Queue</code>并列读取的话，应该会比一般的读取速度快不少。能实现这一功能的就是<code>Dispatch I/O</code>和<code>Dispatch Data</code>。</p>
-<p><img src="http://ocga9x543.bkt.clouddn.com/WX20170703-140234.png" alt=""></p>
-<p>如果想提高文件读取速度，可以尝试使用<code>Dispatch I/O</code>。</p>
-<h3 id="1-7-Dispatch-Source"><a href="#1-7-Dispatch-Source" class="headerlink" title="1.7 Dispatch Source"></a>1.7 Dispatch Source</h3><p>GCD中出了主要的<code>Dispatch Queue</code>外，还有不太引人注目的<code>Dispatch Source</code>。它是BSD系内核惯有功能<code>kqueue</code>的包装。<br><code>kqueue</code>是在XNU内核中发生各种事件时，在应用程序编程方执行处理的技术。其CPU负荷非常小，尽量不占用资源。<code>kqueue</code>可以说是应用程序处理XNU内核中发生的各种事件的方法中最优秀的一种。</p>
-<p><code>Dispatch Source</code>可以处理一下事件。</p>
-<p><img src="http://ocga9x543.bkt.clouddn.com/WX20170703-141244.png" alt=""></p>
-<p>在使用NSTimer做定时器的时候，大家应该都知道如果使用不当，会出现内存泄漏的问题。<br>而如果作为一个封装的组件来说，就需要将NSTimer属性暴露出来，在控制器销毁时，调用NSTimer的invalidate方法。如果忘记的话就会内存泄漏！</p>
-<p>但是使用<code>DISPATCH_SOUTCE_TYPE_TIMER</code>的话就不需要担心这个问题了。</p>
-<p><a href="https://github.com/qcyl/GCD-Timer-Demo" target="_blank" rel="external">此处</a>为使用了<code>DISPATCH_SOUTCE_TYPE_TIMER</code>的定时器的小demo。</p>
-
+        
+          
+          本文主要记录自己在搭建个人博客的记录，以及工程中遇到的一些问题。
+废话少说，上干货。
+1. GitHub仓库由于本博客的搭建是基于Hexo + GitHub Page的，所以GitHub账号是必不可少的。相信大家应该也都有自己的账号了，没有的赶紧去注册一个吧！
+注：账号的username会影响你的域
+          ...
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/2017/06/28/Hexo+GitHub Pages搭建个人博客/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
+        
       
     </div>
 
     <div>
       
-        
-<div id="wechat_subscriber" style="display: block; padding: 10px 0; margin: 20px auto; width: 100%; text-align: center">
-    <img id="wechat_subscriber_qcode" src="/images/wechat_qrcode.jpg" alt="qczyl wechat" style="width: 200px; max-width: 100%;"/>
-    <div>欢迎关注「qczyl」，获取本站最新内容。</div>
-</div>
-
-
-      
     </div>
 
     <div>
       
-        
-  <div style="padding: 10px 0; margin: 20px auto; width: 90%; text-align: center;">
-    <div></div>
-    <button id="rewardButton" disable="enable" onclick="var qr = document.getElementById('QR'); if (qr.style.display === 'none') {qr.style.display='block';} else {qr.style.display='none'}">
-      <span>赏</span>
-    </button>
-    <div id="QR" style="display: none;">
-      
-        <div id="wechat" style="display: inline-block">
-          <img id="wechat_qr" src="/images/wechat_pay.png" alt="qczyl WeChat Pay"/>
-          <p>微信打赏</p>
-        </div>
-      
-      
-        <div id="alipay" style="display: inline-block">
-          <img id="alipay_qr" src="/images/ali_pay.png" alt="qczyl Alipay"/>
-          <p>支付宝打赏</p>
-        </div>
-      
-    </div>
-  </div>
-
-
-      
     </div>
 
     <div>
-      
-        
-
       
     </div>
 
@@ -502,42 +435,25 @@
       
 
       
-      
+
       
 
       
-        <div class="post-nav">
-          <div class="post-nav-next post-nav-item">
-            
-              <a href="/2017/06/29/《Objective-C高级编程 iOS与OS X多线程和内存管理》读书笔记 Block篇/" rel="next" title="《Objective-C高级编程 iOS与OS X多线程和内存管理》读书笔记 Block篇">
-                <i class="fa fa-chevron-left"></i> 《Objective-C高级编程 iOS与OS X多线程和内存管理》读书笔记 Block篇
-              </a>
-            
-          </div>
-
-          <span class="post-nav-divider"></span>
-
-          <div class="post-nav-prev post-nav-item">
-            
-              <a href="/2017/07/07/多Target、组件化实践/" rel="prev" title="多Target、组件化实践">
-                多Target、组件化实践 <i class="fa fa-chevron-right"></i>
-              </a>
-            
-          </div>
-        </div>
       
-
-      
+        <div class="post-eof"></div>
       
     </footer>
   </article>
 
 
+    
+  </section>
 
-    <div class="post-spread">
-      
-    </div>
-  </div>
+  
+  <nav class="pagination">
+    <a class="extend prev" rel="prev" href="/"><i class="fa fa-angle-left"></i></a><a class="page-number" href="/">1</a><span class="page-number current">2</span>
+  </nav>
+
 
 
           </div>
@@ -545,12 +461,6 @@
 
 
           
-  <div class="comments" id="comments">
-    
-      <div id="cloud-tie-wrapper" class="cloud-tie-wrapper"></div>
-    
-  </div>
-
 
         </div>
         
@@ -570,17 +480,8 @@
       
 
       
-        <ul class="sidebar-nav motion-element">
-          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
-            文章目录
-          </li>
-          <li class="sidebar-nav-overview" data-target="site-overview">
-            站点概览
-          </li>
-        </ul>
-      
 
-      <section class="site-overview sidebar-panel">
+      <section class="site-overview sidebar-panel sidebar-panel-active">
         <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
           <img class="site-author-image" itemprop="image"
                src="/images/avatar.png"
@@ -660,22 +561,6 @@
 
       </section>
 
-      
-      <!--noindex-->
-        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
-          <div class="post-toc">
-
-            
-              
-            
-
-            
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#1-GCD的API"><span class="nav-number">1.</span> <span class="nav-text">1.GCD的API</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-1-Dispatch-Queue"><span class="nav-number">1.1.</span> <span class="nav-text">1.1 Dispatch Queue</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#1-2-dispatch-queue-create"><span class="nav-number">1.2.</span> <span class="nav-text">1.2 dispatch_queue_create</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#1-3-dispatch-set-target-queue"><span class="nav-number">1.3.</span> <span class="nav-text">1.3 dispatch_set_target_queue</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#1-3-dispatch-after"><span class="nav-number">1.4.</span> <span class="nav-text">1.3 dispatch_after</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#1-4-dispatch-barrier-async"><span class="nav-number">1.5.</span> <span class="nav-text">1.4 dispatch_barrier_async</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#1-5-dispatch-apply"><span class="nav-number">1.6.</span> <span class="nav-text">1.5 dispatch_apply</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#1-6-Dispatch-I-O"><span class="nav-number">1.7.</span> <span class="nav-text">1.6 Dispatch I/O</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#1-7-Dispatch-Source"><span class="nav-number">1.8.</span> <span class="nav-text">1.7 Dispatch Source</span></a></li></ol></li></ol></div>
-            
-
-          </div>
-        </section>
-      <!--/noindex-->
       
 
       
@@ -794,10 +679,10 @@
   
 
   
-  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.1"></script>
+    <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.1"></script>
 <script type="text/javascript" src="/js/src/post-details.js?v=5.1.1"></script>
 
-
+  
 
   
 
