@@ -694,7 +694,7 @@
             counter.save(null, {
               success: function(counter) {
                 var $element = $(document.getElementById(url));
-                $element.find('.leancloud-visitors-count').text("1");
+                $element.find('.leancloud-visitors-count').text(counter.get('time'));
               },
               error: function(counter, error) {
                 console.log('Failed to save Visitor num, with error message: ' + error.message);
