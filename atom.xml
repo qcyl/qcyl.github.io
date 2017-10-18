@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://blog.qczyl.club/"/>
-  <updated>2017-10-17T10:04:10.000Z</updated>
+  <updated>2017-10-18T08:04:53.000Z</updated>
   <id>http://blog.qczyl.club/</id>
   
   <author>
@@ -14,6 +14,48 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>开始使用Git吧</title>
+    <link href="http://blog.qczyl.club/2017/10/18/%E5%BC%80%E5%A7%8B%E4%BD%BF%E7%94%A8Git%E5%90%A7/"/>
+    <id>http://blog.qczyl.club/2017/10/18/开始使用Git吧/</id>
+    <published>2017-10-18T08:04:51.000Z</published>
+    <updated>2017-10-18T08:04:53.000Z</updated>
+    
+    <content type="html"><![CDATA[<p>既然说<code>开始使用Git吧</code>，那Git相对于SVN来说肯定还是有一定的好处的。<br>大家可以看一下<a href="https://my.oschina.net/u/1580062/blog/214850" target="_blank" rel="external">评《GIT和SVN之间的五个基本区别》</a>这篇文章，虽然文章时间有点久远，但是我很认同里边的说法，特别是Git对分支和合并有更好的支持。</p>
+<p>虽然评论区还是有很多使用SVN的用户不是很赞同他的观点，认为Git的权限问题是一个很大的问题，但是现在公司搭一个Gitlab就可以将权限问题完全搞定了。</p>
+<h3 id="Git的基本使用"><a href="#Git的基本使用" class="headerlink" title="Git的基本使用"></a>Git的基本使用</h3><p>Git相对于SVN来说命令确实多了一些，大家可以通过<a href="https://git-scm.com/book/zh/v1/Git-%E5%9F%BA%E7%A1%80" target="_blank" rel="external">Git基础</a>来学习一下Git的常用命令。</p>
+<p>但是个人推荐直接使用<a href="https://www.sourcetreeapp.com/" target="_blank" rel="external">Sourcetree</a>来进行日常的开发使用，简单方便可视化。当然命令还是要了解一下的，以防万一啊！</p>
+<h3 id="Git远程仓库"><a href="#Git远程仓库" class="headerlink" title="Git远程仓库"></a>Git远程仓库</h3><p>了解了Git的简单命令，以及<a href="https://www.sourcetreeapp.com/" target="_blank" rel="external">Sourcetree</a>的使用，大家就可以<code>开始使用Git</code>了。</p>
+<p>但是，只使用本地仓库的话，那就丧失了Git的真正意义。<br>这里介绍几款Git远程仓库：</p>
+<ol>
+<li><a href="https://github.com/" target="_blank" rel="external">GItHub</a>，相信这个大家都知道的，但是在<code>GItHub</code>上使用私有仓库是收费的</li>
+<li><a href="https://gitee.com/" target="_blank" rel="external">码云</a>，很屌的名字，支持私用仓库创建</li>
+<li><a href="https://about.gitlab.com/" target="_blank" rel="external">GitLab</a>，可搭建在自己的服务器上，适合公司使用，有完善的权限系统</li>
+</ol>
+<h3 id="Git工作流程"><a href="#Git工作流程" class="headerlink" title="Git工作流程"></a>Git工作流程</h3><p>当在团队开发中使用版本控制系统时，商定一个统一的工作流程是至关重要的。Git 的确可以在各个方面做很多事情，然而，如果在你的团队中还没有能形成一个特定有效的工作流程，那么混乱就将是不可避免的。</p>
+<p>Git工作流程有各式各样的用法，但也正因此使得在实际工作中如何上手使用变得很头大。这里介绍几种公司最常用的Git工作流程：</p>
+<ol>
+<li><a href="http://blog.jobbole.com/76847/" target="_blank" rel="external">集中式工作流</a>，适合开发团队成员已经很熟悉SVN，无需去适应一个全新流程</li>
+<li><a href="http://blog.jobbole.com/76857/" target="_blank" rel="external">功能分支工作流</a>，以集中式工作流为基础，不同的是为各个新功能分配一个专门的分支来开发</li>
+<li><a href="http://blog.jobbole.com/76867/" target="_blank" rel="external">Gitflow工作流</a>，通过为功能开发、发布准备和维护分配独立的分支，让发布迭代过程更流畅。最早诞生、并得到广泛采用的一种工作流程，推荐的流程</li>
+<li><a href="http://blog.jobbole.com/76861/" target="_blank" rel="external">Forking工作流</a>，分布式工作流，充分利用了Git在分支和克隆上的优势。可以安全可靠地管理大团队的开发者（developer），并能接受不信任贡献者（contributor）的提交</li>
+</ol>
+<p>个人推荐使用<a href="http://blog.jobbole.com/76867/" target="_blank" rel="external">Gitflow工作流</a>，而且<a href="https://www.sourcetreeapp.com/" target="_blank" rel="external">Sourcetree</a>也天然支持Gitflow，并把这个模型的各种操作通过菜单命令的形式提供了出来，大大减轻了使用人员的学习使用成本。</p>
+<hr>
+<p>相信大家使用Git后，会渐渐的爱上他的！</p>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;既然说&lt;code&gt;开始使用Git吧&lt;/code&gt;，那Git相对于SVN来说肯定还是有一定的好处的。&lt;br&gt;大家可以看一下&lt;a href=&quot;https://my.oschina.net/u/1580062/blog/214850&quot; target=&quot;_blank&quot; rel=&quot;e
+    
+    </summary>
+    
+      <category term="杂学" scheme="http://blog.qczyl.club/categories/%E6%9D%82%E5%AD%A6/"/>
+    
+    
+  </entry>
   
   <entry>
     <title>Swift 4.0 新特性</title>
