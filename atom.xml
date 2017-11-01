@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://blog.qczyl.club/"/>
-  <updated>2017-10-18T08:04:53.000Z</updated>
+  <updated>2017-11-01T07:22:47.000Z</updated>
   <id>http://blog.qczyl.club/</id>
   
   <author>
@@ -14,6 +14,76 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>GitLab搭建及汉化</title>
+    <link href="http://blog.qczyl.club/2017/11/01/GitLab%E6%90%AD%E5%BB%BA%E5%8F%8A%E6%B1%89%E5%8C%96/"/>
+    <id>http://blog.qczyl.club/2017/11/01/GitLab搭建及汉化/</id>
+    <published>2017-11-01T07:22:47.000Z</published>
+    <updated>2017-11-01T07:22:47.000Z</updated>
+    
+    <content type="html"><![CDATA[<h3 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h3><p><a href="http://blog.qczyl.club/2017/10/18/%E5%BC%80%E5%A7%8B%E4%BD%BF%E7%94%A8Git%E5%90%A7/">上一篇文章</a>简单介绍了Git的优点以及使用。这一篇就来介绍一下GitLab的搭建。</p>
+<hr>
+<p>作为公司的话，肯定不希望自己的代码放在别人的网站上，所以搭建一个自己的Git仓库就显得十分必要了（当然，如果你的公司不在意的话，那也是没有问题的）。<a href="https://about.gitlab.com/" target="_blank" rel="external">GitLab</a>就是一款可以搭建在自己服务器上的Git仓库。</p>
+<p>而且GitLab的搭建非常简单，只需三四步的操作即可。</p>
+<ol>
+<li><p>首先，需要一台服务器，这是最基本的。</p>
+<ul>
+<li>但是有几点需要注意的：</li>
+<li>GitLab官网上强烈推荐承载 GitLab 运行的服务器 至少分配4GB的内存 给 GitLab 。</li>
+<li>推荐使用以下几种操作系统的服务器，可以使用Omnibus包安装方法，操作简单。<img src="http://ocga9x543.bkt.clouddn.com/WX20171101-141806.png" alt=""></li>
+</ul>
+</li>
+<li><p>打开<a href="https://about.gitlab.com/installation/" target="_blank" rel="external">GitLab</a>或<a href="https://www.gitlab.cc/installation/" target="_blank" rel="external">GitLab中文网</a>，选择对应的操作系统，按照提示进行安装。推荐使用<code>Omnibus包安装方法</code>进行安装！</p>
+<ul>
+<li>这里也有一些注意点：</li>
+<li>选择对应的操作系统后，会有两种版本的安装方法。</li>
+<li><code>Community Edition</code>: 社区版（免费）</li>
+<li><code>Enterprise Edition</code>: 企业版（收费）</li>
+<li>但是这里推荐安装<code>企业版</code>的。<code>企业版</code>未付费的话，和<code>社区版</code>功能是一样的，付费后可直接使用<code>企业版</code>的功能。而<code>社区版</code>要升级为<code>企业版</code>的话需要重新部署。</li>
+</ul>
+</li>
+<li><p>配置SMTP</p>
+<ul>
+<li><p>进入<code>/etc/gitlab/gitlab.rb</code>文件，将以下配置的注释取消并修改</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div></pre></td><td class="code"><pre><div class="line">gitlab_rails[&apos;smtp_enable&apos;] = true</div><div class="line">gitlab_rails[&apos;smtp_address&apos;] = &quot;smtp.server&quot;</div><div class="line">gitlab_rails[&apos;smtp_port&apos;] = 465</div><div class="line">gitlab_rails[&apos;smtp_user_name&apos;] = &quot;smtp user&quot;</div><div class="line">gitlab_rails[&apos;smtp_password&apos;] = &quot;smtp password&quot;</div><div class="line">gitlab_rails[&apos;smtp_domain&apos;] = &quot;example.com&quot;</div><div class="line">gitlab_rails[&apos;smtp_authentication&apos;] = &quot;login&quot;</div><div class="line">gitlab_rails[&apos;smtp_enable_starttls_auto&apos;] = true</div><div class="line">gitlab_rails[&apos;smtp_openssl_verify_mode&apos;] = &apos;peer&apos;</div><div class="line"></div><div class="line"># 如果你使用的SMTP服务是默认的 &apos;From:gitlab@localhost&apos;</div><div class="line"># 你可以修改这里的 &apos;From&apos; 的值。</div><div class="line">gitlab_rails[&apos;gitlab_email_from&apos;] = &apos;gitlab@example.com&apos;</div><div class="line">gitlab_rails[&apos;gitlab_email_reply_to&apos;] = &apos;noreply@example.com&apos;</div></pre></td></tr></table></figure>
+</li>
+</ul>
+</li>
+</ol>
+<pre><code>* 注：上面只是一个例子，具体的SMTP配置还需要自己根据实际情况修改（修改完配置后记得执行``sudo gitlab-ctl reconfigure``使配置生效）
+* 常用的SMTP配置示例可以去[这里](https://docs.gitlab.com.cn/omnibus/settings/smtp.html)查看。
+* 配置完成后可以用Rails控制台验证邮件是否能发送成功。 在GitLab服务器上，执行``gitlab-rails console``进入控制台。 然后在控制台提示符后输入下面的命令 发送一封测试邮件：
+
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">	irb(main):003:0&gt; Notify.test_email(&apos;destination_email@address.com&apos;, &apos;Message Subject&apos;, &apos;Message Body&apos;).deliver_now</div><div class="line"># 示例</div><div class="line">Notify.test_email(&apos;收件人邮箱&apos;, &apos;邮件标题&apos;, &apos;邮件正文&apos;).deliver_now</div></pre></td></tr></table></figure>
+</code></pre><p>如果你的测试邮件发送成功了的话，那么恭喜你，GitLab已经搭建完成了，可以尽情的使用了。</p>
+<hr>
+<p>下面要介绍的就是GitLab的汉化，个人感觉汉化的也不是很完整，导致部分页面是中文英文混杂着的，当然，大部分已经汉化了。</p>
+<p>首先确认版本：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">sudo cat /opt/gitlab/embedded/service/gitlab-rails/VERSION</div></pre></td></tr></table></figure>
+<p> v7 ~ v8.8版本clone以下仓库到本地：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">git clone https://gitlab.com/larryli/gitlab.git</div></pre></td></tr></table></figure>
+<p> v8.9以后版本clone以下仓库到本地：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">git clone https://gitlab.com/xhang/gitlab.git</div></pre></td></tr></table></figure>
+<p> clone仓库成功后，比较汉化分支和原分支，导出 patch 用的 diff 文件：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">// $&#123;gitlab_version&#125;替换为你上面确定的版本</div><div class="line">git diff v$&#123;gitlab_version&#125; v$&#123;gitlab_version&#125;-zh &gt; ../$&#123;gitlab_version&#125;-zh.diff</div></pre></td></tr></table></figure>
+<p>执行完毕后将生成当前版本的补丁文件，如<code>9.0.0-zh.diff</code></p>
+<p>导入汉化补丁：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"># 停止 gitlab</div><div class="line">sudo gitlab-ctl stop</div><div class="line">sudo patch -d /opt/gitlab/embedded/service/gitlab-rails -p1 &lt; 9.0.0-zh.diff</div></pre></td></tr></table></figure>
+<p>确定没有 .rej 文件，重启 GitLab 即可。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">sudo gitlab-ctl start</div></pre></td></tr></table></figure>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;h3 id=&quot;前言&quot;&gt;&lt;a href=&quot;#前言&quot; class=&quot;headerlink&quot; title=&quot;前言&quot;&gt;&lt;/a&gt;前言&lt;/h3&gt;&lt;p&gt;&lt;a href=&quot;http://blog.qczyl.club/2017/10/18/%E5%BC%80%E5%A7%8B%E4%BD%BF
+    
+    </summary>
+    
+      <category term="杂学" scheme="http://blog.qczyl.club/categories/%E6%9D%82%E5%AD%A6/"/>
+    
+    
+  </entry>
   
   <entry>
     <title>开始使用Git吧</title>

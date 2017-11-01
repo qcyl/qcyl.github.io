@@ -95,21 +95,18 @@
 
 
 
-<meta name="description" content="这篇文章主要给大家讲解一下GCD的平时不太常用的API，以及文末会贴出GCD定时器的一个小例子。 1.GCD的API1.1 Dispatch Queue要谈GCD，就一定要了解Dispatch Queue（执行处理的等待队列）。Dispatch Queue按照追加的顺序（先进先出FIFO，First-In-First-Out）执行处理。另外在执行处理是存在两种Dispatch Queue，一种是等">
+<meta name="description" content="前言上一篇文章简单介绍了Git的优点以及使用。这一篇就来介绍一下GitLab的搭建。  作为公司的话，肯定不希望自己的代码放在别人的网站上，所以搭建一个自己的Git仓库就显得十分必要了（当然，如果你的公司不在意的话，那也是没有问题的）。GitLab就是一款可以搭建在自己服务器上的Git仓库。 而且GitLab的搭建非常简单，只需三四步的操作即可。  首先，需要一台服务器，这是最基本的。  但是有几">
 <meta property="og:type" content="article">
-<meta property="og:title" content="《Objective-C高级编程 iOS与OS X多线程和内存管理》读书笔记 GCD篇">
-<meta property="og:url" content="http://blog.qczyl.club/2017/07/03/《Objective-C高级编程 iOS与OS X多线程和内存管理》读书笔记 GCD篇/index.html">
+<meta property="og:title" content="GitLab搭建及汉化">
+<meta property="og:url" content="http://blog.qczyl.club/2017/11/01/GitLab搭建及汉化/index.html">
 <meta property="og:site_name" content="qczyl&#39;s Blog">
-<meta property="og:description" content="这篇文章主要给大家讲解一下GCD的平时不太常用的API，以及文末会贴出GCD定时器的一个小例子。 1.GCD的API1.1 Dispatch Queue要谈GCD，就一定要了解Dispatch Queue（执行处理的等待队列）。Dispatch Queue按照追加的顺序（先进先出FIFO，First-In-First-Out）执行处理。另外在执行处理是存在两种Dispatch Queue，一种是等">
-<meta property="og:image" content="http://ocga9x543.bkt.clouddn.com/WX20170703-111143.png">
-<meta property="og:image" content="http://ocga9x543.bkt.clouddn.com/WX20170703-115939.png">
-<meta property="og:image" content="http://ocga9x543.bkt.clouddn.com/WX20170703-140234.png">
-<meta property="og:image" content="http://ocga9x543.bkt.clouddn.com/WX20170703-141244.png">
-<meta property="og:updated_time" content="2017-07-03T06:38:52.000Z">
+<meta property="og:description" content="前言上一篇文章简单介绍了Git的优点以及使用。这一篇就来介绍一下GitLab的搭建。  作为公司的话，肯定不希望自己的代码放在别人的网站上，所以搭建一个自己的Git仓库就显得十分必要了（当然，如果你的公司不在意的话，那也是没有问题的）。GitLab就是一款可以搭建在自己服务器上的Git仓库。 而且GitLab的搭建非常简单，只需三四步的操作即可。  首先，需要一台服务器，这是最基本的。  但是有几">
+<meta property="og:image" content="http://ocga9x543.bkt.clouddn.com/WX20171101-141806.png">
+<meta property="og:updated_time" content="2017-11-01T07:22:47.000Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="《Objective-C高级编程 iOS与OS X多线程和内存管理》读书笔记 GCD篇">
-<meta name="twitter:description" content="这篇文章主要给大家讲解一下GCD的平时不太常用的API，以及文末会贴出GCD定时器的一个小例子。 1.GCD的API1.1 Dispatch Queue要谈GCD，就一定要了解Dispatch Queue（执行处理的等待队列）。Dispatch Queue按照追加的顺序（先进先出FIFO，First-In-First-Out）执行处理。另外在执行处理是存在两种Dispatch Queue，一种是等">
-<meta name="twitter:image" content="http://ocga9x543.bkt.clouddn.com/WX20170703-111143.png">
+<meta name="twitter:title" content="GitLab搭建及汉化">
+<meta name="twitter:description" content="前言上一篇文章简单介绍了Git的优点以及使用。这一篇就来介绍一下GitLab的搭建。  作为公司的话，肯定不希望自己的代码放在别人的网站上，所以搭建一个自己的Git仓库就显得十分必要了（当然，如果你的公司不在意的话，那也是没有问题的）。GitLab就是一款可以搭建在自己服务器上的Git仓库。 而且GitLab的搭建非常简单，只需三四步的操作即可。  首先，需要一台服务器，这是最基本的。  但是有几">
+<meta name="twitter:image" content="http://ocga9x543.bkt.clouddn.com/WX20171101-141806.png">
 
 
 
@@ -137,13 +134,13 @@
 
 
 
-  <link rel="canonical" href="http://blog.qczyl.club/2017/07/03/《Objective-C高级编程 iOS与OS X多线程和内存管理》读书笔记 GCD篇/"/>
+  <link rel="canonical" href="http://blog.qczyl.club/2017/11/01/GitLab搭建及汉化/"/>
 
 
 
 
 
-  <title>《Objective-C高级编程 iOS与OS X多线程和内存管理》读书笔记 GCD篇 | qczyl's Blog</title>
+  <title>GitLab搭建及汉化 | qczyl's Blog</title>
   
 
 
@@ -272,7 +269,7 @@
   
 
   <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-    <link itemprop="mainEntityOfPage" href="http://blog.qczyl.club/2017/07/03/《Objective-C高级编程 iOS与OS X多线程和内存管理》读书笔记 GCD篇/">
+    <link itemprop="mainEntityOfPage" href="http://blog.qczyl.club/2017/11/01/GitLab搭建及汉化/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="qczyl">
@@ -289,7 +286,7 @@
 
         
         
-          <h2 class="post-title" itemprop="name headline">《Objective-C高级编程 iOS与OS X多线程和内存管理》读书笔记 GCD篇</h2>
+          <h2 class="post-title" itemprop="name headline">GitLab搭建及汉化</h2>
         
 
         <div class="post-meta">
@@ -301,8 +298,8 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-07-03T14:14:08+08:00">
-                2017-07-03
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-11-01T15:22:47+08:00">
+                2017-11-01
               </time>
             
 
@@ -324,8 +321,8 @@
               
               
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/读书笔记/" itemprop="url" rel="index">
-                    <span itemprop="name">读书笔记</span>
+                  <a href="/categories/杂学/" itemprop="url" rel="index">
+                    <span itemprop="name">杂学</span>
                   </a>
                 </span>
 
@@ -341,7 +338,7 @@
 
           
           
-             <span id="/2017/07/03/《Objective-C高级编程 iOS与OS X多线程和内存管理》读书笔记 GCD篇/" class="leancloud_visitors" data-flag-title="《Objective-C高级编程 iOS与OS X多线程和内存管理》读书笔记 GCD篇">
+             <span id="/2017/11/01/GitLab搭建及汉化/" class="leancloud_visitors" data-flag-title="GitLab搭建及汉化">
                <span class="post-meta-divider">|</span>
                <span class="post-meta-item-icon">
                  <i class="fa fa-eye"></i>
@@ -369,40 +366,56 @@
       
 
       
-        <p>这篇文章主要给大家讲解一下GCD的平时不太常用的API，以及文末会贴出GCD定时器的一个小例子。</p>
-<h2 id="1-GCD的API"><a href="#1-GCD的API" class="headerlink" title="1.GCD的API"></a>1.GCD的API</h2><h3 id="1-1-Dispatch-Queue"><a href="#1-1-Dispatch-Queue" class="headerlink" title="1.1 Dispatch Queue"></a>1.1 Dispatch Queue</h3><p>要谈GCD，就一定要了解<code>Dispatch Queue</code>（执行处理的等待队列）。<br><code>Dispatch Queue</code>按照追加的顺序（先进先出FIFO，First-In-First-Out）执行处理。<br>另外在执行处理是存在两种<code>Dispatch Queue</code>，一种是等待现在执行中处理的<code>Serial Dispatch Queue</code>，另一种是不等待现在执行中处理的<code>Concurrent Dispatch Queue</code>。</p>
-<p><img src="http://ocga9x543.bkt.clouddn.com/WX20170703-111143.png" alt=""></p>
-<h3 id="1-2-dispatch-queue-create"><a href="#1-2-dispatch-queue-create" class="headerlink" title="1.2 dispatch_queue_create"></a>1.2 dispatch_queue_create</h3><p>由于平时在使用时，我们大部分都是使用系统提供的<code>Main Dispatch Queue</code>和<code>Global Dispatch Queue</code>。<br>所以关于<code>dispatch_queue_create</code>API，这里只说两点：</p>
+        <h3 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h3><p><a href="http://blog.qczyl.club/2017/10/18/%E5%BC%80%E5%A7%8B%E4%BD%BF%E7%94%A8Git%E5%90%A7/">上一篇文章</a>简单介绍了Git的优点以及使用。这一篇就来介绍一下GitLab的搭建。</p>
+<hr>
+<p>作为公司的话，肯定不希望自己的代码放在别人的网站上，所以搭建一个自己的Git仓库就显得十分必要了（当然，如果你的公司不在意的话，那也是没有问题的）。<a href="https://about.gitlab.com/" target="_blank" rel="external">GitLab</a>就是一款可以搭建在自己服务器上的Git仓库。</p>
+<p>而且GitLab的搭建非常简单，只需三四步的操作即可。</p>
+<ol>
+<li><p>首先，需要一台服务器，这是最基本的。</p>
 <ul>
-<li>通过<code>dispatch_queue_create</code>函数生成的<code>Dispatch Queue</code>在使用结束后要通过<code>dispatch_release</code>函数释放。</li>
-<li>如果生成过多的线程，就会消耗大量内存，大幅度降低系统的响应性能。而使用系统提供的<code>Global Dispatch Queue</code>则不用担心这个问题。所以除非必要，其他情况建议使用系统提供的<code>Dispatch Queue</code>。</li>
+<li>但是有几点需要注意的：</li>
+<li>GitLab官网上强烈推荐承载 GitLab 运行的服务器 至少分配4GB的内存 给 GitLab 。</li>
+<li>推荐使用以下几种操作系统的服务器，可以使用Omnibus包安装方法，操作简单。<img src="http://ocga9x543.bkt.clouddn.com/WX20171101-141806.png" alt=""></li>
 </ul>
-<h3 id="1-3-dispatch-set-target-queue"><a href="#1-3-dispatch-set-target-queue" class="headerlink" title="1.3 dispatch_set_target_queue"></a>1.3 dispatch_set_target_queue</h3><p>使用<code>dispatch_queue_create</code>函数生成的<code>Dispatch Queue</code>，都使用的是与系统提供的<code>Global Dispatch Queue</code>的默认优先级相同的优先级。而要变更生成的执行优先级的话就要使用<code>dispatch_set_target_queue</code>函数。</p>
-<p>在后台执行动作处理的<code>Serial Dispatch Queue</code>的生成方法如下:</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">dispatch_queue_t mySerialDispatchQueue = dispatch_queue_create(&quot;com.example.gcd.mySerialDispatchQueue&quot;, NULL);</div><div class="line">   dispatch_queue_t globalDispatchQueueBackground = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_BACKGROUND, 0);</div><div class="line">   dispatch_set_target_queue(mySerialDispatchQueue, globalDispatchQueueBackground);</div></pre></td></tr></table></figure>
-<h3 id="1-3-dispatch-after"><a href="#1-3-dispatch-after" class="headerlink" title="1.3 dispatch_after"></a>1.3 dispatch_after</h3><p><code>dispatch_after</code>这里只说一点，<code>dispatch_after</code>函数并不是在指定时间后执行处理，而只是在指定时间追加处理到<code>Dispatch Queue</code>。</p>
-<p>因为<code>Main Dispatch Queue</code>在主线程的<code>RunLoop</code>中执行，所以在比如每隔1/60秒执行的<code>RunLoop</code>中，Block最快在 3 秒后执行，最慢在 3 秒 + 1/60 秒后执行，并且在<code>Main Dispatch Queue</code>有大量处理追加或主线程的处理本身有延迟时，这个时间会更长。</p>
-<p>所以该函数在有严格时间要求的情况下使用会出现问题，但是只是想大致延迟执行处理，该函数是非常有效的。</p>
-<h3 id="1-4-dispatch-barrier-async"><a href="#1-4-dispatch-barrier-async" class="headerlink" title="1.4 dispatch_barrier_async"></a>1.4 dispatch_barrier_async</h3><p>在访问数据库或文件时，使用多线程可能会产生数据竞争的问题，当然使用<code>Serial Dispatch Queue</code>可避免数据竞争。</p>
-<p>但是如果读取处理只是与读取处理并行执行，那么多个并行执行就不会发生问题。也就是说为了高效率的进行访问，读取处理追加到<code>Concurrent Dispatch Queue</code>，写入处理在任一读取处理没有执行的状态下，追加到<code>Serial Dispatch Queue</code>中即可（在写入处理结束之前，读取处理不可执行）。</p>
-<p>使用<code>dispatch_barrier_async</code>便可解决这个问题。<code>dispatch_barrier_async</code>函数会等待追加到<code>Concurrent Dispatch Queue</code>上的并行执行的处理全部结束后，再将制定的处理追加到该<code>Concurrent Dispatch Queue</code>中。然后在由<code>dispatch_barrier_async</code>函数追加的处理执行完毕后，<code>Concurrent Dispatch Queue</code>才恢复为一般的动作，追加到该<code>Concurrent Dispatch Queue</code>的处理又开始并行执行。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line">dispatch_async(queue, blk0_for_reading);</div><div class="line">dispatch_async(queue, blk1_for_reading);</div><div class="line">dispatch_async(queue, blk2_for_reading);</div><div class="line">dispatch_async(queue, blk3_for_reading);</div><div class="line">dispatch_barrier_async(queue, blk_for_writing);</div><div class="line">dispatch_async(queue, blk4_for_reading);</div><div class="line">dispatch_async(queue, blk5_for_reading);</div><div class="line">dispatch_async(queue, blk6_for_reading);</div><div class="line">dispatch_async(queue, blk7_for_reading);</div></pre></td></tr></table></figure>
-<p>如上所示，使用方法非常简单。仅使用<code>dispatch_barrier_async</code>函数代替<code>dispatch_async</code>函数即可。</p>
-<p><img src="http://ocga9x543.bkt.clouddn.com/WX20170703-115939.png" alt=""></p>
-<h3 id="1-5-dispatch-apply"><a href="#1-5-dispatch-apply" class="headerlink" title="1.5 dispatch_apply"></a>1.5 dispatch_apply</h3><p><code>dispatch_apply</code>函数是<code>dispatch_sync</code>函数和<code>Dispatch Group</code>的关联API。该函数按指定的次数将指定的Block追加到指定的<code>Dispatch Queue</code>中，并等待全部处理执行结束。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">dispatch_queue_t queue = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0);</div><div class="line">dispatch_apply(10, queue, ^(size_t index) &#123;</div><div class="line">    NSLog(@&quot;%zu&quot;, index);</div><div class="line">&#125;);</div><div class="line">NSLog(@&quot;done&quot;);</div></pre></td></tr></table></figure>
-<p>例如，该源代码的执行结果为：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line">4</div><div class="line">1</div><div class="line">0</div><div class="line">3</div><div class="line">5</div><div class="line">2</div><div class="line">6</div><div class="line">8</div><div class="line">9</div><div class="line">7</div><div class="line">done</div></pre></td></tr></table></figure>
-<p>因为在<code>Global Dispatch Queue</code>中执行处理，所以各个处理的执行时间不定。但是输出结果中最后的done必定在最后的位置上。这是因为<code>dispatch_apply</code>函数会等待全部处理执行结束。</p>
-<h3 id="1-6-Dispatch-I-O"><a href="#1-6-Dispatch-I-O" class="headerlink" title="1.6 Dispatch I/O"></a>1.6 Dispatch I/O</h3><p>大家可能想过，在读取较大文件时，如果将文件分成合适的大小并使用<code>Global Dispatch Queue</code>并列读取的话，应该会比一般的读取速度快不少。能实现这一功能的就是<code>Dispatch I/O</code>和<code>Dispatch Data</code>。</p>
-<p><img src="http://ocga9x543.bkt.clouddn.com/WX20170703-140234.png" alt=""></p>
-<p>如果想提高文件读取速度，可以尝试使用<code>Dispatch I/O</code>。</p>
-<h3 id="1-7-Dispatch-Source"><a href="#1-7-Dispatch-Source" class="headerlink" title="1.7 Dispatch Source"></a>1.7 Dispatch Source</h3><p>GCD中出了主要的<code>Dispatch Queue</code>外，还有不太引人注目的<code>Dispatch Source</code>。它是BSD系内核惯有功能<code>kqueue</code>的包装。<br><code>kqueue</code>是在XNU内核中发生各种事件时，在应用程序编程方执行处理的技术。其CPU负荷非常小，尽量不占用资源。<code>kqueue</code>可以说是应用程序处理XNU内核中发生的各种事件的方法中最优秀的一种。</p>
-<p><code>Dispatch Source</code>可以处理一下事件。</p>
-<p><img src="http://ocga9x543.bkt.clouddn.com/WX20170703-141244.png" alt=""></p>
-<p>在使用NSTimer做定时器的时候，大家应该都知道如果使用不当，会出现内存泄漏的问题。<br>而如果作为一个封装的组件来说，就需要将NSTimer属性暴露出来，在控制器销毁时，调用NSTimer的invalidate方法。如果忘记的话就会内存泄漏！</p>
-<p>但是使用<code>DISPATCH_SOUTCE_TYPE_TIMER</code>的话就不需要担心这个问题了。</p>
-<p><a href="https://github.com/qcyl/GCD-Timer-Demo" target="_blank" rel="external">此处</a>为使用了<code>DISPATCH_SOUTCE_TYPE_TIMER</code>的定时器的小demo。</p>
+</li>
+<li><p>打开<a href="https://about.gitlab.com/installation/" target="_blank" rel="external">GitLab</a>或<a href="https://www.gitlab.cc/installation/" target="_blank" rel="external">GitLab中文网</a>，选择对应的操作系统，按照提示进行安装。推荐使用<code>Omnibus包安装方法</code>进行安装！</p>
+<ul>
+<li>这里也有一些注意点：</li>
+<li>选择对应的操作系统后，会有两种版本的安装方法。</li>
+<li><code>Community Edition</code>: 社区版（免费）</li>
+<li><code>Enterprise Edition</code>: 企业版（收费）</li>
+<li>但是这里推荐安装<code>企业版</code>的。<code>企业版</code>未付费的话，和<code>社区版</code>功能是一样的，付费后可直接使用<code>企业版</code>的功能。而<code>社区版</code>要升级为<code>企业版</code>的话需要重新部署。</li>
+</ul>
+</li>
+<li><p>配置SMTP</p>
+<ul>
+<li><p>进入<code>/etc/gitlab/gitlab.rb</code>文件，将以下配置的注释取消并修改</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div></pre></td><td class="code"><pre><div class="line">gitlab_rails[&apos;smtp_enable&apos;] = true</div><div class="line">gitlab_rails[&apos;smtp_address&apos;] = &quot;smtp.server&quot;</div><div class="line">gitlab_rails[&apos;smtp_port&apos;] = 465</div><div class="line">gitlab_rails[&apos;smtp_user_name&apos;] = &quot;smtp user&quot;</div><div class="line">gitlab_rails[&apos;smtp_password&apos;] = &quot;smtp password&quot;</div><div class="line">gitlab_rails[&apos;smtp_domain&apos;] = &quot;example.com&quot;</div><div class="line">gitlab_rails[&apos;smtp_authentication&apos;] = &quot;login&quot;</div><div class="line">gitlab_rails[&apos;smtp_enable_starttls_auto&apos;] = true</div><div class="line">gitlab_rails[&apos;smtp_openssl_verify_mode&apos;] = &apos;peer&apos;</div><div class="line"></div><div class="line"># 如果你使用的SMTP服务是默认的 &apos;From:gitlab@localhost&apos;</div><div class="line"># 你可以修改这里的 &apos;From&apos; 的值。</div><div class="line">gitlab_rails[&apos;gitlab_email_from&apos;] = &apos;gitlab@example.com&apos;</div><div class="line">gitlab_rails[&apos;gitlab_email_reply_to&apos;] = &apos;noreply@example.com&apos;</div></pre></td></tr></table></figure>
+</li>
+</ul>
+</li>
+</ol>
+<pre><code>* 注：上面只是一个例子，具体的SMTP配置还需要自己根据实际情况修改（修改完配置后记得执行``sudo gitlab-ctl reconfigure``使配置生效）
+* 常用的SMTP配置示例可以去[这里](https://docs.gitlab.com.cn/omnibus/settings/smtp.html)查看。
+* 配置完成后可以用Rails控制台验证邮件是否能发送成功。 在GitLab服务器上，执行``gitlab-rails console``进入控制台。 然后在控制台提示符后输入下面的命令 发送一封测试邮件：
+
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">	irb(main):003:0&gt; Notify.test_email(&apos;destination_email@address.com&apos;, &apos;Message Subject&apos;, &apos;Message Body&apos;).deliver_now</div><div class="line"># 示例</div><div class="line">Notify.test_email(&apos;收件人邮箱&apos;, &apos;邮件标题&apos;, &apos;邮件正文&apos;).deliver_now</div></pre></td></tr></table></figure>
+</code></pre><p>如果你的测试邮件发送成功了的话，那么恭喜你，GitLab已经搭建完成了，可以尽情的使用了。</p>
+<hr>
+<p>下面要介绍的就是GitLab的汉化，个人感觉汉化的也不是很完整，导致部分页面是中文英文混杂着的，当然，大部分已经汉化了。</p>
+<p>首先确认版本：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">sudo cat /opt/gitlab/embedded/service/gitlab-rails/VERSION</div></pre></td></tr></table></figure>
+<p> v7 ~ v8.8版本clone以下仓库到本地：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">git clone https://gitlab.com/larryli/gitlab.git</div></pre></td></tr></table></figure>
+<p> v8.9以后版本clone以下仓库到本地：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">git clone https://gitlab.com/xhang/gitlab.git</div></pre></td></tr></table></figure>
+<p> clone仓库成功后，比较汉化分支和原分支，导出 patch 用的 diff 文件：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">// $&#123;gitlab_version&#125;替换为你上面确定的版本</div><div class="line">git diff v$&#123;gitlab_version&#125; v$&#123;gitlab_version&#125;-zh &gt; ../$&#123;gitlab_version&#125;-zh.diff</div></pre></td></tr></table></figure>
+<p>执行完毕后将生成当前版本的补丁文件，如<code>9.0.0-zh.diff</code></p>
+<p>导入汉化补丁：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"># 停止 gitlab</div><div class="line">sudo gitlab-ctl stop</div><div class="line">sudo patch -d /opt/gitlab/embedded/service/gitlab-rails -p1 &lt; 9.0.0-zh.diff</div></pre></td></tr></table></figure>
+<p>确定没有 .rej 文件，重启 GitLab 即可。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">sudo gitlab-ctl start</div></pre></td></tr></table></figure>
 
       
     </div>
@@ -465,8 +478,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2017/06/29/《Objective-C高级编程 iOS与OS X多线程和内存管理》读书笔记 Block篇/" rel="next" title="《Objective-C高级编程 iOS与OS X多线程和内存管理》读书笔记 Block篇">
-                <i class="fa fa-chevron-left"></i> 《Objective-C高级编程 iOS与OS X多线程和内存管理》读书笔记 Block篇
+              <a href="/2017/10/18/开始使用Git吧/" rel="next" title="开始使用Git吧">
+                <i class="fa fa-chevron-left"></i> 开始使用Git吧
               </a>
             
           </div>
@@ -474,10 +487,6 @@
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
-            
-              <a href="/2017/07/07/多Target、组件化实践/" rel="prev" title="多Target、组件化实践">
-                多Target、组件化实践 <i class="fa fa-chevron-right"></i>
-              </a>
             
           </div>
         </div>
@@ -624,7 +633,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#1-GCD的API"><span class="nav-number">1.</span> <span class="nav-text">1.GCD的API</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-1-Dispatch-Queue"><span class="nav-number">1.1.</span> <span class="nav-text">1.1 Dispatch Queue</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#1-2-dispatch-queue-create"><span class="nav-number">1.2.</span> <span class="nav-text">1.2 dispatch_queue_create</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#1-3-dispatch-set-target-queue"><span class="nav-number">1.3.</span> <span class="nav-text">1.3 dispatch_set_target_queue</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#1-3-dispatch-after"><span class="nav-number">1.4.</span> <span class="nav-text">1.3 dispatch_after</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#1-4-dispatch-barrier-async"><span class="nav-number">1.5.</span> <span class="nav-text">1.4 dispatch_barrier_async</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#1-5-dispatch-apply"><span class="nav-number">1.6.</span> <span class="nav-text">1.5 dispatch_apply</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#1-6-Dispatch-I-O"><span class="nav-number">1.7.</span> <span class="nav-text">1.6 Dispatch I/O</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#1-7-Dispatch-Source"><span class="nav-number">1.8.</span> <span class="nav-text">1.7 Dispatch Source</span></a></li></ol></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#前言"><span class="nav-number">1.</span> <span class="nav-text">前言</span></a></li></ol></div>
             
 
           </div>
