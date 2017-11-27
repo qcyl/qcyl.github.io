@@ -31,20 +31,17 @@ categories: 杂学
 	* 进入``/etc/gitlab/gitlab.rb``文件，将以下配置的注释取消并修改
 	
 	```
+	
 	gitlab_rails['smtp_enable'] = true
-	gitlab_rails['smtp_address'] = "smtp.server"
-	gitlab_rails['smtp_port'] = 465
-	gitlab_rails['smtp_user_name'] = "smtp user"
-	gitlab_rails['smtp_password'] = "smtp password"
-	gitlab_rails['smtp_domain'] = "example.com"
+	gitlab_rails['smtp_address'] = "smtp.163.com"
+	gitlab_rails['smtp_port'] = 25
+	gitlab_rails['smtp_domain'] = "163.com"
+	gitlab_rails['smtp_user_name'] = "username@163.com"
+	gitlab_rails['smtp_password'] = "password"
 	gitlab_rails['smtp_authentication'] = "login"
 	gitlab_rails['smtp_enable_starttls_auto'] = true
-	gitlab_rails['smtp_openssl_verify_mode'] = 'peer'
-	
-	# 如果你使用的SMTP服务是默认的 'From:gitlab@localhost'
-	# 你可以修改这里的 'From' 的值。
-	gitlab_rails['gitlab_email_from'] = 'gitlab@example.com'
-	gitlab_rails['gitlab_email_reply_to'] = 'noreply@example.com'
+	gitlab_rails['gitlab_email_from'] = 'username@163.com'
+	gitlab_rails['gitlab_email_reply_to'] = 'username@163.com'
 	
 	```
 	
@@ -52,11 +49,11 @@ categories: 杂学
 	* 常用的SMTP配置示例可以去[这里](https://docs.gitlab.com.cn/omnibus/settings/smtp.html)查看。
 	* 配置完成后可以用Rails控制台验证邮件是否能发送成功。 在GitLab服务器上，执行``gitlab-rails console``进入控制台。 然后在控制台提示符后输入下面的命令 发送一封测试邮件：
 	
-	```
-	irb(main):003:0> Notify.test_email('destination_email@address.com', 'Message Subject', 'Message Body').deliver_now
+```
+irb(main):003:0> Notify.test_email('destination_email@address.com', 'Message Subject', 'Message Body').deliver_now
 # 示例
 Notify.test_email('收件人邮箱', '邮件标题', '邮件正文').deliver_now
-	```
+```
 	
 如果你的测试邮件发送成功了的话，那么恭喜你，GitLab已经搭建完成了，可以尽情的使用了。
 
