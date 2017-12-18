@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://blog.qczyl.club/"/>
-  <updated>2017-11-27T02:57:19.280Z</updated>
+  <updated>2017-12-18T09:38:21.000Z</updated>
   <id>http://blog.qczyl.club/</id>
   
   <author>
@@ -14,6 +14,38 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>ReactNative从零到上架</title>
+    <link href="http://blog.qczyl.club/2017/12/18/ReactNative%E4%BB%8E%E9%9B%B6%E5%88%B0%E4%B8%8A%E6%9E%B6/"/>
+    <id>http://blog.qczyl.club/2017/12/18/ReactNative从零到上架/</id>
+    <published>2017-12-18T08:59:09.000Z</published>
+    <updated>2017-12-18T09:38:21.000Z</updated>
+    
+    <content type="html"><![CDATA[<p>首先，向大家介绍一下这款RN开发的上架项目：<a href="http://a.app.qq.com/o/simple.jsp?pkgname=com.qc.taoyouhui" target="_blank" rel="external">淘优惠</a>，一款免费领取天猫淘宝购物优惠券的软件。<br>下载链接： <a href="http://a.app.qq.com/o/simple.jsp?pkgname=com.qc.taoyouhui" target="_blank" rel="external">http://a.app.qq.com/o/simple.jsp?pkgname=com.qc.taoyouhui</a><br><img src="http://ocga9x543.bkt.clouddn.com/1513588944.png" alt=""></p>
+<h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>我个人本身是一位iOS开发者，最开始开发<a href="http://a.app.qq.com/o/simple.jsp?pkgname=com.qc.taoyouhui" target="_blank" rel="external">淘优惠</a>时，是iOS和Android各写了一套代码；由于对Android的了解还是有限，所以开发出来的版本不是很好，于是就打算用ReactNative再开发一个版本出来。<br>这篇文章主要介绍我是如何使用ReactNative将<a href="http://a.app.qq.com/o/simple.jsp?pkgname=com.qc.taoyouhui" target="_blank" rel="external">淘优惠2.0</a>从零到上架的。</p>
+<h2 id="开发环境搭建"><a href="#开发环境搭建" class="headerlink" title="开发环境搭建"></a>开发环境搭建</h2><p>搭建开发环境应该说是最基础的问题了，ReactNative的环境搭建还是很简单的，一般照着<a href="https://reactnative.cn/docs/0.51/getting-started.html" target="_blank" rel="external">文档</a>来都不会出什么错的。</p>
+<h2 id="Hello-World"><a href="#Hello-World" class="headerlink" title="Hello World"></a>Hello World</h2><p>开发环境搭建完成之后，要先大概了解一下项目的运行路径，可以先按照<a href="https://reactnative.cn/docs/0.51/getting-started.html" target="_blank" rel="external">文档</a>敲一下Hello World，以及后边的一些简单示例。</p>
+<h2 id="源码学习"><a href="#源码学习" class="headerlink" title="源码学习"></a>源码学习</h2><p>大概了解了之后，我又在GitHub上找了很多的开源项目，找一些简单的，再找一些稍微大一点的，去慢慢学习他们的编程方式，以及架构上的一些设计。学习学习再学习，期间可以修改一下他们的代码，然后看运行效果，可以更方便的了解代码。</p>
+<h2 id="项目开发"><a href="#项目开发" class="headerlink" title="项目开发"></a>项目开发</h2><p>然后就要自己动手开发了，可以选一个简单的项目，比如说我的<a href="http://a.app.qq.com/o/simple.jsp?pkgname=com.qc.taoyouhui" target="_blank" rel="external">淘优惠2.0</a>，这就是一个很简单的项目了。开发前要确定一下自己项目整体的架构，要尽量保持项目代码的整洁，防止项目开发后期代码混乱不堪，这会减少我们学习的激情，甚至有可能放弃。</p>
+<p>我最开始开发<a href="http://a.app.qq.com/o/simple.jsp?pkgname=com.qc.taoyouhui" target="_blank" rel="external">淘优惠2.0</a>时，在项目中使用了redux来管理状态，也许是我对redux的理解还不够，也许是我的项目确实不适合redux，导致了开发到后期项目代码有些混乱，所以我又不得不推倒重新来过。</p>
+<p>确定了项目之后就要进入开发了，开发过程中，难免会遇到各种问题，这时候就要多看<a href="https://reactnative.cn/docs/0.51/getting-started.html" target="_blank" rel="external">文档</a>了，<a href="https://reactnative.cn/docs/0.51/getting-started.html" target="_blank" rel="external">文档</a>可以帮你解决绝大多数的问题，解决不了的就要学会百度、谷歌了。要是实在解决不了也可以发到这里，让大家一起交流一下。</p>
+<p>如果你只会iOS或者Android，你可以只先开发一端的，最后再去适配另一端。相信我，你修改的东西不会很多，只需要简单的适配一下页面，集成一些第三方的SDK，向RN暴露一些原生方法。而这些东西，都是简单的照着对应的文档操作即可。</p>
+<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>个人认为ReactNative的体验还是可以接受的，如果项目没有过于复杂的界面层级，严格的原生交互方式，并且开发人员不足的情况下，推荐大家试试ReactNative！对了，还支持热更新哦（不会被拒的那种）！</p>
+<hr>
+<p>最后，在打一波广告！<br><a href="http://a.app.qq.com/o/simple.jsp?pkgname=com.qc.taoyouhui" target="_blank" rel="external">淘优惠</a>，一款免费领取天猫淘宝购物优惠券的软件。<br>下载链接： <a href="http://a.app.qq.com/o/simple.jsp?pkgname=com.qc.taoyouhui" target="_blank" rel="external">http://a.app.qq.com/o/simple.jsp?pkgname=com.qc.taoyouhui</a><br><img src="http://ocga9x543.bkt.clouddn.com/1513588944.png" alt=""></p>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;首先，向大家介绍一下这款RN开发的上架项目：&lt;a href=&quot;http://a.app.qq.com/o/simple.jsp?pkgname=com.qc.taoyouhui&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;淘优惠&lt;/a&gt;，一款免费领取天猫
+    
+    </summary>
+    
+      <category term="杂学" scheme="http://blog.qczyl.club/categories/%E6%9D%82%E5%AD%A6/"/>
+    
+    
+  </entry>
   
   <entry>
     <title>GitLab搭建及汉化</title>
