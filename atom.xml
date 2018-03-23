@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://blog.qczyl.club/"/>
-  <updated>2017-12-18T09:38:21.000Z</updated>
+  <updated>2018-03-23T02:07:26.920Z</updated>
   <id>http://blog.qczyl.club/</id>
   
   <author>
@@ -19,8 +19,8 @@
     <title>ReactNative从零到上架</title>
     <link href="http://blog.qczyl.club/2017/12/18/ReactNative%E4%BB%8E%E9%9B%B6%E5%88%B0%E4%B8%8A%E6%9E%B6/"/>
     <id>http://blog.qczyl.club/2017/12/18/ReactNative从零到上架/</id>
-    <published>2017-12-18T08:59:09.000Z</published>
-    <updated>2017-12-18T09:38:21.000Z</updated>
+    <published>2017-12-17T16:00:00.000Z</published>
+    <updated>2018-03-23T02:07:26.920Z</updated>
     
     <content type="html"><![CDATA[<p>首先，向大家介绍一下这款RN开发的上架项目：<a href="http://a.app.qq.com/o/simple.jsp?pkgname=com.qc.taoyouhui" target="_blank" rel="external">淘优惠</a>，一款免费领取天猫淘宝购物优惠券的软件。<br>下载链接： <a href="http://a.app.qq.com/o/simple.jsp?pkgname=com.qc.taoyouhui" target="_blank" rel="external">http://a.app.qq.com/o/simple.jsp?pkgname=com.qc.taoyouhui</a><br><img src="http://ocga9x543.bkt.clouddn.com/1513588944.png" alt=""></p>
 <h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>我个人本身是一位iOS开发者，最开始开发<a href="http://a.app.qq.com/o/simple.jsp?pkgname=com.qc.taoyouhui" target="_blank" rel="external">淘优惠</a>时，是iOS和Android各写了一套代码；由于对Android的了解还是有限，所以开发出来的版本不是很好，于是就打算用ReactNative再开发一个版本出来。<br>这篇文章主要介绍我是如何使用ReactNative将<a href="http://a.app.qq.com/o/simple.jsp?pkgname=com.qc.taoyouhui" target="_blank" rel="external">淘优惠2.0</a>从零到上架的。</p>
@@ -49,10 +49,10 @@
   
   <entry>
     <title>GitLab搭建及汉化</title>
-    <link href="http://blog.qczyl.club/2017/11/21/GitLab%E6%90%AD%E5%BB%BA%E5%8F%8A%E6%B1%89%E5%8C%96/"/>
-    <id>http://blog.qczyl.club/2017/11/21/GitLab搭建及汉化/</id>
-    <published>2017-11-20T22:49:29.000Z</published>
-    <updated>2017-11-27T02:57:19.280Z</updated>
+    <link href="http://blog.qczyl.club/2017/11/01/GitLab%E6%90%AD%E5%BB%BA%E5%8F%8A%E6%B1%89%E5%8C%96/"/>
+    <id>http://blog.qczyl.club/2017/11/01/GitLab搭建及汉化/</id>
+    <published>2017-10-31T16:00:00.000Z</published>
+    <updated>2018-03-23T02:08:20.610Z</updated>
     
     <content type="html"><![CDATA[<h3 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h3><p><a href="http://blog.qczyl.club/2017/10/18/%E5%BC%80%E5%A7%8B%E4%BD%BF%E7%94%A8Git%E5%90%A7/">上一篇文章</a>简单介绍了Git的优点以及使用。这一篇就来介绍一下GitLab的搭建。</p>
 <hr>
@@ -117,11 +117,53 @@
   </entry>
   
   <entry>
+    <title>开始使用Git吧</title>
+    <link href="http://blog.qczyl.club/2017/10/18/%E5%BC%80%E5%A7%8B%E4%BD%BF%E7%94%A8Git%E5%90%A7/"/>
+    <id>http://blog.qczyl.club/2017/10/18/开始使用Git吧/</id>
+    <published>2017-10-17T16:00:00.000Z</published>
+    <updated>2018-03-23T02:08:54.110Z</updated>
+    
+    <content type="html"><![CDATA[<p>既然说<code>开始使用Git吧</code>，那Git相对于SVN来说肯定还是有一定的好处的。<br>大家可以看一下<a href="https://my.oschina.net/u/1580062/blog/214850" target="_blank" rel="external">评《GIT和SVN之间的五个基本区别》</a>这篇文章，虽然文章时间有点久远，但是我很认同里边的说法，特别是Git对分支和合并有更好的支持。</p>
+<p>虽然评论区还是有很多使用SVN的用户不是很赞同他的观点，认为Git的权限问题是一个很大的问题，但是现在公司搭一个Gitlab就可以将权限问题完全搞定了。</p>
+<h3 id="Git的基本使用"><a href="#Git的基本使用" class="headerlink" title="Git的基本使用"></a>Git的基本使用</h3><p>Git相对于SVN来说命令确实多了一些，大家可以通过<a href="https://git-scm.com/book/zh/v1/Git-%E5%9F%BA%E7%A1%80" target="_blank" rel="external">Git基础</a>来学习一下Git的常用命令。</p>
+<p>但是个人推荐直接使用<a href="https://www.sourcetreeapp.com/" target="_blank" rel="external">Sourcetree</a>来进行日常的开发使用，简单方便可视化。当然命令还是要了解一下的，以防万一啊！</p>
+<h3 id="Git远程仓库"><a href="#Git远程仓库" class="headerlink" title="Git远程仓库"></a>Git远程仓库</h3><p>了解了Git的简单命令，以及<a href="https://www.sourcetreeapp.com/" target="_blank" rel="external">Sourcetree</a>的使用，大家就可以<code>开始使用Git</code>了。</p>
+<p>但是，只使用本地仓库的话，那就丧失了Git的真正意义。<br>这里介绍几款Git远程仓库：</p>
+<ol>
+<li><a href="https://github.com/" target="_blank" rel="external">GItHub</a>，相信这个大家都知道的，但是在<code>GItHub</code>上使用私有仓库是收费的</li>
+<li><a href="https://gitee.com/" target="_blank" rel="external">码云</a>，很屌的名字，支持私用仓库创建</li>
+<li><a href="https://about.gitlab.com/" target="_blank" rel="external">GitLab</a>，可搭建在自己的服务器上，适合公司使用，有完善的权限系统</li>
+</ol>
+<h3 id="Git工作流程"><a href="#Git工作流程" class="headerlink" title="Git工作流程"></a>Git工作流程</h3><p>当在团队开发中使用版本控制系统时，商定一个统一的工作流程是至关重要的。Git 的确可以在各个方面做很多事情，然而，如果在你的团队中还没有能形成一个特定有效的工作流程，那么混乱就将是不可避免的。</p>
+<p>Git工作流程有各式各样的用法，但也正因此使得在实际工作中如何上手使用变得很头大。这里介绍几种公司最常用的Git工作流程：</p>
+<ol>
+<li><a href="http://blog.jobbole.com/76847/" target="_blank" rel="external">集中式工作流</a>，适合开发团队成员已经很熟悉SVN，无需去适应一个全新流程</li>
+<li><a href="http://blog.jobbole.com/76857/" target="_blank" rel="external">功能分支工作流</a>，以集中式工作流为基础，不同的是为各个新功能分配一个专门的分支来开发</li>
+<li><a href="http://blog.jobbole.com/76867/" target="_blank" rel="external">Gitflow工作流</a>，通过为功能开发、发布准备和维护分配独立的分支，让发布迭代过程更流畅。最早诞生、并得到广泛采用的一种工作流程，推荐的流程</li>
+<li><a href="http://blog.jobbole.com/76861/" target="_blank" rel="external">Forking工作流</a>，分布式工作流，充分利用了Git在分支和克隆上的优势。可以安全可靠地管理大团队的开发者（developer），并能接受不信任贡献者（contributor）的提交</li>
+</ol>
+<p>个人推荐使用<a href="http://blog.jobbole.com/76867/" target="_blank" rel="external">Gitflow工作流</a>，而且<a href="https://www.sourcetreeapp.com/" target="_blank" rel="external">Sourcetree</a>也天然支持Gitflow，并把这个模型的各种操作通过菜单命令的形式提供了出来，大大减轻了使用人员的学习使用成本。</p>
+<hr>
+<p>相信大家使用Git后，会渐渐的爱上他的！</p>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;既然说&lt;code&gt;开始使用Git吧&lt;/code&gt;，那Git相对于SVN来说肯定还是有一定的好处的。&lt;br&gt;大家可以看一下&lt;a href=&quot;https://my.oschina.net/u/1580062/blog/214850&quot; target=&quot;_blank&quot; rel=&quot;e
+    
+    </summary>
+    
+      <category term="杂学" scheme="http://blog.qczyl.club/categories/%E6%9D%82%E5%AD%A6/"/>
+    
+    
+  </entry>
+  
+  <entry>
     <title>Swift 4.0 新特性</title>
-    <link href="http://blog.qczyl.club/2017/11/21/Swift%204.0%20%E6%96%B0%E7%89%B9%E6%80%A7/"/>
-    <id>http://blog.qczyl.club/2017/11/21/Swift 4.0 新特性/</id>
-    <published>2017-11-20T22:49:29.000Z</published>
-    <updated>2017-10-17T10:04:10.000Z</updated>
+    <link href="http://blog.qczyl.club/2017/10/17/Swift%204.0%20%E6%96%B0%E7%89%B9%E6%80%A7/"/>
+    <id>http://blog.qczyl.club/2017/10/17/Swift 4.0 新特性/</id>
+    <published>2017-10-16T16:00:00.000Z</published>
+    <updated>2018-03-23T02:07:47.440Z</updated>
     
     <content type="html"><![CDATA[<p>本文主要是基于github上一个Swift 4.0新特性的开源项目<a href="https://github.com/ole/whats-new-in-swift-4" target="_blank" rel="external">whats-new-in-swift-4</a>的解读。</p>
 <h2 id="1-One-sided-ranges"><a href="#1-One-sided-ranges" class="headerlink" title="1.One-sided ranges"></a>1.One-sided ranges</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">let numbers = [1,2,3,4,5,6,7,8,9,10]</div><div class="line">numbers[5...] // instead of numbers[5..&lt;numbers.endIndex]</div></pre></td></tr></table></figure>
@@ -261,66 +303,62 @@
   </entry>
   
   <entry>
-    <title>《Objective-C高级编程 iOS与OS X多线程和内存管理》读书笔记 GCD篇</title>
-    <link href="http://blog.qczyl.club/2017/11/21/%E3%80%8AObjective-C%E9%AB%98%E7%BA%A7%E7%BC%96%E7%A8%8B%20iOS%E4%B8%8EOS%20X%E5%A4%9A%E7%BA%BF%E7%A8%8B%E5%92%8C%E5%86%85%E5%AD%98%E7%AE%A1%E7%90%86%E3%80%8B%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0%20GCD%E7%AF%87/"/>
-    <id>http://blog.qczyl.club/2017/11/21/《Objective-C高级编程 iOS与OS X多线程和内存管理》读书笔记 GCD篇/</id>
-    <published>2017-11-20T22:49:29.000Z</published>
-    <updated>2017-07-03T06:38:52.000Z</updated>
+    <title>数据驱动的TableView：QCListView_Swift</title>
+    <link href="http://blog.qczyl.club/2017/07/28/%E6%95%B0%E6%8D%AE%E9%A9%B1%E5%8A%A8%E7%9A%84TableView%EF%BC%9AQCListView_Swift/"/>
+    <id>http://blog.qczyl.club/2017/07/28/数据驱动的TableView：QCListView_Swift/</id>
+    <published>2017-07-27T16:00:00.000Z</published>
+    <updated>2018-03-23T02:08:31.610Z</updated>
     
-    <content type="html"><![CDATA[<p>这篇文章主要给大家讲解一下GCD的平时不太常用的API，以及文末会贴出GCD定时器的一个小例子。</p>
-<h2 id="1-GCD的API"><a href="#1-GCD的API" class="headerlink" title="1.GCD的API"></a>1.GCD的API</h2><h3 id="1-1-Dispatch-Queue"><a href="#1-1-Dispatch-Queue" class="headerlink" title="1.1 Dispatch Queue"></a>1.1 Dispatch Queue</h3><p>要谈GCD，就一定要了解<code>Dispatch Queue</code>（执行处理的等待队列）。<br><code>Dispatch Queue</code>按照追加的顺序（先进先出FIFO，First-In-First-Out）执行处理。<br>另外在执行处理是存在两种<code>Dispatch Queue</code>，一种是等待现在执行中处理的<code>Serial Dispatch Queue</code>，另一种是不等待现在执行中处理的<code>Concurrent Dispatch Queue</code>。</p>
-<p><img src="http://ocga9x543.bkt.clouddn.com/WX20170703-111143.png" alt=""></p>
-<h3 id="1-2-dispatch-queue-create"><a href="#1-2-dispatch-queue-create" class="headerlink" title="1.2 dispatch_queue_create"></a>1.2 dispatch_queue_create</h3><p>由于平时在使用时，我们大部分都是使用系统提供的<code>Main Dispatch Queue</code>和<code>Global Dispatch Queue</code>。<br>所以关于<code>dispatch_queue_create</code>API，这里只说两点：</p>
-<ul>
-<li>通过<code>dispatch_queue_create</code>函数生成的<code>Dispatch Queue</code>在使用结束后要通过<code>dispatch_release</code>函数释放。</li>
-<li>如果生成过多的线程，就会消耗大量内存，大幅度降低系统的响应性能。而使用系统提供的<code>Global Dispatch Queue</code>则不用担心这个问题。所以除非必要，其他情况建议使用系统提供的<code>Dispatch Queue</code>。</li>
-</ul>
-<h3 id="1-3-dispatch-set-target-queue"><a href="#1-3-dispatch-set-target-queue" class="headerlink" title="1.3 dispatch_set_target_queue"></a>1.3 dispatch_set_target_queue</h3><p>使用<code>dispatch_queue_create</code>函数生成的<code>Dispatch Queue</code>，都使用的是与系统提供的<code>Global Dispatch Queue</code>的默认优先级相同的优先级。而要变更生成的执行优先级的话就要使用<code>dispatch_set_target_queue</code>函数。</p>
-<p>在后台执行动作处理的<code>Serial Dispatch Queue</code>的生成方法如下:</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">dispatch_queue_t mySerialDispatchQueue = dispatch_queue_create(&quot;com.example.gcd.mySerialDispatchQueue&quot;, NULL);</div><div class="line">   dispatch_queue_t globalDispatchQueueBackground = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_BACKGROUND, 0);</div><div class="line">   dispatch_set_target_queue(mySerialDispatchQueue, globalDispatchQueueBackground);</div></pre></td></tr></table></figure>
-<h3 id="1-3-dispatch-after"><a href="#1-3-dispatch-after" class="headerlink" title="1.3 dispatch_after"></a>1.3 dispatch_after</h3><p><code>dispatch_after</code>这里只说一点，<code>dispatch_after</code>函数并不是在指定时间后执行处理，而只是在指定时间追加处理到<code>Dispatch Queue</code>。</p>
-<p>因为<code>Main Dispatch Queue</code>在主线程的<code>RunLoop</code>中执行，所以在比如每隔1/60秒执行的<code>RunLoop</code>中，Block最快在 3 秒后执行，最慢在 3 秒 + 1/60 秒后执行，并且在<code>Main Dispatch Queue</code>有大量处理追加或主线程的处理本身有延迟时，这个时间会更长。</p>
-<p>所以该函数在有严格时间要求的情况下使用会出现问题，但是只是想大致延迟执行处理，该函数是非常有效的。</p>
-<h3 id="1-4-dispatch-barrier-async"><a href="#1-4-dispatch-barrier-async" class="headerlink" title="1.4 dispatch_barrier_async"></a>1.4 dispatch_barrier_async</h3><p>在访问数据库或文件时，使用多线程可能会产生数据竞争的问题，当然使用<code>Serial Dispatch Queue</code>可避免数据竞争。</p>
-<p>但是如果读取处理只是与读取处理并行执行，那么多个并行执行就不会发生问题。也就是说为了高效率的进行访问，读取处理追加到<code>Concurrent Dispatch Queue</code>，写入处理在任一读取处理没有执行的状态下，追加到<code>Serial Dispatch Queue</code>中即可（在写入处理结束之前，读取处理不可执行）。</p>
-<p>使用<code>dispatch_barrier_async</code>便可解决这个问题。<code>dispatch_barrier_async</code>函数会等待追加到<code>Concurrent Dispatch Queue</code>上的并行执行的处理全部结束后，再将制定的处理追加到该<code>Concurrent Dispatch Queue</code>中。然后在由<code>dispatch_barrier_async</code>函数追加的处理执行完毕后，<code>Concurrent Dispatch Queue</code>才恢复为一般的动作，追加到该<code>Concurrent Dispatch Queue</code>的处理又开始并行执行。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line">dispatch_async(queue, blk0_for_reading);</div><div class="line">dispatch_async(queue, blk1_for_reading);</div><div class="line">dispatch_async(queue, blk2_for_reading);</div><div class="line">dispatch_async(queue, blk3_for_reading);</div><div class="line">dispatch_barrier_async(queue, blk_for_writing);</div><div class="line">dispatch_async(queue, blk4_for_reading);</div><div class="line">dispatch_async(queue, blk5_for_reading);</div><div class="line">dispatch_async(queue, blk6_for_reading);</div><div class="line">dispatch_async(queue, blk7_for_reading);</div></pre></td></tr></table></figure>
-<p>如上所示，使用方法非常简单。仅使用<code>dispatch_barrier_async</code>函数代替<code>dispatch_async</code>函数即可。</p>
-<p><img src="http://ocga9x543.bkt.clouddn.com/WX20170703-115939.png" alt=""></p>
-<h3 id="1-5-dispatch-apply"><a href="#1-5-dispatch-apply" class="headerlink" title="1.5 dispatch_apply"></a>1.5 dispatch_apply</h3><p><code>dispatch_apply</code>函数是<code>dispatch_sync</code>函数和<code>Dispatch Group</code>的关联API。该函数按指定的次数将指定的Block追加到指定的<code>Dispatch Queue</code>中，并等待全部处理执行结束。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">dispatch_queue_t queue = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0);</div><div class="line">dispatch_apply(10, queue, ^(size_t index) &#123;</div><div class="line">    NSLog(@&quot;%zu&quot;, index);</div><div class="line">&#125;);</div><div class="line">NSLog(@&quot;done&quot;);</div></pre></td></tr></table></figure>
-<p>例如，该源代码的执行结果为：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line">4</div><div class="line">1</div><div class="line">0</div><div class="line">3</div><div class="line">5</div><div class="line">2</div><div class="line">6</div><div class="line">8</div><div class="line">9</div><div class="line">7</div><div class="line">done</div></pre></td></tr></table></figure>
-<p>因为在<code>Global Dispatch Queue</code>中执行处理，所以各个处理的执行时间不定。但是输出结果中最后的done必定在最后的位置上。这是因为<code>dispatch_apply</code>函数会等待全部处理执行结束。</p>
-<h3 id="1-6-Dispatch-I-O"><a href="#1-6-Dispatch-I-O" class="headerlink" title="1.6 Dispatch I/O"></a>1.6 Dispatch I/O</h3><p>大家可能想过，在读取较大文件时，如果将文件分成合适的大小并使用<code>Global Dispatch Queue</code>并列读取的话，应该会比一般的读取速度快不少。能实现这一功能的就是<code>Dispatch I/O</code>和<code>Dispatch Data</code>。</p>
-<p><img src="http://ocga9x543.bkt.clouddn.com/WX20170703-140234.png" alt=""></p>
-<p>如果想提高文件读取速度，可以尝试使用<code>Dispatch I/O</code>。</p>
-<h3 id="1-7-Dispatch-Source"><a href="#1-7-Dispatch-Source" class="headerlink" title="1.7 Dispatch Source"></a>1.7 Dispatch Source</h3><p>GCD中出了主要的<code>Dispatch Queue</code>外，还有不太引人注目的<code>Dispatch Source</code>。它是BSD系内核惯有功能<code>kqueue</code>的包装。<br><code>kqueue</code>是在XNU内核中发生各种事件时，在应用程序编程方执行处理的技术。其CPU负荷非常小，尽量不占用资源。<code>kqueue</code>可以说是应用程序处理XNU内核中发生的各种事件的方法中最优秀的一种。</p>
-<p><code>Dispatch Source</code>可以处理一下事件。</p>
-<p><img src="http://ocga9x543.bkt.clouddn.com/WX20170703-141244.png" alt=""></p>
-<p>在使用NSTimer做定时器的时候，大家应该都知道如果使用不当，会出现内存泄漏的问题。<br>而如果作为一个封装的组件来说，就需要将NSTimer属性暴露出来，在控制器销毁时，调用NSTimer的invalidate方法。如果忘记的话就会内存泄漏！</p>
-<p>但是使用<code>DISPATCH_SOUTCE_TYPE_TIMER</code>的话就不需要担心这个问题了。</p>
-<p><a href="https://github.com/qcyl/GCD-Timer-Demo" target="_blank" rel="external">此处</a>为使用了<code>DISPATCH_SOUTCE_TYPE_TIMER</code>的定时器的小demo。</p>
+    <content type="html"><![CDATA[<h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p><code>UITableView</code>可以说是iOS开发中最常用的一个控件了，那么对<code>UITableView</code>的使用以及封装就可以说是重中之重了。今天就介绍一个自己封装的由数据进行驱动的<code>UITableView</code>的封装<a href="https://github.com/qcyl/QCListView_Swift" target="_blank" rel="external">QCListView_Swift</a>。</p>
+<h2 id="数据驱动"><a href="#数据驱动" class="headerlink" title="数据驱动"></a>数据驱动</h2><p>何为数据驱动？<br>就是只关心数据的处理，数据改变，cell改变。不需要实现<code>UITableView</code>那些繁杂的协议方法。</p>
+<p>只是这么说的话，相信大家还都是比较懵的状态，下面看源码：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div></pre></td><td class="code"><pre><div class="line">// 我需要TableView展示两种cell, 并且每隔一行换一种，我只需要将对应的model拼接成一个数组，</div><div class="line">// 那么UI会自动根据数组中的model找到对应的cell进行展示</div><div class="line"></div><div class="line">class ViewController: UIViewController &#123;</div><div class="line"></div><div class="line">    override func viewDidLoad() &#123;</div><div class="line">        super.viewDidLoad()</div><div class="line">        </div><div class="line">        let tableView = TableView(frame: CGRect(x: 0, y: 0, width: self.view.bounds.width, height: self.view.bounds.height), style: .plain)</div><div class="line">        tableView.qcDataSource = dataSource</div><div class="line">        tableView.qcDelegate = self</div><div class="line">        tableView.register(cell: DemoCell())</div><div class="line">        tableView.register(cell: Demo2Cell())</div><div class="line">        view.addSubview(tableView)</div><div class="line">    &#125;</div><div class="line">    </div><div class="line">    let dataSource: TableViewDataSource = &#123;</div><div class="line">        let dataSource = TableViewDataSource()</div><div class="line">        </div><div class="line">        var section = SectionObject()</div><div class="line">        section.items = &#123;</div><div class="line">            var items: [TableViewBaseItem] = []</div><div class="line">            </div><div class="line">            for i in 0..&lt;20 &#123;</div><div class="line">                let model = DemoModel()</div><div class="line">                model.count = i</div><div class="line">                items.append(model)</div><div class="line">                let model2 = Demo2Model()</div><div class="line">                model2.count2 = i</div><div class="line">                items.append(model2)</div><div class="line">            &#125;</div><div class="line"></div><div class="line">            return items</div><div class="line">        &#125;()</div><div class="line">        dataSource.sections = [section]</div><div class="line">        </div><div class="line">        return dataSource</div><div class="line">    &#125;()</div><div class="line"></div><div class="line">&#125;</div><div class="line"></div><div class="line">extension ViewController: TableViewDelegate &#123;</div><div class="line">    func tableView(_ tableView: TableView, didSelectedObject object: TableViewBaseItem, atIndexPath indexPatn: IndexPath) &#123;</div><div class="line">        print(&quot;点击&quot;)</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h2 id="整体思路"><a href="#整体思路" class="headerlink" title="整体思路"></a>整体思路</h2><p>由于<code>UITableView</code>的数据源实际上就是一个二维数组，所以将每组封装成一个<code>SectionObject</code>对象，对象内又包含每行的对象数组<code>items</code>。这样外部按照这个格式来拼接对象就确定了<code>UITableView</code>的数据源。</p>
+<p>数据源确定了，还需要确定返回的cell，这里我将每行数据的model与cell之间制定了一个规则（规则说明请看文末），这样就可以通过对应的model找到cell，并返回。</p>
+<p>在Model类的父类中<code>TableViewBaseItem</code>，有两个属性<code>cellHeight</code>和<code>itemIdentifier</code>。<code>cellHeight</code>存储cell的高度，在Cell类中实现<code>TableViewCellDelegate</code>协议返回；<code>itemIdentifier</code>根据Model类名转换，并使用这个<code>itemIdentifier</code>注册cell。<br>注：一般情况下，这两个属性都无需关心。</p>
+<p>另外<code>UITableView</code>的代理协议中包含非常多的协议方法，<a href="https://github.com/qcyl/QCListView_Swift" target="_blank" rel="external">QCListView_Swift</a>中的<code>TableView</code>不可能将每个协议方法都进行实现，这就需要用到<a href="http://www.olinone.com/?p=643" target="_blank" rel="external">协议分发</a>,通过使用<a href="https://github.com/panghaijiao/HJProtocolDispatcher" target="_blank" rel="external">HJProtocolDispatcher</a>实现协议的分发。</p>
+<h2 id="优点"><a href="#优点" class="headerlink" title="优点"></a>优点</h2><ol>
+<li>只需要关心数据的处理，无需每次都实现协议</li>
+<li>更好的职责划分，cell的样式，高度由cell内部自己处理</li>
+<li>更好的处理多cell的TableView</li>
+<li>注册cell时无需区分xib还是class</li>
+</ol>
+<h2 id="TODO"><a href="#TODO" class="headerlink" title="TODO"></a>TODO</h2><ol>
+<li><code>SectionObject</code>完善</li>
+<li><code>TableViewBaseItem</code>支持泛型处理</li>
+<li><code>UITableViewDataSource</code>的协议分发</li>
+<li>支持自动高度计算（也有可能不会支持）</li>
+</ol>
+<h2 id="规则说明"><a href="#规则说明" class="headerlink" title="规则说明"></a>规则说明</h2><p>本库会自动将Model类（每行对应的对象）后的<code>Model或Item</code>转换成<code>Cell</code>，然后去寻找对应的Cell。</p>
+<blockquote>
+<p>例如：<br>Model类（DemoModel）会自动去找对应的Cell类（DemoCell）<br>Model类（DemoItem）会自动去找对应的Cell类（DemoCell）</p>
+</blockquote>
+<p>如果你的个人习惯或者项目要求导致Model类不会以<code>Model或Item</code>结尾，还可创建<code>cellIDRule.plist</code>文件（根结构为数组），在文件内填写需要转换的结尾字符串。</p>
+<blockquote>
+<p>例如需要转换以<code>Etity</code>结尾的Model类：<br>则在<code>cellIDRule.plist</code>文件中添加一项<code>Etity</code></p>
+<p>注意：创建<code>cellIDRule.plist</code>文件后，默认的<code>Model或Item</code>将不再支持</p>
+</blockquote>
+<hr>
+<p>更细致的内容还请大家去看<a href="https://github.com/qcyl/QCListView_Swift" target="_blank" rel="external">demo</a>。</p>
 ]]></content>
     
     <summary type="html">
     
-      &lt;p&gt;这篇文章主要给大家讲解一下GCD的平时不太常用的API，以及文末会贴出GCD定时器的一个小例子。&lt;/p&gt;
-&lt;h2 id=&quot;1-GCD的API&quot;&gt;&lt;a href=&quot;#1-GCD的API&quot; class=&quot;headerlink&quot; title=&quot;1.GCD的API&quot;&gt;&lt;/a&gt;1.G
+      &lt;h2 id=&quot;前言&quot;&gt;&lt;a href=&quot;#前言&quot; class=&quot;headerlink&quot; title=&quot;前言&quot;&gt;&lt;/a&gt;前言&lt;/h2&gt;&lt;p&gt;&lt;code&gt;UITableView&lt;/code&gt;可以说是iOS开发中最常用的一个控件了，那么对&lt;code&gt;UITableView&lt;/code
     
     </summary>
     
-      <category term="读书笔记" scheme="http://blog.qczyl.club/categories/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/"/>
+      <category term="iOS" scheme="http://blog.qczyl.club/categories/iOS/"/>
     
     
   </entry>
   
   <entry>
     <title>多Target、组件化实践</title>
-    <link href="http://blog.qczyl.club/2017/11/21/%E5%A4%9ATarget%E3%80%81%E7%BB%84%E4%BB%B6%E5%8C%96%E5%AE%9E%E8%B7%B5/"/>
-    <id>http://blog.qczyl.club/2017/11/21/多Target、组件化实践/</id>
-    <published>2017-11-20T22:49:29.000Z</published>
-    <updated>2017-07-07T08:02:52.000Z</updated>
+    <link href="http://blog.qczyl.club/2017/07/07/%E5%A4%9ATarget%E3%80%81%E7%BB%84%E4%BB%B6%E5%8C%96%E5%AE%9E%E8%B7%B5/"/>
+    <id>http://blog.qczyl.club/2017/07/07/多Target、组件化实践/</id>
+    <published>2017-07-06T16:00:00.000Z</published>
+    <updated>2018-03-23T02:09:05.070Z</updated>
     
     <content type="html"><![CDATA[<h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>因为公司项目的特性：每个城市对应一个APP，每个APP又有着或多或少的区别；</p>
 <p>所以开发人员面临的问题是：开发多个相似APP。</p>
@@ -376,94 +414,56 @@
   </entry>
   
   <entry>
-    <title>开始使用Git吧</title>
-    <link href="http://blog.qczyl.club/2017/11/21/%E5%BC%80%E5%A7%8B%E4%BD%BF%E7%94%A8Git%E5%90%A7/"/>
-    <id>http://blog.qczyl.club/2017/11/21/开始使用Git吧/</id>
-    <published>2017-11-20T22:49:29.000Z</published>
-    <updated>2017-10-18T08:04:53.000Z</updated>
+    <title>《Objective-C高级编程 iOS与OS X多线程和内存管理》读书笔记 GCD篇</title>
+    <link href="http://blog.qczyl.club/2017/07/03/%E3%80%8AObjective-C%E9%AB%98%E7%BA%A7%E7%BC%96%E7%A8%8B%20iOS%E4%B8%8EOS%20X%E5%A4%9A%E7%BA%BF%E7%A8%8B%E5%92%8C%E5%86%85%E5%AD%98%E7%AE%A1%E7%90%86%E3%80%8B%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0%20GCD%E7%AF%87/"/>
+    <id>http://blog.qczyl.club/2017/07/03/《Objective-C高级编程 iOS与OS X多线程和内存管理》读书笔记 GCD篇/</id>
+    <published>2017-07-02T16:00:00.000Z</published>
+    <updated>2018-03-23T02:08:04.960Z</updated>
     
-    <content type="html"><![CDATA[<p>既然说<code>开始使用Git吧</code>，那Git相对于SVN来说肯定还是有一定的好处的。<br>大家可以看一下<a href="https://my.oschina.net/u/1580062/blog/214850" target="_blank" rel="external">评《GIT和SVN之间的五个基本区别》</a>这篇文章，虽然文章时间有点久远，但是我很认同里边的说法，特别是Git对分支和合并有更好的支持。</p>
-<p>虽然评论区还是有很多使用SVN的用户不是很赞同他的观点，认为Git的权限问题是一个很大的问题，但是现在公司搭一个Gitlab就可以将权限问题完全搞定了。</p>
-<h3 id="Git的基本使用"><a href="#Git的基本使用" class="headerlink" title="Git的基本使用"></a>Git的基本使用</h3><p>Git相对于SVN来说命令确实多了一些，大家可以通过<a href="https://git-scm.com/book/zh/v1/Git-%E5%9F%BA%E7%A1%80" target="_blank" rel="external">Git基础</a>来学习一下Git的常用命令。</p>
-<p>但是个人推荐直接使用<a href="https://www.sourcetreeapp.com/" target="_blank" rel="external">Sourcetree</a>来进行日常的开发使用，简单方便可视化。当然命令还是要了解一下的，以防万一啊！</p>
-<h3 id="Git远程仓库"><a href="#Git远程仓库" class="headerlink" title="Git远程仓库"></a>Git远程仓库</h3><p>了解了Git的简单命令，以及<a href="https://www.sourcetreeapp.com/" target="_blank" rel="external">Sourcetree</a>的使用，大家就可以<code>开始使用Git</code>了。</p>
-<p>但是，只使用本地仓库的话，那就丧失了Git的真正意义。<br>这里介绍几款Git远程仓库：</p>
-<ol>
-<li><a href="https://github.com/" target="_blank" rel="external">GItHub</a>，相信这个大家都知道的，但是在<code>GItHub</code>上使用私有仓库是收费的</li>
-<li><a href="https://gitee.com/" target="_blank" rel="external">码云</a>，很屌的名字，支持私用仓库创建</li>
-<li><a href="https://about.gitlab.com/" target="_blank" rel="external">GitLab</a>，可搭建在自己的服务器上，适合公司使用，有完善的权限系统</li>
-</ol>
-<h3 id="Git工作流程"><a href="#Git工作流程" class="headerlink" title="Git工作流程"></a>Git工作流程</h3><p>当在团队开发中使用版本控制系统时，商定一个统一的工作流程是至关重要的。Git 的确可以在各个方面做很多事情，然而，如果在你的团队中还没有能形成一个特定有效的工作流程，那么混乱就将是不可避免的。</p>
-<p>Git工作流程有各式各样的用法，但也正因此使得在实际工作中如何上手使用变得很头大。这里介绍几种公司最常用的Git工作流程：</p>
-<ol>
-<li><a href="http://blog.jobbole.com/76847/" target="_blank" rel="external">集中式工作流</a>，适合开发团队成员已经很熟悉SVN，无需去适应一个全新流程</li>
-<li><a href="http://blog.jobbole.com/76857/" target="_blank" rel="external">功能分支工作流</a>，以集中式工作流为基础，不同的是为各个新功能分配一个专门的分支来开发</li>
-<li><a href="http://blog.jobbole.com/76867/" target="_blank" rel="external">Gitflow工作流</a>，通过为功能开发、发布准备和维护分配独立的分支，让发布迭代过程更流畅。最早诞生、并得到广泛采用的一种工作流程，推荐的流程</li>
-<li><a href="http://blog.jobbole.com/76861/" target="_blank" rel="external">Forking工作流</a>，分布式工作流，充分利用了Git在分支和克隆上的优势。可以安全可靠地管理大团队的开发者（developer），并能接受不信任贡献者（contributor）的提交</li>
-</ol>
-<p>个人推荐使用<a href="http://blog.jobbole.com/76867/" target="_blank" rel="external">Gitflow工作流</a>，而且<a href="https://www.sourcetreeapp.com/" target="_blank" rel="external">Sourcetree</a>也天然支持Gitflow，并把这个模型的各种操作通过菜单命令的形式提供了出来，大大减轻了使用人员的学习使用成本。</p>
-<hr>
-<p>相信大家使用Git后，会渐渐的爱上他的！</p>
+    <content type="html"><![CDATA[<p>这篇文章主要给大家讲解一下GCD的平时不太常用的API，以及文末会贴出GCD定时器的一个小例子。</p>
+<h2 id="1-GCD的API"><a href="#1-GCD的API" class="headerlink" title="1.GCD的API"></a>1.GCD的API</h2><h3 id="1-1-Dispatch-Queue"><a href="#1-1-Dispatch-Queue" class="headerlink" title="1.1 Dispatch Queue"></a>1.1 Dispatch Queue</h3><p>要谈GCD，就一定要了解<code>Dispatch Queue</code>（执行处理的等待队列）。<br><code>Dispatch Queue</code>按照追加的顺序（先进先出FIFO，First-In-First-Out）执行处理。<br>另外在执行处理是存在两种<code>Dispatch Queue</code>，一种是等待现在执行中处理的<code>Serial Dispatch Queue</code>，另一种是不等待现在执行中处理的<code>Concurrent Dispatch Queue</code>。</p>
+<p><img src="http://ocga9x543.bkt.clouddn.com/WX20170703-111143.png" alt=""></p>
+<h3 id="1-2-dispatch-queue-create"><a href="#1-2-dispatch-queue-create" class="headerlink" title="1.2 dispatch_queue_create"></a>1.2 dispatch_queue_create</h3><p>由于平时在使用时，我们大部分都是使用系统提供的<code>Main Dispatch Queue</code>和<code>Global Dispatch Queue</code>。<br>所以关于<code>dispatch_queue_create</code>API，这里只说两点：</p>
+<ul>
+<li>通过<code>dispatch_queue_create</code>函数生成的<code>Dispatch Queue</code>在使用结束后要通过<code>dispatch_release</code>函数释放。</li>
+<li>如果生成过多的线程，就会消耗大量内存，大幅度降低系统的响应性能。而使用系统提供的<code>Global Dispatch Queue</code>则不用担心这个问题。所以除非必要，其他情况建议使用系统提供的<code>Dispatch Queue</code>。</li>
+</ul>
+<h3 id="1-3-dispatch-set-target-queue"><a href="#1-3-dispatch-set-target-queue" class="headerlink" title="1.3 dispatch_set_target_queue"></a>1.3 dispatch_set_target_queue</h3><p>使用<code>dispatch_queue_create</code>函数生成的<code>Dispatch Queue</code>，都使用的是与系统提供的<code>Global Dispatch Queue</code>的默认优先级相同的优先级。而要变更生成的执行优先级的话就要使用<code>dispatch_set_target_queue</code>函数。</p>
+<p>在后台执行动作处理的<code>Serial Dispatch Queue</code>的生成方法如下:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">dispatch_queue_t mySerialDispatchQueue = dispatch_queue_create(&quot;com.example.gcd.mySerialDispatchQueue&quot;, NULL);</div><div class="line">   dispatch_queue_t globalDispatchQueueBackground = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_BACKGROUND, 0);</div><div class="line">   dispatch_set_target_queue(mySerialDispatchQueue, globalDispatchQueueBackground);</div></pre></td></tr></table></figure>
+<h3 id="1-3-dispatch-after"><a href="#1-3-dispatch-after" class="headerlink" title="1.3 dispatch_after"></a>1.3 dispatch_after</h3><p><code>dispatch_after</code>这里只说一点，<code>dispatch_after</code>函数并不是在指定时间后执行处理，而只是在指定时间追加处理到<code>Dispatch Queue</code>。</p>
+<p>因为<code>Main Dispatch Queue</code>在主线程的<code>RunLoop</code>中执行，所以在比如每隔1/60秒执行的<code>RunLoop</code>中，Block最快在 3 秒后执行，最慢在 3 秒 + 1/60 秒后执行，并且在<code>Main Dispatch Queue</code>有大量处理追加或主线程的处理本身有延迟时，这个时间会更长。</p>
+<p>所以该函数在有严格时间要求的情况下使用会出现问题，但是只是想大致延迟执行处理，该函数是非常有效的。</p>
+<h3 id="1-4-dispatch-barrier-async"><a href="#1-4-dispatch-barrier-async" class="headerlink" title="1.4 dispatch_barrier_async"></a>1.4 dispatch_barrier_async</h3><p>在访问数据库或文件时，使用多线程可能会产生数据竞争的问题，当然使用<code>Serial Dispatch Queue</code>可避免数据竞争。</p>
+<p>但是如果读取处理只是与读取处理并行执行，那么多个并行执行就不会发生问题。也就是说为了高效率的进行访问，读取处理追加到<code>Concurrent Dispatch Queue</code>，写入处理在任一读取处理没有执行的状态下，追加到<code>Serial Dispatch Queue</code>中即可（在写入处理结束之前，读取处理不可执行）。</p>
+<p>使用<code>dispatch_barrier_async</code>便可解决这个问题。<code>dispatch_barrier_async</code>函数会等待追加到<code>Concurrent Dispatch Queue</code>上的并行执行的处理全部结束后，再将制定的处理追加到该<code>Concurrent Dispatch Queue</code>中。然后在由<code>dispatch_barrier_async</code>函数追加的处理执行完毕后，<code>Concurrent Dispatch Queue</code>才恢复为一般的动作，追加到该<code>Concurrent Dispatch Queue</code>的处理又开始并行执行。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line">dispatch_async(queue, blk0_for_reading);</div><div class="line">dispatch_async(queue, blk1_for_reading);</div><div class="line">dispatch_async(queue, blk2_for_reading);</div><div class="line">dispatch_async(queue, blk3_for_reading);</div><div class="line">dispatch_barrier_async(queue, blk_for_writing);</div><div class="line">dispatch_async(queue, blk4_for_reading);</div><div class="line">dispatch_async(queue, blk5_for_reading);</div><div class="line">dispatch_async(queue, blk6_for_reading);</div><div class="line">dispatch_async(queue, blk7_for_reading);</div></pre></td></tr></table></figure>
+<p>如上所示，使用方法非常简单。仅使用<code>dispatch_barrier_async</code>函数代替<code>dispatch_async</code>函数即可。</p>
+<p><img src="http://ocga9x543.bkt.clouddn.com/WX20170703-115939.png" alt=""></p>
+<h3 id="1-5-dispatch-apply"><a href="#1-5-dispatch-apply" class="headerlink" title="1.5 dispatch_apply"></a>1.5 dispatch_apply</h3><p><code>dispatch_apply</code>函数是<code>dispatch_sync</code>函数和<code>Dispatch Group</code>的关联API。该函数按指定的次数将指定的Block追加到指定的<code>Dispatch Queue</code>中，并等待全部处理执行结束。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">dispatch_queue_t queue = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0);</div><div class="line">dispatch_apply(10, queue, ^(size_t index) &#123;</div><div class="line">    NSLog(@&quot;%zu&quot;, index);</div><div class="line">&#125;);</div><div class="line">NSLog(@&quot;done&quot;);</div></pre></td></tr></table></figure>
+<p>例如，该源代码的执行结果为：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line">4</div><div class="line">1</div><div class="line">0</div><div class="line">3</div><div class="line">5</div><div class="line">2</div><div class="line">6</div><div class="line">8</div><div class="line">9</div><div class="line">7</div><div class="line">done</div></pre></td></tr></table></figure>
+<p>因为在<code>Global Dispatch Queue</code>中执行处理，所以各个处理的执行时间不定。但是输出结果中最后的done必定在最后的位置上。这是因为<code>dispatch_apply</code>函数会等待全部处理执行结束。</p>
+<h3 id="1-6-Dispatch-I-O"><a href="#1-6-Dispatch-I-O" class="headerlink" title="1.6 Dispatch I/O"></a>1.6 Dispatch I/O</h3><p>大家可能想过，在读取较大文件时，如果将文件分成合适的大小并使用<code>Global Dispatch Queue</code>并列读取的话，应该会比一般的读取速度快不少。能实现这一功能的就是<code>Dispatch I/O</code>和<code>Dispatch Data</code>。</p>
+<p><img src="http://ocga9x543.bkt.clouddn.com/WX20170703-140234.png" alt=""></p>
+<p>如果想提高文件读取速度，可以尝试使用<code>Dispatch I/O</code>。</p>
+<h3 id="1-7-Dispatch-Source"><a href="#1-7-Dispatch-Source" class="headerlink" title="1.7 Dispatch Source"></a>1.7 Dispatch Source</h3><p>GCD中出了主要的<code>Dispatch Queue</code>外，还有不太引人注目的<code>Dispatch Source</code>。它是BSD系内核惯有功能<code>kqueue</code>的包装。<br><code>kqueue</code>是在XNU内核中发生各种事件时，在应用程序编程方执行处理的技术。其CPU负荷非常小，尽量不占用资源。<code>kqueue</code>可以说是应用程序处理XNU内核中发生的各种事件的方法中最优秀的一种。</p>
+<p><code>Dispatch Source</code>可以处理一下事件。</p>
+<p><img src="http://ocga9x543.bkt.clouddn.com/WX20170703-141244.png" alt=""></p>
+<p>在使用NSTimer做定时器的时候，大家应该都知道如果使用不当，会出现内存泄漏的问题。<br>而如果作为一个封装的组件来说，就需要将NSTimer属性暴露出来，在控制器销毁时，调用NSTimer的invalidate方法。如果忘记的话就会内存泄漏！</p>
+<p>但是使用<code>DISPATCH_SOUTCE_TYPE_TIMER</code>的话就不需要担心这个问题了。</p>
+<p><a href="https://github.com/qcyl/GCD-Timer-Demo" target="_blank" rel="external">此处</a>为使用了<code>DISPATCH_SOUTCE_TYPE_TIMER</code>的定时器的小demo。</p>
 ]]></content>
     
     <summary type="html">
     
-      &lt;p&gt;既然说&lt;code&gt;开始使用Git吧&lt;/code&gt;，那Git相对于SVN来说肯定还是有一定的好处的。&lt;br&gt;大家可以看一下&lt;a href=&quot;https://my.oschina.net/u/1580062/blog/214850&quot; target=&quot;_blank&quot; rel=&quot;e
+      &lt;p&gt;这篇文章主要给大家讲解一下GCD的平时不太常用的API，以及文末会贴出GCD定时器的一个小例子。&lt;/p&gt;
+&lt;h2 id=&quot;1-GCD的API&quot;&gt;&lt;a href=&quot;#1-GCD的API&quot; class=&quot;headerlink&quot; title=&quot;1.GCD的API&quot;&gt;&lt;/a&gt;1.G
     
     </summary>
     
-      <category term="杂学" scheme="http://blog.qczyl.club/categories/%E6%9D%82%E5%AD%A6/"/>
-    
-    
-  </entry>
-  
-  <entry>
-    <title>数据驱动的TableView：QCListView_Swift</title>
-    <link href="http://blog.qczyl.club/2017/11/21/%E6%95%B0%E6%8D%AE%E9%A9%B1%E5%8A%A8%E7%9A%84TableView%EF%BC%9AQCListView_Swift/"/>
-    <id>http://blog.qczyl.club/2017/11/21/数据驱动的TableView：QCListView_Swift/</id>
-    <published>2017-11-20T22:49:29.000Z</published>
-    <updated>2017-07-28T01:35:52.000Z</updated>
-    
-    <content type="html"><![CDATA[<h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p><code>UITableView</code>可以说是iOS开发中最常用的一个控件了，那么对<code>UITableView</code>的使用以及封装就可以说是重中之重了。今天就介绍一个自己封装的由数据进行驱动的<code>UITableView</code>的封装<a href="https://github.com/qcyl/QCListView_Swift" target="_blank" rel="external">QCListView_Swift</a>。</p>
-<h2 id="数据驱动"><a href="#数据驱动" class="headerlink" title="数据驱动"></a>数据驱动</h2><p>何为数据驱动？<br>就是只关心数据的处理，数据改变，cell改变。不需要实现<code>UITableView</code>那些繁杂的协议方法。</p>
-<p>只是这么说的话，相信大家还都是比较懵的状态，下面看源码：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div></pre></td><td class="code"><pre><div class="line">// 我需要TableView展示两种cell, 并且每隔一行换一种，我只需要将对应的model拼接成一个数组，</div><div class="line">// 那么UI会自动根据数组中的model找到对应的cell进行展示</div><div class="line"></div><div class="line">class ViewController: UIViewController &#123;</div><div class="line"></div><div class="line">    override func viewDidLoad() &#123;</div><div class="line">        super.viewDidLoad()</div><div class="line">        </div><div class="line">        let tableView = TableView(frame: CGRect(x: 0, y: 0, width: self.view.bounds.width, height: self.view.bounds.height), style: .plain)</div><div class="line">        tableView.qcDataSource = dataSource</div><div class="line">        tableView.qcDelegate = self</div><div class="line">        tableView.register(cell: DemoCell())</div><div class="line">        tableView.register(cell: Demo2Cell())</div><div class="line">        view.addSubview(tableView)</div><div class="line">    &#125;</div><div class="line">    </div><div class="line">    let dataSource: TableViewDataSource = &#123;</div><div class="line">        let dataSource = TableViewDataSource()</div><div class="line">        </div><div class="line">        var section = SectionObject()</div><div class="line">        section.items = &#123;</div><div class="line">            var items: [TableViewBaseItem] = []</div><div class="line">            </div><div class="line">            for i in 0..&lt;20 &#123;</div><div class="line">                let model = DemoModel()</div><div class="line">                model.count = i</div><div class="line">                items.append(model)</div><div class="line">                let model2 = Demo2Model()</div><div class="line">                model2.count2 = i</div><div class="line">                items.append(model2)</div><div class="line">            &#125;</div><div class="line"></div><div class="line">            return items</div><div class="line">        &#125;()</div><div class="line">        dataSource.sections = [section]</div><div class="line">        </div><div class="line">        return dataSource</div><div class="line">    &#125;()</div><div class="line"></div><div class="line">&#125;</div><div class="line"></div><div class="line">extension ViewController: TableViewDelegate &#123;</div><div class="line">    func tableView(_ tableView: TableView, didSelectedObject object: TableViewBaseItem, atIndexPath indexPatn: IndexPath) &#123;</div><div class="line">        print(&quot;点击&quot;)</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<h2 id="整体思路"><a href="#整体思路" class="headerlink" title="整体思路"></a>整体思路</h2><p>由于<code>UITableView</code>的数据源实际上就是一个二维数组，所以将每组封装成一个<code>SectionObject</code>对象，对象内又包含每行的对象数组<code>items</code>。这样外部按照这个格式来拼接对象就确定了<code>UITableView</code>的数据源。</p>
-<p>数据源确定了，还需要确定返回的cell，这里我将每行数据的model与cell之间制定了一个规则（规则说明请看文末），这样就可以通过对应的model找到cell，并返回。</p>
-<p>在Model类的父类中<code>TableViewBaseItem</code>，有两个属性<code>cellHeight</code>和<code>itemIdentifier</code>。<code>cellHeight</code>存储cell的高度，在Cell类中实现<code>TableViewCellDelegate</code>协议返回；<code>itemIdentifier</code>根据Model类名转换，并使用这个<code>itemIdentifier</code>注册cell。<br>注：一般情况下，这两个属性都无需关心。</p>
-<p>另外<code>UITableView</code>的代理协议中包含非常多的协议方法，<a href="https://github.com/qcyl/QCListView_Swift" target="_blank" rel="external">QCListView_Swift</a>中的<code>TableView</code>不可能将每个协议方法都进行实现，这就需要用到<a href="http://www.olinone.com/?p=643" target="_blank" rel="external">协议分发</a>,通过使用<a href="https://github.com/panghaijiao/HJProtocolDispatcher" target="_blank" rel="external">HJProtocolDispatcher</a>实现协议的分发。</p>
-<h2 id="优点"><a href="#优点" class="headerlink" title="优点"></a>优点</h2><ol>
-<li>只需要关心数据的处理，无需每次都实现协议</li>
-<li>更好的职责划分，cell的样式，高度由cell内部自己处理</li>
-<li>更好的处理多cell的TableView</li>
-<li>注册cell时无需区分xib还是class</li>
-</ol>
-<h2 id="TODO"><a href="#TODO" class="headerlink" title="TODO"></a>TODO</h2><ol>
-<li><code>SectionObject</code>完善</li>
-<li><code>TableViewBaseItem</code>支持泛型处理</li>
-<li><code>UITableViewDataSource</code>的协议分发</li>
-<li>支持自动高度计算（也有可能不会支持）</li>
-</ol>
-<h2 id="规则说明"><a href="#规则说明" class="headerlink" title="规则说明"></a>规则说明</h2><p>本库会自动将Model类（每行对应的对象）后的<code>Model或Item</code>转换成<code>Cell</code>，然后去寻找对应的Cell。</p>
-<blockquote>
-<p>例如：<br>Model类（DemoModel）会自动去找对应的Cell类（DemoCell）<br>Model类（DemoItem）会自动去找对应的Cell类（DemoCell）</p>
-</blockquote>
-<p>如果你的个人习惯或者项目要求导致Model类不会以<code>Model或Item</code>结尾，还可创建<code>cellIDRule.plist</code>文件（根结构为数组），在文件内填写需要转换的结尾字符串。</p>
-<blockquote>
-<p>例如需要转换以<code>Etity</code>结尾的Model类：<br>则在<code>cellIDRule.plist</code>文件中添加一项<code>Etity</code></p>
-<p>注意：创建<code>cellIDRule.plist</code>文件后，默认的<code>Model或Item</code>将不再支持</p>
-</blockquote>
-<hr>
-<p>更细致的内容还请大家去看<a href="https://github.com/qcyl/QCListView_Swift" target="_blank" rel="external">demo</a>。</p>
-]]></content>
-    
-    <summary type="html">
-    
-      &lt;h2 id=&quot;前言&quot;&gt;&lt;a href=&quot;#前言&quot; class=&quot;headerlink&quot; title=&quot;前言&quot;&gt;&lt;/a&gt;前言&lt;/h2&gt;&lt;p&gt;&lt;code&gt;UITableView&lt;/code&gt;可以说是iOS开发中最常用的一个控件了，那么对&lt;code&gt;UITableView&lt;/code
-    
-    </summary>
-    
-      <category term="iOS" scheme="http://blog.qczyl.club/categories/iOS/"/>
+      <category term="读书笔记" scheme="http://blog.qczyl.club/categories/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/"/>
     
     
   </entry>
