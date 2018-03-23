@@ -2,6 +2,8 @@
 
 title: GitLab搭建及汉化
 
+date: 2017-11-01 00:00:00
+
 categories: 杂学
 
 ---

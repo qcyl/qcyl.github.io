@@ -2,6 +2,8 @@
 
 title: 开始使用Git吧
 
+date: 2017-10-18 00:00:00
+
 categories: 杂学
 
 ---

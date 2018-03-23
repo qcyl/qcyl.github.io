@@ -1,6 +1,8 @@
 ---
 title: 《Objective-C高级编程 iOS与OS X多线程和内存管理》读书笔记 GCD篇
 
+date: 2017-07-03 00:00:00
+
 categories: 读书笔记
 
 ---
